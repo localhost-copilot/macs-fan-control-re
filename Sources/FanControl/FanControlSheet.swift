@@ -63,7 +63,7 @@ struct FanControlSheet: View {
                 Picker(model.text("Sensor:", "传感器："), selection: $sensor) {
                     Text(model.text("Select a sensor", "选择传感器")).tag("")
                     ForEach(sensorChoices) { sensor in
-                        Text("\(sensor.name) (\(model.temperature(sensor.celsius))\(model.unit.symbol))").tag(sensor.id)
+                        Text("\(model.sensorName(sensor)) (\(model.temperature(sensor.celsius))\(model.unit.symbol))").tag(sensor.id).help(model.sensorHelp(sensor))
                     }
                 }
                 HStack {

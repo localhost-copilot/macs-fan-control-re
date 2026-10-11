@@ -100,6 +100,28 @@ final class AppModel: ObservableObject {
         if sensor.quantity == .temperature { return temperature(value) + " " + unit.symbol }
         return String(format: "%.3f", value) + " " + sensor.quantity.symbol
     }
+    // Only change presentation: average IDs include the catalog name and are
+    // persisted in presets and used by the helper to resolve their members.
+    func sensorName(_ sensor: Sensor) -> String {
+        guard sensor.name.hasSuffix(" (inferred)") else { return sensor.name }
+        if sensor.id.hasPrefix("avg:"), sensor.category == "cpu" {
+            return text("CPU Average Temperature", "CPU 平均温度")
+        }
+        if sensor.id.hasPrefix("avg:"), sensor.category == "gpu" {
+            return text("GPU Average Temperature", "GPU 平均温度")
+        }
+        return String(sensor.name.dropLast(" (inferred)".count))
+    }
+    func sensorHelp(_ sensor: Sensor) -> String {
+        var details = "\(sensorName(sensor)) · \(sensor.source) · \(sensor.id)\n\(sensor.issue ?? reading(sensor))"
+        if sensor.name.hasSuffix(" (inferred)") {
+            details += "\n" + text("Temperatures come from hardware sensors; CPU/GPU attribution is inferred from channel names.", "温度来自真实传感器，CPU/GPU 归属按通道名称推断。")
+            if sensor.id.hasPrefix("avg:") {
+                details += "\n" + text("Average of the currently available readings in this group.", "此值为组内当前可用温度读数的平均值。")
+            }
+        }
+        return details
+    }
     func quantityName(_ quantity: SensorQuantity) -> String {
         switch quantity {
         case .temperature: return text("Temperature", "温度")
@@ -113,7 +135,7 @@ final class AppModel: ObservableObject {
         switch modes[fan.id] ?? .automatic {
         case .automatic: return fan.manual && !demo ? text("External control", "外部控制") : text("Auto", "自动")
         case .constant(let rpm): return text("Constant value of \(rpm)", "恒定转速 \(rpm)")
-        case .sensor(let key, _, _): return text("Based on ", "基于 ") + (sensors.first { $0.id == key }?.name ?? key)
+        case .sensor(let key, _, _): return text("Based on ", "基于 ") + (sensors.first { $0.id == key }.map(sensorName) ?? key)
         }
     }
     /// Installs the helper on demand so fan control works without a separate setup step.

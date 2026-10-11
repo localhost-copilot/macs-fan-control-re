@@ -76,16 +76,16 @@ struct PreferencesView: View {
                 Spacer()
                 TextField(model.text("Filter", "筛选"), text: $sensorFilter).textFieldStyle(.roundedBorder).frame(width: 150)
             }
-            List(model.sensors.filter { ($0.isVisibleByDefault || model.preferences.showUnknownSensors) && (sensorFilter.isEmpty || $0.name.localizedCaseInsensitiveContains(sensorFilter) || $0.id.localizedCaseInsensitiveContains(sensorFilter)) }) { sensor in
+            List(model.sensors.filter { ($0.isVisibleByDefault || model.preferences.showUnknownSensors) && (sensorFilter.isEmpty || model.sensorName($0).localizedCaseInsensitiveContains(sensorFilter) || $0.id.localizedCaseInsensitiveContains(sensorFilter)) }) { sensor in
                 Toggle(isOn: Binding(get: { !model.preferences.hiddenSensors.contains(sensor.id) }, set: { visible in
                     if visible { model.preferences.hiddenSensors.remove(sensor.id) } else { model.preferences.hiddenSensors.insert(sensor.id) }
                 })) {
                     HStack {
                         Image(systemName: sensorIcon(sensor)).foregroundStyle(sensorColor(sensor)).frame(width: 16)
-                        Text(sensor.name).lineLimit(1)
+                        Text(model.sensorName(sensor)).lineLimit(1)
                         Spacer()
                         Text(model.reading(sensor)).monospacedDigit().foregroundStyle(.secondary)
-                    }.help(sensor.id + "\n" + (sensor.issue ?? ""))
+                    }.help(model.sensorHelp(sensor))
                 }
             }.listStyle(.bordered(alternatesRowBackgrounds: true)).frame(height: 190)
         }.toggleStyle(.checkbox)
@@ -133,7 +133,7 @@ struct PreferencesView: View {
                         Text(model.text("Automatic", "自动")).tag("")
                         Divider()
                         ForEach(model.visibleSensors.filter { $0.value != nil || $0.id == model.preferences.menuSensor }) {
-                            Text("\($0.name) (\(model.reading($0)))").tag($0.id)
+                            Text("\(model.sensorName($0)) (\(model.reading($0)))").tag($0.id).help(model.sensorHelp($0))
                         }
                     }.labelsHidden()
                 }

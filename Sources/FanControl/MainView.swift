@@ -14,14 +14,14 @@ struct MainView: View {
         let values = model.visibleSensors.filter {
             (quantityFilter == "all" || $0.quantity.rawValue == quantityFilter) &&
             (showUnavailable || $0.value != nil) &&
-            (filter.isEmpty || $0.name.localizedCaseInsensitiveContains(filter) || $0.id.localizedCaseInsensitiveContains(filter) || $0.source.localizedCaseInsensitiveContains(filter))
+            (filter.isEmpty || model.sensorName($0).localizedCaseInsensitiveContains(filter) || $0.id.localizedCaseInsensitiveContains(filter) || $0.source.localizedCaseInsensitiveContains(filter))
         }
         return values.sorted {
             if sortByValue {
                 if $0.quantity != $1.quantity { return $0.quantity.rawValue < $1.quantity.rawValue }
                 if $0.value != $1.value { return ascending ? ($0.value ?? -.infinity) < ($1.value ?? -.infinity) : ($0.value ?? -.infinity) > ($1.value ?? -.infinity) }
             }
-            let comparison = $0.name.localizedStandardCompare($1.name)
+            let comparison = model.sensorName($0).localizedStandardCompare(model.sensorName($1))
             if comparison == .orderedSame { return $0.id < $1.id }
             return ascending ? comparison == .orderedAscending : comparison == .orderedDescending
         }
@@ -154,17 +154,17 @@ struct MainView: View {
                             ForEach(Array(rows.enumerated()), id: \.element.id) { index, sensor in
                                 HStack(spacing: 9) {
                                     Image(systemName: sensorIcon(sensor)).foregroundStyle(sensorColor(sensor)).frame(width: 18)
-                                    Text(sensor.name).lineLimit(1).frame(maxWidth: .infinity, alignment: .leading)
+                                    Text(model.sensorName(sensor)).lineLimit(1).frame(maxWidth: .infinity, alignment: .leading)
                                     Text(model.reading(sensor)).monospacedDigit().foregroundStyle(readingColor(sensor)).frame(width: 84, alignment: .trailing)
                                 }.padding(.horizontal, 7).frame(height: 23)
                                     .background(selectedSensor == sensor.id ? Color.accentColor.opacity(0.18) : rowColor(index))
                                     .contentShape(Rectangle()).onTapGesture { selectedSensor = sensor.id }
-                                    .help("\(sensor.name) · \(sensor.source) · \(sensor.id)\n\(sensor.issue ?? model.reading(sensor))")
+                                    .help(model.sensorHelp(sensor))
                                     .contextMenu {
                                         Button(model.text("Show in menu bar", "在菜单栏显示")) { model.preferences.menuSensor = sensor.id; model.preferences.menuTemperature = true }
                                         Button(model.text("Copy sensor value", "复制传感器数值")) {
                                             NSPasteboard.general.clearContents()
-                                            NSPasteboard.general.setString("\(sensor.name): \(model.reading(sensor)) [\(sensor.source): \(sensor.id)]", forType: .string)
+                                            NSPasteboard.general.setString("\(model.sensorName(sensor)): \(model.reading(sensor)) [\(sensor.source): \(sensor.id)]", forType: .string)
                                         }
                                         Button(model.text("Hide sensor", "隐藏传感器")) { model.preferences.hiddenSensors.insert(sensor.id) }
                                     }
