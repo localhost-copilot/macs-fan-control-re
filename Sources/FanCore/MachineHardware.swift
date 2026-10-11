@@ -5,6 +5,7 @@ public final class MachineHardware: FanHardware {
     private let smc: AppleSMC
     private let hid = HIDSensorReader()
     private let power = PowerReader()
+    private let clpcCPU = PowerReader.clpcCPU()
     private let catalog = SensorCatalog()
     private var keys: [String] = []
     private var cache: [String: Sensor] = [:]
@@ -74,7 +75,13 @@ public final class MachineHardware: FanHardware {
             readings.append(Sensor(id: "avg:" + name, name: name, celsius: available.reduce(0, +) / Double(available.count), category: members.compactMap { values[$0]?.category }.first ?? "temperature"))
         }
         readings += MaximumTemperature.allCases.compactMap { $0.sensor(from: readings) }
-        readings += power?.readings() ?? []
+        let reportedPower = power?.readings() ?? []
+        readings += reportedPower
+        // Keep subscriptions independent so an unsupported CLPC report cannot
+        // break GPU/PCIe readings. Do not duplicate an existing CPU aggregate.
+        if !reportedPower.contains(where: { $0.name == "CPU Power" }) {
+            readings += clpcCPU?.readings() ?? []
+        }
         // Models without a sensor database still get a useful default list.
         curated = readings.contains { $0.isVisibleByDefault && $0.quantity == .temperature && $0.source != "Calculated" }
         if !curated {

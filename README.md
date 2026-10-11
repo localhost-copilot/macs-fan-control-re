@@ -132,6 +132,7 @@ Move the app to a stable location (for example `/Applications/Macs Fan Control.a
 - Changes take effect immediately; **Cancel** restores the previous settings.
 - CPU / GPU Maximum Temperature shows the highest currently available reading among each family's identified channels, and can drive menu bar readings and fan control. These are current maxima, not historical peaks; losing every reading makes the value unavailable and returns temperature-based control to automatic.
 - Explicit CPU / GPU energy channels from macOS IOReport Energy Model appear as power readings by default when available. Values are interval averages calculated from reported energy, not direct wattmeter measurements. Missing channels are not guessed from utilization or unidentified SMC rails.
+- When CPU Energy is absent on macOS 27.0 / 27.0.1 with AppleT8152CLPC, a verified AppleCLPC CPU energy report supplies CPU Power without sudo. The mapping follows [macmon's discovery notes](https://github.com/vladkens/macmon/blob/main/docs/clpc-discovery.md), and readings have been verified on Mac18,5 / macOS 27.0.1, but not yet compared with local sudo powermetrics. Other drivers and OS versions do not reuse this mapping.
 - Presets: Automatic, Full blast, and custom presets (save / rename / delete / apply). The last successfully applied control settings also persist without saving a preset, and are restored after hardware discovery on launch, including after upgrades. Selecting Automatic clears custom control for the next launch.
 
 </details>

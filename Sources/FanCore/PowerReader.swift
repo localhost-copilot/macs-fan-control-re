@@ -34,10 +34,20 @@ public final class PowerReader {
     private let subgroup: Label
     private let unit: Label
     private let integer: Integer
+    private let source: String
     private var deltas: [String: EnergyDelta] = [:]
     private var lastSensors: [Sensor] = []
 
-    public init?() {
+    public convenience init?() {
+        self.init(channels: nil, source: "IOReport")
+    }
+
+    static func clpcCPU() -> PowerReader? {
+        guard let channels = CLPCCPUPower.channels() else { return nil }
+        return PowerReader(channels: channels, source: "IOReport/CLPC")
+    }
+
+    private init?(channels suppliedChannels: CFMutableDictionary?, source: String) {
         guard let library = Self.library else { return nil }
         func symbol<T>(_ name: String, as type: T.Type) -> T? {
             guard let address = dlsym(library, name) else { return nil }
@@ -49,9 +59,14 @@ public final class PowerReader {
               let name = symbol("IOReportChannelGetChannelName", as: Label.self),
               let subgroup = symbol("IOReportChannelGetSubGroup", as: Label.self),
               let unit = symbol("IOReportChannelGetUnitLabel", as: Label.self),
-              let integer = symbol("IOReportSimpleGetIntegerValue", as: Integer.self),
-              let raw = copy("Energy Model" as CFString, nil, 0, 0, 0)?.takeRetainedValue(),
-              let channels = CFDictionaryCreateMutableCopy(nil, 0, raw) else { return nil }
+              let integer = symbol("IOReportSimpleGetIntegerValue", as: Integer.self) else { return nil }
+        let channels: CFMutableDictionary
+        if let suppliedChannels { channels = suppliedChannels }
+        else {
+            guard let raw = copy("Energy Model" as CFString, nil, 0, 0, 0)?.takeRetainedValue(),
+                  let discovered = CFDictionaryCreateMutableCopy(nil, 0, raw) else { return nil }
+            channels = discovered
+        }
         var subscribedChannels: Unmanaged<CFMutableDictionary>?
         guard let subscription = subscribe(nil, channels, &subscribedChannels, 0, nil)?.takeRetainedValue() else {
             subscribedChannels?.release(); return nil
@@ -59,6 +74,7 @@ public final class PowerReader {
         self.channels = subscribedChannels?.takeRetainedValue() ?? channels
         self.subscription = subscription; self.sample = sample; self.name = name
         self.subgroup = subgroup; self.unit = unit; self.integer = integer
+        self.source = source
     }
 
     public func readings() -> [Sensor] {
@@ -81,7 +97,7 @@ public final class PowerReader {
             let occurrence = occurrences[base, default: 0]; occurrences[base] = occurrence + 1
             let id = base + ":\(occurrence)"
             let value = deltas[id, default: EnergyDelta()].watts(energy: integer(channel, 0), unit: unit, now: now)
-            var sensor = Sensor(id: id, name: name.replacingOccurrences(of: "Energy", with: "Power"), value: value, quantity: .power, source: "IOReport", issue: value == nil ? "Waiting for two valid energy samples; source unit: \(unit)." : nil, category: "psu")
+            var sensor = Sensor(id: id, name: name.replacingOccurrences(of: "Energy", with: "Power"), value: value, quantity: .power, source: source, issue: value == nil ? "Waiting for two valid energy samples; source unit: \(unit)." : nil, category: "psu")
             // Only expose explicitly named processor channels by default; raw
             // rails and overlapping energy counters have no confirmed CPU/GPU mapping.
             sensor.isVisibleByDefault = name == "CPU Energy" || name == "GPU Energy"

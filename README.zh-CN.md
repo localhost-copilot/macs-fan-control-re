@@ -41,6 +41,7 @@ swift run FanControl --probe-json
 - 调速对话框实时生效：拖动滑块、切换到基于传感器或修改温度后立即作用于风扇，曲线实时显示当前工作点；取消恢复打开前的设置。
 - CPU / GPU 最高温度取各自已识别通道中当前可用读数的最大值，可用于菜单栏和温控。这是当前最高温度，不是历史峰值；全部读数不可用时显示为空，用于温控时回退到系统自动控制。
 - 系统 IOReport Energy Model 明确提供 CPU / GPU 能量通道时，默认显示对应功率。数值按能量差分计算，是采样期间的平均功率，不是功率计直接测量；缺少对应通道时不会根据负载或未知 SMC 通道猜测。
+- macOS 27.0 / 27.0.1 的 AppleT8152CLPC 驱动缺少公开枚举的 CPU Energy 时，通过已确认的 AppleCLPC CPU 能量报告显示 CPU 功率，无需 sudo。报告映射依据 [macmon 的发现记录](https://github.com/vladkens/macmon/blob/main/docs/clpc-discovery.md)，已在 Mac18,5 / macOS 27.0.1 读通；尚未与本机 sudo powermetrics 对照。其他驱动或系统版本不会套用此映射。
 - 工具栏式偏好设置窗口（General、T° Sensors、Menu bar display），另有 Advanced 页管理 helper 与诊断；登录最小化启动、Dock 图标、摄氏/华氏、精确显示、传感器显示管理、中英文主要界面。
 - SMC 自动枚举 `T*` / `V*` / `I*` / `P*` 通道，支持 float 和有效的 16 位有符号/无符号定点编码；保留未知键和不可用状态，每分钟重新发现。
 - HID 温度、电压、电流；通过 LocationID 区分同名 PMU 通道，并用对应 SMC 键读取存在 HID 编码异常的电气通道。保留原始 HID 数值供诊断。

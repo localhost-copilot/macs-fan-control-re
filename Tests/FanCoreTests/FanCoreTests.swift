@@ -4,6 +4,21 @@ import XCTest
 final class FanCoreTests: XCTestCase {
     private let fan = Fan(id: 0, name: "Left", minimum: 1200, current: 2000, maximum: 5800)
 
+    func testCLPCCPUCounterRejectsUnverifiedDriversAndOSLayouts() {
+        let driver = "com.apple.driver.AppleT8152CLPC"
+        let supported = OperatingSystemVersion(majorVersion: 27, minorVersion: 0, patchVersion: 1)
+        XCTAssertNotNil(CLPCCPUPower.reportID(bundle: driver, version: supported))
+        XCTAssertNil(CLPCCPUPower.reportID(bundle: "com.apple.driver.AppleUnknownCLPC", version: supported))
+        for version in [
+            OperatingSystemVersion(majorVersion: 26, minorVersion: 6, patchVersion: 2),
+            OperatingSystemVersion(majorVersion: 27, minorVersion: 0, patchVersion: 2),
+            OperatingSystemVersion(majorVersion: 27, minorVersion: 1, patchVersion: 0),
+            OperatingSystemVersion(majorVersion: 28, minorVersion: 0, patchVersion: 0)
+        ] {
+            XCTAssertNil(CLPCCPUPower.reportID(bundle: driver, version: version), "Do not reuse opaque counter IDs on unverified OS layouts")
+        }
+    }
+
     func testMaximumTemperatureUsesCurrentRawReadingsAndSeparatesFamilies() throws {
         var readings = [
             Sensor(id: "Tp01", name: "CPU 1", celsius: 45, category: "cpu"),
