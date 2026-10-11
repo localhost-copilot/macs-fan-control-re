@@ -42,8 +42,8 @@ public final class PowerReader {
         self.init(channels: nil, source: "IOReport")
     }
 
-    static func clpcCPU() -> PowerReader? {
-        guard let channels = CLPCCPUPower.channels() else { return nil }
+    static func clpc() -> PowerReader? {
+        guard let channels = CLPCPower.channels() else { return nil }
         return PowerReader(channels: channels, source: "IOReport/CLPC")
     }
 
@@ -87,7 +87,7 @@ public final class PowerReader {
         }
         let now = Double(clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW)) / 1e9
         var occurrences: [String: Int] = [:]
-        var result: [Sensor] = []
+        var channels: [(name: String, sensor: Sensor)] = []
         for item in items {
             let channel = item as CFDictionary
             let name = self.name(channel)?.takeUnretainedValue() as String? ?? "Unnamed energy channel"
@@ -97,13 +97,13 @@ public final class PowerReader {
             let occurrence = occurrences[base, default: 0]; occurrences[base] = occurrence + 1
             let id = base + ":\(occurrence)"
             let value = deltas[id, default: EnergyDelta()].watts(energy: integer(channel, 0), unit: unit, now: now)
-            var sensor = Sensor(id: id, name: name.replacingOccurrences(of: "Energy", with: "Power"), value: value, quantity: .power, source: source, issue: value == nil ? "Waiting for two valid energy samples; source unit: \(unit)." : nil, category: "psu")
-            // Only expose explicitly named processor channels by default; raw
-            // rails and overlapping energy counters have no confirmed CPU/GPU mapping.
-            sensor.isVisibleByDefault = name == "CPU Energy" || name == "GPU Energy"
-            result.append(sensor)
+            let sensor = Sensor(id: id, name: name.replacingOccurrences(of: "Energy", with: "Power"), value: value, quantity: .power, source: source, issue: value == nil ? "Waiting for two valid energy samples; source unit: \(unit)." : nil, category: "psu")
+            channels.append((name, sensor))
         }
-        let active = Set(result.map(\.id))
+        // Only channels powermetrics attributes to CPU/GPU/ANE/DRAM are shown by
+        // default; other rails have no confirmed component mapping.
+        let result = PowerChannelRole.present(channels)
+        let active = Set(channels.map(\.sensor.id))
         deltas = deltas.filter { active.contains($0.key) }
         lastSensors = result
         return result

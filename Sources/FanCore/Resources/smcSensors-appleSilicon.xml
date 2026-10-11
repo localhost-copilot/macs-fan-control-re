@@ -318,4 +318,62 @@
       <smc name="Tg0D" type="gpu">GPU Cluster 2</smc>
     </group>
   </modelMatch>
+  <!-- Mac18,5 / macOS 27.0.1: families verified by load response (P/M-core load raises Tp, E-core-only
+       background load raises Te, GPU-only Metal load raises Tg most). Per-core identities are unknown. -->
+  <modelMatch models="Mac18,5">
+    <group name="CPU Performance Cluster Average">
+      <smc name="Tp05" type="cpu">CPU Performance Cluster Sensor Tp05</smc>
+      <smc name="Tp07" type="cpu">CPU Performance Cluster Sensor Tp07</smc>
+      <smc name="Tp09" type="cpu">CPU Performance Cluster Sensor Tp09</smc>
+      <smc name="Tp0A" type="cpu">CPU Performance Cluster Sensor Tp0A</smc>
+      <smc name="Tp0E" type="cpu">CPU Performance Cluster Sensor Tp0E</smc>
+      <smc name="Tp0G" type="cpu">CPU Performance Cluster Sensor Tp0G</smc>
+      <smc name="Tp0I" type="cpu">CPU Performance Cluster Sensor Tp0I</smc>
+      <smc name="Tp0L" type="cpu">CPU Performance Cluster Sensor Tp0L</smc>
+      <smc name="Tp0b" type="cpu">CPU Performance Cluster Sensor Tp0b</smc>
+      <smc name="Tp0d" type="cpu">CPU Performance Cluster Sensor Tp0d</smc>
+      <smc name="Tp0g" type="cpu">CPU Performance Cluster Sensor Tp0g</smc>
+      <smc name="Tp0j" type="cpu">CPU Performance Cluster Sensor Tp0j</smc>
+      <smc name="Tp0m" type="cpu">CPU Performance Cluster Sensor Tp0m</smc>
+      <smc name="Tp0o" type="cpu">CPU Performance Cluster Sensor Tp0o</smc>
+      <smc name="Tp0r" type="cpu">CPU Performance Cluster Sensor Tp0r</smc>
+      <smc name="Tp0t" type="cpu">CPU Performance Cluster Sensor Tp0t</smc>
+      <smc name="Tp0u" type="cpu">CPU Performance Cluster Sensor Tp0u</smc>
+      <smc name="Tp0w" type="cpu">CPU Performance Cluster Sensor Tp0w</smc>
+      <smc name="Tp0x" type="cpu">CPU Performance Cluster Sensor Tp0x</smc>
+      <smc name="Tp0y" type="cpu">CPU Performance Cluster Sensor Tp0y</smc>
+      <smc name="Tp0z" type="cpu">CPU Performance Cluster Sensor Tp0z</smc>
+    </group>
+    <group name="CPU Efficiency Cluster Average">
+      <smc name="Te07" type="cpu">CPU Efficiency Cluster Sensor Te07</smc>
+      <smc name="Te08" type="cpu">CPU Efficiency Cluster Sensor Te08</smc>
+      <smc name="Te09" type="cpu">CPU Efficiency Cluster Sensor Te09</smc>
+      <smc name="Te0c" type="cpu">CPU Efficiency Cluster Sensor Te0c</smc>
+      <smc name="Te0e" type="cpu">CPU Efficiency Cluster Sensor Te0e</smc>
+      <smc name="Te0f" type="cpu">CPU Efficiency Cluster Sensor Te0f</smc>
+      <smc name="Te0g" type="cpu">CPU Efficiency Cluster Sensor Te0g</smc>
+      <smc name="Te0h" type="cpu">CPU Efficiency Cluster Sensor Te0h</smc>
+      <smc name="Te0i" type="cpu">CPU Efficiency Cluster Sensor Te0i</smc>
+    </group>
+    <group name="GPU Average">
+      <smc name="Tg01" type="gpu">GPU Sensor Tg01</smc>
+      <smc name="Tg07" type="gpu">GPU Sensor Tg07</smc>
+      <smc name="Tg08" type="gpu">GPU Sensor Tg08</smc>
+      <smc name="Tg09" type="gpu">GPU Sensor Tg09</smc>
+      <smc name="Tg0a" type="gpu">GPU Sensor Tg0a</smc>
+      <smc name="Tg0b" type="gpu">GPU Sensor Tg0b</smc>
+      <smc name="Tg0c" type="gpu">GPU Sensor Tg0c</smc>
+      <smc name="Tg0d" type="gpu">GPU Sensor Tg0d</smc>
+      <smc name="Tg10" type="gpu">GPU Sensor Tg10</smc>
+      <smc name="Tg17" type="gpu">GPU Sensor Tg17</smc>
+      <smc name="Tg1a" type="gpu">GPU Sensor Tg1a</smc>
+      <smc name="Tg1b" type="gpu">GPU Sensor Tg1b</smc>
+      <smc name="Tg1c" type="gpu">GPU Sensor Tg1c</smc>
+      <smc name="Tg1d" type="gpu">GPU Sensor Tg1d</smc>
+      <smc name="Tg1e" type="gpu">GPU Sensor Tg1e</smc>
+      <smc name="Tg1f" type="gpu">GPU Sensor Tg1f</smc>
+      <smc name="Tg1g" type="gpu">GPU Sensor Tg1g</smc>
+      <smc name="Tg1h" type="gpu">GPU Sensor Tg1h</smc>
+    </group>
+  </modelMatch>
 </smcSensors>

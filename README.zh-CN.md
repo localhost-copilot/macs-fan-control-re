@@ -40,12 +40,13 @@ swift run FanControl --probe-json
 - 菜单栏：单色/彩色/无图标、风扇 RPM、指定传感器读数；数值使用固定宽度槽位，读数变化时不左右跳动。手动控制时彩色图标变橙，高温读数着色。预设切换、逐风扇控制、隐藏/重新打开与退出。
 - 调速对话框实时生效：拖动滑块、切换到基于传感器或修改温度后立即作用于风扇，曲线实时显示当前工作点；取消恢复打开前的设置。
 - CPU / GPU 最高温度取各自已识别通道中当前可用读数的最大值，可用于菜单栏和温控。这是当前最高温度，不是历史峰值；全部读数不可用时显示为空，用于温控时回退到系统自动控制。
-- 系统 IOReport Energy Model 明确提供 CPU / GPU 能量通道时，默认显示对应功率。数值按能量差分计算，是采样期间的平均功率，不是功率计直接测量；缺少对应通道时不会根据负载或未知 SMC 通道猜测。
-- macOS 27.0 / 27.0.1 的 AppleT8152CLPC 驱动缺少公开枚举的 CPU Energy 时，通过已确认的 AppleCLPC CPU 能量报告显示 CPU 功率，无需 sudo。报告映射依据 [macmon 的发现记录](https://github.com/vladkens/macmon/blob/main/docs/clpc-discovery.md)，已在 Mac18,5 / macOS 27.0.1 读通；尚未与本机 sudo powermetrics 对照。其他驱动或系统版本不会套用此映射。
+- CPU / GPU / ANE / DRAM 功率沿用从 `/usr/bin/powermetrics`（macOS 27.0.1）逆向出的 Energy Model 通道规则：有 `CPU Energy` 汇总通道时直接使用，否则对各集群通道（`ECPU`、`PACC0_CPU`、`DIE_1_PCPU` 等）求和；`GPU Energy`/`GPU`、`ANE*`、`DRAM*` 直接对应。数值按能量差分计算，是采样期间的平均功率，不是功率计直接测量；其余通道保留原始名称并默认隐藏，不根据负载或未知 SMC 通道猜测。
+- macOS 27 的 Energy Model 不再枚举 CPU 能量，powermetrics 也没有其他 CPU 来源。在 macOS 27.0 / 27.0.1 上，应用改读 AppleCLPC 的 CPU / GPU / ANE 能量报告，无需 sudo，覆盖 [macmon 固件分析表](https://github.com/vladkens/macmon/blob/main/docs/clpc-discovery.md)中 M1–M6 的 17 个 CLPC 驱动；Energy Model 已有的部件优先。在 Mac18,5 / macOS 27.0.1 上，CLPC GPU 与 Energy Model GPU 在 10.8 W 负载下相差不到 0.5%。CLPC ANE 尚未在 ANE 负载下核对，默认隐藏。其他系统版本不套用这些 ID。分级负载下与独立 SMC 电源轨的对照见 [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)。
+- Mac18,5 的 CPU（`Tp*` 性能集群、`Te*` 能效集群）与 GPU（`Tg*`）温度族已通过隔离的 CPU、E 核、GPU 负载确认，不再标记 inferred。
 - 工具栏式偏好设置窗口（General、T° Sensors、Menu bar display），另有 Advanced 页管理 helper 与诊断；登录最小化启动、Dock 图标、摄氏/华氏、精确显示、传感器显示管理、中英文主要界面。
 - SMC 自动枚举 `T*` / `V*` / `I*` / `P*` 通道，支持 float 和有效的 16 位有符号/无符号定点编码；保留未知键和不可用状态，每分钟重新发现。
 - HID 温度、电压、电流；通过 LocationID 区分同名 PMU 通道，并用对应 SMC 键读取存在 HID 编码异常的电气通道。保留原始 HID 数值供诊断。
-- IOReport Energy Model 的全部可发现通道：两次能耗采样换算瓦数，首次采样、计数重置或睡眠间隔显示等待；不把重叠功耗相加成系统总功耗。
+- IOReport Energy Model 的全部可发现通道：两次能耗采样换算瓦数，首次采样、计数重置或睡眠间隔显示等待；只按 powermetrics 规则对同一部件的通道求和，不合成系统总功耗。
 - 温度/电压/电流/功耗分类、单位、来源、通道数和不可用原因。温控候选仅包含有效温度；电气读数不会进入温控计算。
 - 独立 root XPC helper：双向验证代码签名、硬件范围与传感器；探测 `F{i}md`、`F{i}Md` 或 Intel 的 `FS! ` 位掩码，支持 float / `fpe2` 目标 RPM。模式 3 表示系统控制；手动模式写入被固件以 `0x82` 拒绝时探测 `Ftst` 解锁并限时重试。最后一个受控风扇恢复自动后释放本连接取得的解锁，失败可重试。模式与目标写入均回读确认。
 - 传感器失效、写入失败、客户端断线和心跳超时恢复系统控制；失败的恢复操作继续重试。退出和睡眠主动释放本应用控制的风扇。
@@ -76,8 +77,8 @@ SIGNING_IDENTITY='Developer ID Application: YOUR NAME (TEAMID)' bash scripts/bui
 - 这是独立项目，与 CrystalIDEA 无关联。
 - 控制器实现温度区间、方向迟滞、渐变和 31 秒刷新。
 - SSD 温度来自系统 HID/NAND 通道；尚未实现独立的 SATA/NVMe SMART 插件、Thunderbolt 外接磁盘和独立 eGPU 温度通道。系统未提供的传感器不会伪造读数。
-- 主列表默认只显示机型数据库命名的传感器和分组平均值；传感器菜单中的“显示全部原始通道”可列出全部发现的通道。未命名通道隐藏时每 10 次刷新才重新读取一次。缺少 SMC CPU/GPU 映射的 Apple Silicon（含基础款 M1、M6）补充分组平均值（名称带 `inferred`），保留已有机型映射。按 `Tp*` / `Te*` 与 `Tg*` 分组是推断，不代表官方封装温度或准确核心编号；仅聚合实际有效值。HID 与 SMC 可能指向同一物理传感器，通道数不等于物理传感器数。
-- “全部”指系统当前公开且可枚举的通道，不能访问固件未公开的传感器。未确定物理位置的通道保留原始名称。本机 IOReport 公开 GPU 与 PCIe 能耗，未枚举到 CPU/ANE/DRAM 能耗，不伪造这些通道。
+- 主列表默认只显示机型数据库命名的传感器和分组平均值；传感器菜单中的“显示全部原始通道”可列出全部发现的通道。未命名通道隐藏时每 10 次刷新才重新读取一次。缺少 SMC CPU/GPU 映射的 Apple Silicon（含基础款 M1）补充分组平均值（名称带 `inferred`），保留已有机型映射。按 `Tp*` / `Te*` 与 `Tg*` 分组是推断，不代表官方封装温度或准确核心编号；仅聚合实际有效值。Mac18,5（M6）已改用负载验证的集群分组。HID 与 SMC 可能指向同一物理传感器，通道数不等于物理传感器数。
+- “全部”指系统当前公开且可枚举的通道，不能访问固件未公开的传感器。未确定物理位置的通道保留原始名称。本机 IOReport Energy Model 只公开 GPU 与 PCIe 能耗；CPU/ANE 来自 AppleCLPC 报告，DRAM 未提供，不伪造。
 - 低温时部分 Apple Silicon 硬件可能不接受手动启动风扇；具体机型的专用模式键兼容性仍需实机验证。
 - 主要界面提供英文和简体中文，硬件名称与底层错误可能保留英文。
 - 未公证。M4 Mac mini 调速已获用户确认；Intel/其他 Apple Silicon 机型及睡眠后的真实硬件恢复仍需实测。

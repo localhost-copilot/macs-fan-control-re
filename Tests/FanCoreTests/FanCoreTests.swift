@@ -4,19 +4,56 @@ import XCTest
 final class FanCoreTests: XCTestCase {
     private let fan = Fan(id: 0, name: "Left", minimum: 1200, current: 2000, maximum: 5800)
 
-    func testCLPCCPUCounterRejectsUnverifiedDriversAndOSLayouts() {
+    func testCLPCCountersRejectUnverifiedDriversAndOSLayouts() throws {
         let driver = "com.apple.driver.AppleT8152CLPC"
         let supported = OperatingSystemVersion(majorVersion: 27, minorVersion: 0, patchVersion: 1)
-        XCTAssertNotNil(CLPCCPUPower.reportID(bundle: driver, version: supported))
-        XCTAssertNil(CLPCCPUPower.reportID(bundle: "com.apple.driver.AppleUnknownCLPC", version: supported))
+        let reports = try XCTUnwrap(CLPCPower.reports(bundle: driver, version: supported))
+        XCTAssertEqual(reports.map(\.id), [0x0000_0010_485d_4bfc, 0x0000_0019_1178_4654, 0x0000_0018_9380_c6bb])
+        XCTAssertEqual(reports.map { PowerChannelRole.classify($0.name)?.role }, [.cpu, .gpu, .ane])
+        XCTAssertEqual(CLPCPower.reports(bundle: "com.apple.driver.AppleT8112CLPC", version: supported)?.map(\.id),
+                       [0x0000_0010_b543_5137, 0x0000_0019_638d_9d52, 0x0000_0018_ea08_9c36], "M2 IDs from macmon's 27.0.1 catalog")
+        XCTAssertNil(CLPCPower.reports(bundle: "com.apple.driver.AppleUnknownCLPC", version: supported))
+        XCTAssertNil(CLPCPower.reports(bundle: "AppleT8152CLPC", version: supported))
         for version in [
             OperatingSystemVersion(majorVersion: 26, minorVersion: 6, patchVersion: 2),
             OperatingSystemVersion(majorVersion: 27, minorVersion: 0, patchVersion: 2),
             OperatingSystemVersion(majorVersion: 27, minorVersion: 1, patchVersion: 0),
             OperatingSystemVersion(majorVersion: 28, minorVersion: 0, patchVersion: 0)
         ] {
-            XCTAssertNil(CLPCCPUPower.reportID(bundle: driver, version: version), "Do not reuse opaque counter IDs on unverified OS layouts")
+            XCTAssertNil(CLPCPower.reports(bundle: driver, version: version), "Do not reuse opaque counter IDs on unverified OS layouts")
         }
+    }
+
+    func testPowerChannelsFollowPowermetricsNames() {
+        for name in ["CPU Energy", "CPU_Energy"] { XCTAssertTrue(PowerChannelRole.classify(name)! == (.cpu, false)) }
+        for name in ["ECPU", "PCPU1", "MCPU", "EACC_CPU", "PACC0_CPU", "DIE_1_PCPU2", "DIE_0_EACC1_CPU", "pCPUs Energy", "ECPU_NRG", "HACC"] {
+            XCTAssertTrue(PowerChannelRole.classify(name)! == (.cpu, true), name)
+        }
+        for name in ["GPU Energy", "GPU"] { XCTAssertEqual(PowerChannelRole.classify(name)?.role, .gpu) }
+        for name in ["ANE", "ANE0", "ANE_1", "ANE0_1"] { XCTAssertEqual(PowerChannelRole.classify(name)?.role, .ane, name) }
+        for name in ["DRAM", "DRAM_0", "DRAM0_1"] { XCTAssertEqual(PowerChannelRole.classify(name)?.role, .dram, name) }
+        for name in ["PCIe Port 0 Energy", "apciec0 Energy", "GPU SRAM", "CPU", "XCPU", "ECPU Power"] {
+            XCTAssertNil(PowerChannelRole.classify(name), name)
+        }
+    }
+
+    func testPowerChannelsSumClustersOnlyWithoutCPUAggregate() throws {
+        func channel(_ name: String, _ value: Double?) -> (name: String, sensor: Sensor) {
+            (name, Sensor(id: "ioreport::\(name):0", name: name, value: value, quantity: .power, source: "IOReport", category: "psu"))
+        }
+        let clusters = PowerChannelRole.present([channel("EACC_CPU", 1), channel("PACC0_CPU", 2), channel("PACC1_CPU", 3),
+                                                 channel("GPU Energy", 4), channel("ANE0", 0.5), channel("PCIe Port 0 Energy", 0)])
+        let visible = clusters.filter(\.isVisibleByDefault)
+        XCTAssertEqual(visible.map(\.name).sorted(), ["ANE Power", "CPU Power", "GPU Power"])
+        let cpu = try XCTUnwrap(visible.first { $0.name == "CPU Power" })
+        XCTAssertEqual(cpu.value, 6); XCTAssertEqual(cpu.id, "ioreport:sum:CPU Power"); XCTAssertEqual(cpu.source, "IOReport/Sum")
+        XCTAssertEqual(clusters.count, 7, "Raw channels remain available but hidden")
+
+        let aggregate = PowerChannelRole.present([channel("CPU Energy", 5), channel("PCPU", 3), channel("ECPU", 1)])
+        XCTAssertEqual(aggregate.filter(\.isVisibleByDefault).map(\.id), ["ioreport::CPU Energy:0"], "The aggregate channel wins, as in powermetrics")
+
+        let partial = PowerChannelRole.present([channel("ECPU", 1), channel("PCPU", nil)])
+        XCTAssertNil(partial.last?.value); XCTAssertNotNil(partial.last?.issue)
     }
 
     func testMaximumTemperatureUsesCurrentRawReadingsAndSeparatesFamilies() throws {
@@ -197,7 +234,7 @@ final class FanCoreTests: XCTestCase {
     }
     func testDiscoveredCPUAndGPUFallbackIsScopedAndDoesNotGuessAmbiguousKeys() {
         let keys = ["Tp05", "Tp05", "Te07", "Tg08", "TCMb", "TPD0", "TW0P", "TpLong"]
-        let catalog = SensorCatalog(model: "Mac18,5")
+        let catalog = SensorCatalog(model: "Mac99,1")
         catalog.addDiscoveredSensors(keys)
         catalog.addDiscoveredSensors(keys)
         XCTAssertEqual(Set(catalog.groups["CPU Sensors Average (inferred)"] ?? []), ["Tp05", "Te07"])
@@ -214,6 +251,18 @@ final class FanCoreTests: XCTestCase {
         supported.addDiscoveredSensors(keys)
         XCTAssertEqual(supported.sensors["Tp05"]?.name, originalName)
         XCTAssertNil(supported.groups["CPU Sensors Average (inferred)"])
+    }
+    func testMac18_5UsesLoadVerifiedClusterFamilies() {
+        let catalog = SensorCatalog(model: "Mac18,5")
+        catalog.addDiscoveredSensors(["Tp05", "Te07", "Tg01", "Tp99"])
+        XCTAssertEqual(catalog.sensors["Tp05"]?.category, "cpu")
+        XCTAssertEqual(catalog.sensors["Te07"]?.category, "cpu")
+        XCTAssertEqual(catalog.sensors["Tg01"]?.category, "gpu")
+        XCTAssertEqual(catalog.groups["CPU Performance Cluster Average"]?.count, 21)
+        XCTAssertEqual(catalog.groups["CPU Efficiency Cluster Average"]?.count, 9)
+        XCTAssertEqual(catalog.groups["GPU Average"]?.count, 18)
+        XCTAssertNil(catalog.sensors["Tp99"], "Mapped families do not add unverified keys")
+        XCTAssertFalse(catalog.sensors.values.contains { $0.name.hasSuffix("(inferred)") })
     }
 }
 

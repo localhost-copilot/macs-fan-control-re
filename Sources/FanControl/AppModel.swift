@@ -106,6 +106,8 @@ final class AppModel: ObservableObject {
         if sensor.source.hasPrefix("IOReport") {
             if sensor.name == "CPU Power" { return text("CPU Power", "CPU 功率") }
             if sensor.name == "GPU Power" { return text("GPU Power", "GPU 功率") }
+            if sensor.name == "ANE Power" { return text("ANE Power", "神经网络引擎功率") }
+            if sensor.name == "DRAM Power" { return text("DRAM Power", "内存功率") }
         }
         if let maximum = MaximumTemperature(rawValue: sensor.id) {
             return maximum == .cpu ? text("CPU Maximum Temperature", "CPU 最高温度") : text("GPU Maximum Temperature", "GPU 最高温度")
@@ -122,7 +124,9 @@ final class AppModel: ObservableObject {
     func sensorHelp(_ sensor: Sensor) -> String {
         var details = "\(sensorName(sensor)) · \(sensor.source) · \(sensor.id)\n\(sensor.issue ?? reading(sensor))"
         if sensor.source == "IOReport/CLPC" {
-            details += "\n" + text("Average CPU power calculated from the AppleCLPC energy counter over the sampling interval; not a direct wattmeter measurement.", "由 AppleCLPC CPU 能量计数器差分计算采样期间的平均功率，并非功率计直接测量。")
+            details += "\n" + text("Average power calculated from the AppleCLPC energy counter over the sampling interval; not a direct wattmeter measurement.", "由 AppleCLPC 能量计数器差分计算采样期间的平均功率，并非功率计直接测量。")
+        } else if sensor.source.hasSuffix("/Sum") {
+            details += "\n" + text("Sum of the per-cluster or per-instance Energy Model channels that powermetrics attributes to this component; interval average, not a direct wattmeter measurement.", "按 powermetrics 的归属规则，对该部件各集群/实例的 Energy Model 通道求和，为采样期间平均功率，并非功率计直接测量。")
         } else if sensor.source == "IOReport" {
             details += "\n" + text("Average power calculated from energy reported by macOS IOReport Energy Model over the sampling interval; not a direct wattmeter measurement.", "由 macOS IOReport Energy Model 上报的能量差分计算采样期间的平均功率，并非功率计直接测量。")
         }

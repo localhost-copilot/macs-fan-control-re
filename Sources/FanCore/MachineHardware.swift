@@ -5,7 +5,7 @@ public final class MachineHardware: FanHardware {
     private let smc: AppleSMC
     private let hid = HIDSensorReader()
     private let power = PowerReader()
-    private let clpcCPU = PowerReader.clpcCPU()
+    private let clpc = PowerReader.clpc()
     private let catalog = SensorCatalog()
     private var keys: [String] = []
     private var cache: [String: Sensor] = [:]
@@ -78,9 +78,11 @@ public final class MachineHardware: FanHardware {
         let reportedPower = power?.readings() ?? []
         readings += reportedPower
         // Keep subscriptions independent so an unsupported CLPC report cannot
-        // break GPU/PCIe readings. Do not duplicate an existing CPU aggregate.
-        if !reportedPower.contains(where: { $0.name == "CPU Power" }) {
-            readings += clpcCPU?.readings() ?? []
+        // break GPU/PCIe readings. Energy Model wins for components it reports.
+        let reported = Set(reportedPower.filter(\.isVisibleByDefault).map(\.name))
+        readings += (clpc?.readings() ?? []).filter { !reported.contains($0.name) }.map { sensor in
+            // CLPC CPU/GPU matched references on hardware; ANE has not been loaded and checked yet.
+            var item = sensor; if item.name == "ANE Power" { item.isVisibleByDefault = false }; return item
         }
         // Models without a sensor database still get a useful default list.
         curated = readings.contains { $0.isVisibleByDefault && $0.quantity == .temperature && $0.source != "Calculated" }

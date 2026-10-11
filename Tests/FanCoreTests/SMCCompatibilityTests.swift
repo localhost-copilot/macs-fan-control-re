@@ -15,7 +15,7 @@ final class SMCCompatibilityTests: XCTestCase {
     }
 
     func testMissingAppleSiliconFamiliesUseDiscoveryWithoutIntelMislabeling() {
-        for model in ["Macmini9,1", "MacBookPro17,1", "MacBookAir10,1", "iMac21,1", "Mac18,5", "Mac99,1"] {
+        for model in ["Macmini9,1", "MacBookPro17,1", "MacBookAir10,1", "iMac21,1", "Mac99,1"] {
             let catalog = SensorCatalog(model: model)
             catalog.addDiscoveredSensors(["Tp01", "Te05", "Tg05", "Tf14", "Tm02"])
             XCTAssertEqual(catalog.sensors["Tp01"]?.category, "cpu", model)

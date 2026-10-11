@@ -131,8 +131,9 @@ Move the app to a stable location (for example `/Applications/Macs Fan Control.a
 - **Sensor-based** control with start / max temperatures, live curve preview showing the current operating point, and input validation.
 - Changes take effect immediately; **Cancel** restores the previous settings.
 - CPU / GPU Maximum Temperature shows the highest currently available reading among each family's identified channels, and can drive menu bar readings and fan control. These are current maxima, not historical peaks; losing every reading makes the value unavailable and returns temperature-based control to automatic.
-- Explicit CPU / GPU energy channels from macOS IOReport Energy Model appear as power readings by default when available. Values are interval averages calculated from reported energy, not direct wattmeter measurements. Missing channels are not guessed from utilization or unidentified SMC rails.
-- When CPU Energy is absent on macOS 27.0 / 27.0.1 with AppleT8152CLPC, a verified AppleCLPC CPU energy report supplies CPU Power without sudo. The mapping follows [macmon's discovery notes](https://github.com/vladkens/macmon/blob/main/docs/clpc-discovery.md), and readings have been verified on Mac18,5 / macOS 27.0.1, but not yet compared with local sudo powermetrics. Other drivers and OS versions do not reuse this mapping.
+- CPU / GPU / ANE / DRAM power follows the Energy Model channel rules reverse-engineered from `/usr/bin/powermetrics` (macOS 27.0.1): an aggregate `CPU Energy` channel wins, otherwise per-cluster channels (`ECPU`, `PACC0_CPU`, `DIE_1_PCPU`, …) are summed; `GPU Energy`/`GPU`, `ANE*` and `DRAM*` map directly. Values are interval averages calculated from reported energy, not direct wattmeter measurements. Other rails stay raw and hidden; nothing is guessed from utilization or unidentified SMC rails.
+- macOS 27 no longer enumerates CPU energy in Energy Model, and powermetrics has no other CPU source. On macOS 27.0 / 27.0.1 the app reads the AppleCLPC CPU / GPU / ANE energy reports instead, without sudo, for the 17 M1–M6 CLPC drivers in [macmon's firmware-derived table](https://github.com/vladkens/macmon/blob/main/docs/clpc-discovery.md). Energy Model channels take precedence. On Mac18,5 / macOS 27.0.1, CLPC GPU matched Energy Model GPU within 0.5% at 10.8 W. CLPC ANE is hidden by default until checked under ANE load. Other OS versions do not reuse these IDs. Load-step results against independent SMC rails are recorded in [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md).
+- On Mac18,5, CPU (`Tp*` performance cluster, `Te*` efficiency cluster) and GPU (`Tg*`) temperature families were confirmed by isolated CPU, E-core and GPU loads and are no longer labeled inferred.
 - Presets: Automatic, Full blast, and custom presets (save / rename / delete / apply). The last successfully applied control settings also persist without saving a preset, and are restored after hardware discovery on launch, including after upgrades. Selecting Automatic clears custom control for the next launch.
 
 </details>
@@ -152,9 +153,9 @@ Move the app to a stable location (for example `/Applications/Macs Fan Control.a
 
 - **SMC**: automatic enumeration of `T*` / `V*` / `I*` / `P*` keys, supporting float and valid signed / unsigned 16-bit fixed-point encodings. Unknown keys and unavailable states are kept; rediscovery runs every minute.
 - **HID**: temperature, voltage, and current. Same-named PMU channels are disambiguated by `LocationID`; electrical channels with broken HID encoding are read through their matching SMC key. Raw HID values are retained for diagnostics.
-- **IOReport Energy Model**: every discoverable channel, converted to watts from two energy samples. The first sample, counter resets, and sleep gaps show a waiting state. Overlapping channels are never summed into a fake system total.
+- **IOReport Energy Model**: every discoverable channel, converted to watts from two energy samples. The first sample, counter resets, and sleep gaps show a waiting state. Only channels of one component are summed (as powermetrics does); there is no fake system total.
 - Classified by type, unit, source, channel count, and unavailability reason. Only valid temperatures can drive fan curves.
-- Default list shows named sensors and group averages; **Show all raw channels** reveals everything. `Mac18,5` additionally gets *inferred* CPU / GPU averages.
+- Default list shows named sensors and group averages; **Show all raw channels** reveals everything. Apple Silicon models without CPU / GPU mappings additionally get *inferred* averages; `Mac18,5` uses load-verified cluster groups.
 
 </details>
 
