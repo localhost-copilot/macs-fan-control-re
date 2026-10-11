@@ -203,7 +203,7 @@ docs/
 └── REFERENCE.md    Implementation notes, API references, and resource provenance
 ```
 
-The helper discovers `F{i}md` / `F{i}Md` mode keys or the legacy Intel `FS! ` bitmask and writes float or `fpe2` target RPM. Firmware mode 3 is system control. Manual-mode error `0x82` triggers capability-based `Ftst` unlock with bounded retries. An unlock acquired by this connection is released after its last controlled fan returns to automatic mode; failed recovery remains retryable. Mode and target writes are read back before reporting success.
+The helper discovers `F{i}md` / `F{i}Md` mode keys or the legacy Intel `FS! ` bitmask and writes float or `fpe2` target RPM. Firmware mode 3 is system control. Manual-mode error `0x82` or a successful mode write whose readback remains non-manual triggers capability-based `Ftst` unlock with bounded retries. An unlock acquired by this connection is released after its last controlled fan returns to automatic mode; failed recovery remains retryable. Mode and target writes are read back before reporting success.
 
 ## Safety
 

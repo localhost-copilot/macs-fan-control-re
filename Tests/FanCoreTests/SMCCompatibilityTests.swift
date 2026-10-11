@@ -68,6 +68,46 @@ final class SMCCompatibilityTests: XCTestCase {
         XCTAssertEqual(device.waits, 3)
     }
 
+    func testSilentModeRefusalUnlocksAndWaitsForHandoff() throws {
+        for key in ["F0md", "F0Md"] {
+            let device = SMCFixture(modeKey: key, locked: true)
+            device.silentModeRefusal = true
+            device.refusalsAfterUnlock = 2
+            let smc = device.client()
+            try smc.setRPM(2400, fan: XCTUnwrap(smc.fans().first))
+            XCTAssertEqual(try smc.number(key), 1)
+            XCTAssertEqual(try smc.number("F0Tg"), 2400)
+            XCTAssertEqual(device.waits, 3)
+            try smc.setAutomatic(fan: 0)
+            XCTAssertEqual(try smc.number(key), 0)
+            XCTAssertEqual(try smc.number("Ftst"), 0)
+        }
+    }
+
+    func testSilentModeRefusalTimeoutRestoresSystemControl() throws {
+        let device = SMCFixture(modeKey: "F0md", locked: true)
+        device.silentModeRefusal = true
+        device.refusalsAfterUnlock = 100
+        let smc = device.client()
+        XCTAssertThrowsError(try smc.setRPM(2400, fan: XCTUnwrap(smc.fans().first))) { error in
+            XCTAssertTrue(error.localizedDescription.contains("F0md: requested 1, read back 3"))
+        }
+        XCTAssertEqual(device.waits, 20)
+        XCTAssertEqual(try smc.number("Ftst"), 0)
+        XCTAssertEqual(try smc.number("F0md"), 3)
+        XCTAssertFalse(device.writes.contains { $0.0 == "F0Tg" })
+    }
+
+    func testIgnoredAutomaticModeDoesNotAcquireUnlock() throws {
+        let device = SMCFixture(modeKey: "F0md")
+        device.values["F0md"] = ("ui8 ", [1])
+        device.ignoredKeys = ["F0md"]
+        let smc = device.client()
+        XCTAssertThrowsError(try smc.setAutomatic(fan: 0))
+        XCTAssertEqual(device.waits, 0)
+        XCTAssertFalse(device.writes.contains { $0.0 == "Ftst" })
+    }
+
     func testTargetFailureRestoresModeAndUnlock() throws {
         let device = SMCFixture(modeKey: "F0Md", locked: true)
         device.rejectedKeys = ["F0Tg"]
@@ -228,6 +268,7 @@ private final class SMCFixture {
     var rejectedKeys = Set<String>()
     var ignoredKeys = Set<String>()
     var refusalsAfterUnlock = 0
+    var silentModeRefusal = false
     /// Firmware that hands a released fan straight back to the system.
     var releaseToSystemMode = false
     /// Firmware that stores targets with an offset, e.g. after rounding.
@@ -275,8 +316,8 @@ private final class SMCFixture {
             writes.append((key, payload))
             if rejectedKeys.contains(key) { output[40] = 0x85; return output }
             if locked, key.lowercased().hasSuffix("md"), payload == [1] {
-                if values["Ftst"]?.1 != [1] { output[40] = 0x82; return output }
-                if refusalsAfterUnlock > 0 { refusalsAfterUnlock -= 1; output[40] = 0x82; return output }
+                if values["Ftst"]?.1 != [1] { output[40] = silentModeRefusal ? 0 : 0x82; return output }
+                if refusalsAfterUnlock > 0 { refusalsAfterUnlock -= 1; output[40] = silentModeRefusal ? 0 : 0x82; return output }
             }
             if ignoredKeys.contains(key) { return output }
             if releaseToSystemMode, key.lowercased().hasSuffix("md"), payload == [0] { values[key] = (type, [3]); return output }

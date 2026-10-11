@@ -197,26 +197,30 @@ public final class AppleSMC {
             let desired: UInt8 = manual ? 1 : 0
             let current = try number(key)
             if current == Double(desired) || (!manual && current == 3) { return }
-            do {
-                try write(key, bytes: [desired])
-            } catch let error as DeviceError where manual && error.status == 0x82 {
+            func writeAndCheckMode() throws -> Bool {
+                do {
+                    try write(key, bytes: [desired])
+                } catch let error as DeviceError where manual && error.status == 0x82 {
+                    return false
+                }
+                let mode = try number(key)
+                // Releasing may hand the fan straight to the system (mode 3).
+                return mode == Double(desired) || (!manual && mode == 3)
+            }
+            if try writeAndCheckMode() { return }
+            if manual {
                 try acquireUnlock()
-                // thermalmonitord yields asynchronously. Bound retries and only
-                // retry its specific refusal, never transport/permission errors.
-                for attempt in 0..<20 {
+                // A successful write can still leave system control active.
+                // Use the same bounded handoff for this and explicit 0x82 refusals;
+                // transport, permission and read errors still propagate immediately.
+                for _ in 0..<20 {
                     waitForMode()
-                    do {
-                        try write(key, bytes: [desired])
-                        if try number(key) == Double(desired) { return }
-                    } catch let retry as DeviceError where retry.status == 0x82 {
-                        if attempt == 19 { throw retry }
-                    }
+                    if try writeAndCheckMode() { return }
                 }
             }
-            // Releasing may hand the fan straight to the system (mode 3).
             let mode = try number(key)
             guard mode == Double(desired) || (!manual && mode == 3) else {
-                throw FanError.message("SMC did not accept the requested mode for fan \(fan).")
+                throw FanError.message("SMC did not accept the requested mode for fan \(fan) (\(key): requested \(desired), read back \(mode)).")
             }
         } else {
             let value = try number("FS! ")
