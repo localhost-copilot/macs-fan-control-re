@@ -4,6 +4,28 @@ import FanCore
 
 final class AppModelTests: XCTestCase {
     @MainActor
+    func testMaximumTemperatureControlRestoresAndTracksHottestChannel() async {
+        let suite = "local.macsfancontrol.test.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suite)!
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let original = AppModel(defaults: defaults, demoRequested: true)
+        await original.refresh()
+        let changes: [Int: ControlMode] = [0: .sensor(key: "max:cpu", start: 40, maximum: 80), 1: .sensor(key: "max:gpu", start: 35, maximum: 75)]
+        let applied = await original.apply(changes)
+        XCTAssertTrue(applied)
+        let restored = AppModel(defaults: defaults, demoRequested: true)
+        await restored.refresh()
+        XCTAssertEqual(restored.modes, changes)
+        XCTAssertNil(restored.error)
+        for family in MaximumTemperature.allCases {
+            let maximum = restored.sensors.first { $0.id == family.rawValue }
+            let raw = restored.sensors.filter { $0.category == family.category && !$0.id.hasPrefix("max:") }
+            XCTAssertEqual(maximum?.celsius, raw.compactMap(\.celsius).max())
+            XCTAssertTrue(restored.controlSensors.contains { $0.id == family.rawValue })
+        }
+    }
+
+    @MainActor
     func testCustomControlSurvivesQuitAndRestoresAfterDiscovery() async throws {
         let suite = "local.macsfancontrol.test.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!

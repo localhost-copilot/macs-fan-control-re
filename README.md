@@ -130,6 +130,7 @@ Move the app to a stable location (for example `/Applications/Macs Fan Control.a
 - **Constant RPM** via slider or numeric input.
 - **Sensor-based** control with start / max temperatures, live curve preview showing the current operating point, and input validation.
 - Changes take effect immediately; **Cancel** restores the previous settings.
+- CPU / GPU Maximum Temperature shows the highest currently available reading among each family's identified channels, and can drive menu bar readings and fan control. These are current maxima, not historical peaks; losing every reading makes the value unavailable and returns temperature-based control to automatic.
 - Presets: Automatic, Full blast, and custom presets (save / rename / delete / apply). The last successfully applied control settings also persist without saving a preset, and are restored after hardware discovery on launch, including after upgrades. Selecting Automatic clears custom control for the next launch.
 
 </details>

@@ -4,6 +4,42 @@ import XCTest
 final class FanCoreTests: XCTestCase {
     private let fan = Fan(id: 0, name: "Left", minimum: 1200, current: 2000, maximum: 5800)
 
+    func testMaximumTemperatureUsesCurrentRawReadingsAndSeparatesFamilies() throws {
+        var readings = [
+            Sensor(id: "Tp01", name: "CPU 1", celsius: 45, category: "cpu"),
+            Sensor(id: "hid:cpu2", name: "CPU 2", celsius: 62, category: "cpu"),
+            Sensor(id: "Tg01", name: "GPU", celsius: 81, category: "gpu"),
+            Sensor(id: "avg:cpu", name: "Old average", celsius: 95, category: "cpu"),
+            Sensor(id: "max:cpu", name: "Old maximum", celsius: 99, category: "cpu"),
+            Sensor(id: "VC00", name: "Voltage", value: 100, quantity: .voltage, source: "SMC", category: "cpu")
+        ]
+        let maximum = try XCTUnwrap(MaximumTemperature.cpu.sensor(from: readings))
+        XCTAssertEqual(maximum.celsius, 62)
+        XCTAssertEqual(MaximumTemperature.gpu.sensor(from: readings)?.celsius, 81)
+        readings[1].value = 30
+        XCTAssertEqual(MaximumTemperature.cpu.sensor(from: readings)?.celsius, 45, "The maximum falls when the hottest channel cools")
+        let mode = ControlMode.sensor(key: maximum.id, start: 40, maximum: 80)
+        XCTAssertNoThrow(try mode.validate(for: fan))
+        let preset = Preset(name: "Hottest CPU", modes: [0: mode])
+        XCTAssertEqual(try JSONDecoder().decode(Preset.self, from: JSONEncoder().encode(preset)), preset)
+        XCTAssertThrowsError(try ControlMode.sensor(key: "max:unknown", start: 40, maximum: 80).validate(for: fan))
+    }
+
+    func testMaximumTemperatureHandlesPartialAndTotalSensorLoss() throws {
+        var readings = [
+            Sensor(id: "Tp01", name: "CPU 1", celsius: nil, category: "cpu"),
+            Sensor(id: "Tp02", name: "CPU 2", celsius: .nan, category: "cpu"),
+            Sensor(id: "Tp03", name: "CPU 3", celsius: .infinity, category: "cpu"),
+            Sensor(id: "Tp04", name: "CPU 4", celsius: 51, category: "cpu")
+        ]
+        XCTAssertEqual(MaximumTemperature.cpu.sensor(from: readings)?.celsius, 51)
+        readings[3].value = nil
+        let unavailable = try XCTUnwrap(MaximumTemperature.cpu.sensor(from: readings))
+        XCTAssertNil(unavailable.celsius)
+        XCTAssertNotNil(unavailable.issue)
+        XCTAssertNil(MaximumTemperature.gpu.sensor(from: readings), "Do not invent a family with no known channels")
+    }
+
     func testSMCDecodingWithSignedTemperatureAndUnalignedFloat() throws {
         XCTAssertEqual(try AppleSMC.decode(type: "sp78", bytes: [0xFF, 0x80]), -0.5)
         XCTAssertEqual(try AppleSMC.decode(type: "sp78", bytes: [0x2A, 0x80]), 42.5)

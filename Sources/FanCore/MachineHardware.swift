@@ -73,11 +73,12 @@ public final class MachineHardware: FanHardware {
             guard !available.isEmpty else { continue }
             readings.append(Sensor(id: "avg:" + name, name: name, celsius: available.reduce(0, +) / Double(available.count), category: members.compactMap { values[$0]?.category }.first ?? "temperature"))
         }
+        readings += MaximumTemperature.allCases.compactMap { $0.sensor(from: readings) }
         readings += (power?.readings() ?? []).map { sensor in
             var item = sensor; item.isVisibleByDefault = false; return item
         }
         // Models without a sensor database still get a useful default list.
-        curated = readings.contains { $0.isVisibleByDefault && $0.quantity == .temperature && !$0.id.hasPrefix("avg:") }
+        curated = readings.contains { $0.isVisibleByDefault && $0.quantity == .temperature && $0.source != "Calculated" }
         if !curated {
             for index in readings.indices where readings[index].celsius != nil { readings[index].isVisibleByDefault = true }
         }
@@ -88,12 +89,24 @@ public final class MachineHardware: FanHardware {
     }
     public func temperature(_ key: String) throws -> Double {
         // The helper evaluates this every tick, so read only what the key needs.
-        if key.hasPrefix("hid:") || key.hasPrefix("avg:") {
+        let maximum = MaximumTemperature(rawValue: key)
+        if key.hasPrefix("hid:") || key.hasPrefix("avg:") || maximum != nil {
             try discover()
-            let members = key.hasPrefix("avg:") ? Set(catalog.groups[String(key.dropFirst(4))] ?? []) : [key]
+            let members: Set<String>
+            if let maximum {
+                members = Set(catalog.sensors.filter { $0.value.category == maximum.category }.map(\.key))
+            } else {
+                members = key.hasPrefix("avg:") ? Set(catalog.groups[String(key.dropFirst(4))] ?? []) : [key]
+            }
             let hidValues = members.contains { $0.hasPrefix("hid:") }
                 ? Dictionary((hid?.readings(refresh: { members.contains("hid:" + $0) }) ?? []).map { ($0.id, $0.celsius) }, uniquingKeysWith: { first, _ in first }) : [:]
             let values = members.compactMap { $0.hasPrefix("hid:") ? hidValues[$0] ?? nil : try? smc.temperature($0) }
+            if maximum != nil {
+                guard let value = MaximumTemperature.value(values) else {
+                    throw FanError.message("No temperature readings are available in the selected CPU/GPU group.")
+                }
+                return value
+            }
             guard !values.isEmpty else { throw FanError.message("Selected temperature sensor is unavailable or ambiguous. Select it again.") }
             return values.reduce(0, +) / Double(values.count)
         }

@@ -37,7 +37,7 @@ public struct Sensor: Identifiable, Codable, Equatable {
     public var isVisibleByDefault: Bool
     public init(id: String, name: String, celsius: Double?, category: String = "temperature", isVisibleByDefault: Bool = true) {
         self.id = id; self.name = name; self.value = celsius; self.category = category
-        quantity = .temperature; source = id.hasPrefix("avg:") ? "Calculated" : "SMC"
+        quantity = .temperature; source = id.hasPrefix("avg:") || id.hasPrefix("max:") ? "Calculated" : "SMC"
         self.isVisibleByDefault = isVisibleByDefault
     }
     public init(id: String, name: String, value: Double?, quantity: SensorQuantity, source: String, issue: String? = nil, category: String = "temperature") {
@@ -60,7 +60,7 @@ public enum ControlMode: Codable, Equatable {
                 throw FanError.message("RPM must be within the fan’s hardware limits.")
             }
         case .sensor(let key, let start, let maximum):
-            let validKey = (key.utf8.count == 4 && key.hasPrefix("T")) || ((key.hasPrefix("hid:") || key.hasPrefix("avg:")) && key.utf8.count > 4 && key.utf8.count < 200)
+            let validKey = (key.utf8.count == 4 && key.hasPrefix("T")) || ((key.hasPrefix("hid:") || key.hasPrefix("avg:")) && key.utf8.count > 4 && key.utf8.count < 200) || MaximumTemperature(rawValue: key) != nil
             guard validKey, start.isFinite, maximum.isFinite,
                   start >= 0, maximum <= 110, maximum - start >= 1, fan.maximum > fan.minimum else {
                 throw FanError.message("Select a temperature sensor and temperatures at least 1°C apart (0–110°C).")

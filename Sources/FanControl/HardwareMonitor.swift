@@ -40,9 +40,10 @@ enum DemoHardware {
             ("Th1H", "Heatsink Proximity", 36, "temperature"), ("Tm00", "Memory Bank 1", 37, "memory"),
             ("TPMP", "Power Supply Proximity", 34, "psu"), ("Ts0P", "Trackpad", 29, "temperature")
         ]
-        let sensors = names.enumerated().map { index, item in
+        var sensors = names.enumerated().map { index, item in
             Sensor(id: item.0, name: item.1, celsius: item.2 + sin(Double(tick + index) / 9) * 1.8, category: item.3)
         }
+        sensors += MaximumTemperature.allCases.compactMap { $0.sensor(from: sensors) }
         let fans = (0..<2).map { id -> Fan in
             let minimum = id == 0 ? 1200 : 1200
             let maximum = id == 0 ? 5800 : 5800

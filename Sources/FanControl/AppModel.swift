@@ -103,6 +103,9 @@ final class AppModel: ObservableObject {
     // Only change presentation: average IDs include the catalog name and are
     // persisted in presets and used by the helper to resolve their members.
     func sensorName(_ sensor: Sensor) -> String {
+        if let maximum = MaximumTemperature(rawValue: sensor.id) {
+            return maximum == .cpu ? text("CPU Maximum Temperature", "CPU 最高温度") : text("GPU Maximum Temperature", "GPU 最高温度")
+        }
         guard sensor.name.hasSuffix(" (inferred)") else { return sensor.name }
         if sensor.id.hasPrefix("avg:"), sensor.category == "cpu" {
             return text("CPU Average Temperature", "CPU 平均温度")
@@ -114,6 +117,9 @@ final class AppModel: ObservableObject {
     }
     func sensorHelp(_ sensor: Sensor) -> String {
         var details = "\(sensorName(sensor)) · \(sensor.source) · \(sensor.id)\n\(sensor.issue ?? reading(sensor))"
+        if MaximumTemperature(rawValue: sensor.id) != nil {
+            details += "\n" + text("Highest currently available temperature in this group, not a historical peak.", "此值为组内当前可用温度读数的最大值，并非历史最高温度。")
+        }
         if sensor.name.hasSuffix(" (inferred)") {
             details += "\n" + text("Temperatures come from hardware sensors; CPU/GPU attribution is inferred from channel names.", "温度来自真实传感器，CPU/GPU 归属按通道名称推断。")
             if sensor.id.hasPrefix("avg:") {
