@@ -77,7 +77,7 @@ final class SMCCompatibilityTests: XCTestCase {
             try smc.setRPM(2400, fan: XCTUnwrap(smc.fans().first))
             XCTAssertEqual(try smc.number(key), 1)
             XCTAssertEqual(try smc.number("F0Tg"), 2400)
-            XCTAssertEqual(device.waits, 3)
+            XCTAssertEqual(device.waits, 13)
             try smc.setAutomatic(fan: 0)
             XCTAssertEqual(try smc.number(key), 0)
             XCTAssertEqual(try smc.number("Ftst"), 0)
@@ -92,7 +92,7 @@ final class SMCCompatibilityTests: XCTestCase {
         XCTAssertThrowsError(try smc.setRPM(2400, fan: XCTUnwrap(smc.fans().first))) { error in
             XCTAssertTrue(error.localizedDescription.contains("F0md: requested 1, read back 3"))
         }
-        XCTAssertEqual(device.waits, 20)
+        XCTAssertEqual(device.waits, 30)
         XCTAssertEqual(try smc.number("Ftst"), 0)
         XCTAssertEqual(try smc.number("F0md"), 3)
         XCTAssertFalse(device.writes.contains { $0.0 == "F0Tg" })
@@ -104,8 +104,73 @@ final class SMCCompatibilityTests: XCTestCase {
         device.ignoredKeys = ["F0md"]
         let smc = device.client()
         XCTAssertThrowsError(try smc.setAutomatic(fan: 0))
-        XCTAssertEqual(device.waits, 0)
+        XCTAssertEqual(device.waits, 10)
         XCTAssertFalse(device.writes.contains { $0.0 == "Ftst" })
+    }
+
+    func testDelayedModeAndTargetReadbackWithoutUnlock() throws {
+        let device = SMCFixture(modeKey: "F0Md")
+        device.values.removeValue(forKey: "Ftst")
+        device.writeDelays = ["F0Md": 2, "F0Tg": 3]
+        let smc = device.client()
+        try smc.setRPM(1519, fan: XCTUnwrap(smc.fans().first))
+        XCTAssertEqual(try smc.number("F0Md"), 1)
+        XCTAssertEqual(try smc.number("F0Tg"), 1519)
+        XCTAssertEqual(device.waits, 5)
+        try smc.setAutomatic(fan: 0)
+        XCTAssertEqual(try smc.number("F0Md"), 0)
+        XCTAssertEqual(device.waits, 7)
+        XCTAssertTrue(smc.recoveredFans.isEmpty)
+        XCTAssertFalse(device.writes.contains { $0.0 == "Ftst" })
+    }
+
+    func testIgnoredInitialTargetWritesAreRetried() throws {
+        let device = SMCFixture(modeKey: "F0Md")
+        device.ignoredWritesRemaining = ["F0Tg": 2]
+        let smc = device.client()
+        try smc.setRPM(1519, fan: XCTUnwrap(smc.fans().first))
+        XCTAssertEqual(try smc.number("F0Tg"), 1519)
+        XCTAssertEqual(device.waits, 2)
+        XCTAssertEqual(try smc.number("F0Md"), 1)
+    }
+
+    func testTargetTimeoutWaitsForAutomaticRecovery() throws {
+        let device = SMCFixture(modeKey: "F0Md", locked: true)
+        let smc = device.client()
+        try smc.setRPM(2400, fan: XCTUnwrap(smc.fans().first))
+        device.ignoredKeys = ["F0Tg"]
+        device.ignoredWritesRemaining = ["F0Md": 2]
+        XCTAssertThrowsError(try smc.setRPM(1519, fan: XCTUnwrap(smc.fans().first))) { error in
+            XCTAssertTrue(error.localizedDescription.contains("F0Tg: requested 1519 RPM, read back 2400.0 RPM"))
+            XCTAssertFalse(error.localizedDescription.contains("Automatic recovery also failed"))
+        }
+        XCTAssertEqual(try smc.number("F0Md"), 0)
+        XCTAssertEqual(try smc.number("Ftst"), 0)
+        XCTAssertTrue(smc.recoveredFans.isEmpty)
+    }
+
+    func testAutomaticTimeoutKeepsOwnershipAndUnlockForRecovery() throws {
+        let device = SMCFixture(modeKey: "F0Md", locked: true)
+        let smc = device.client()
+        try smc.setRPM(2400, fan: XCTUnwrap(smc.fans().first))
+        device.ignoredKeys = ["F0Md"]
+        XCTAssertThrowsError(try smc.setAutomatic(fan: 0))
+        XCTAssertEqual(try smc.number("F0Md"), 1)
+        XCTAssertEqual(try smc.number("Ftst"), 1)
+        XCTAssertEqual(smc.recoveredFans, [0])
+        device.ignoredKeys = []
+        try smc.setAutomatic(fan: 0)
+        XCTAssertEqual(try smc.number("Ftst"), 0)
+        XCTAssertTrue(smc.recoveredFans.isEmpty)
+    }
+
+    func testModeReadErrorDoesNotTriggerUnlockOrWriteRetries() throws {
+        let device = SMCFixture(modeKey: "F0Md")
+        device.readErrorAfterWrite = ["F0Md": 0x82]
+        let smc = device.client()
+        XCTAssertThrowsError(try smc.setRPM(1519, fan: XCTUnwrap(smc.fans().first)))
+        XCTAssertEqual(device.waits, 0)
+        XCTAssertFalse(device.writes.contains { $0.0 == "Ftst" || $0.0 == "F0Tg" })
     }
 
     func testTargetFailureRestoresModeAndUnlock() throws {
@@ -267,6 +332,10 @@ private final class SMCFixture {
     var writes: [(String, [UInt8])] = []
     var rejectedKeys = Set<String>()
     var ignoredKeys = Set<String>()
+    var ignoredWritesRemaining: [String: Int] = [:]
+    var readErrorAfterWrite: [String: UInt8] = [:]
+    var writeDelays: [String: Int] = [:]
+    private var pendingWrites: [String: (ticks: Int, type: String, bytes: [UInt8])] = [:]
     var refusalsAfterUnlock = 0
     var silentModeRefusal = false
     /// Firmware that hands a released fan straight back to the system.
@@ -298,7 +367,19 @@ private final class SMCFixture {
     }
 
     func client(ledger: URL? = nil) -> AppleSMC {
-        try! AppleSMC(exchange: { self.exchange($0) }, waitForMode: { self.waits += 1 }, ledger: ledger)
+        try! AppleSMC(exchange: { self.exchange($0) }, waitForSMC: { self.advance() }, ledger: ledger)
+    }
+
+    private func advance() {
+        waits += 1
+        for (key, pending) in pendingWrites {
+            if pending.ticks == 1 {
+                values[key] = (pending.type, pending.bytes)
+                pendingWrites.removeValue(forKey: key)
+            } else {
+                pendingWrites[key]?.ticks -= 1
+            }
+        }
     }
 
     private func exchange(_ input: [UInt8]) -> [UInt8] {
@@ -310,6 +391,9 @@ private final class SMCFixture {
             output[28] = UInt8(bytes.count)
             output.replaceSubrange(32..<36, with: type.utf8.reversed())
         case 5:
+            if let status = readErrorAfterWrite[key], writes.contains(where: { $0.0 == key }) {
+                output[40] = status; return output
+            }
             output.replaceSubrange(48..<(48 + bytes.count), with: bytes)
         case 6:
             let payload = Array(input[48..<(48 + bytes.count)])
@@ -320,6 +404,15 @@ private final class SMCFixture {
                 if refusalsAfterUnlock > 0 { refusalsAfterUnlock -= 1; output[40] = silentModeRefusal ? 0 : 0x82; return output }
             }
             if ignoredKeys.contains(key) { return output }
+            if ignoredWritesRemaining[key, default: 0] > 0 {
+                ignoredWritesRemaining[key, default: 0] -= 1
+                return output
+            }
+            if let ticks = writeDelays[key], ticks > 0, payload != bytes {
+                // Repeated writes do not postpone an already pending update.
+                if pendingWrites[key] == nil { pendingWrites[key] = (ticks, type, payload) }
+                return output
+            }
             if releaseToSystemMode, key.lowercased().hasSuffix("md"), payload == [0] { values[key] = (type, [3]); return output }
             if targetOffset != 0, key.hasSuffix("Tg"), type == "flt " {
                 let bits = (Float(bitPattern: payload.enumerated().reduce(UInt32(0)) { $0 | UInt32($1.1) << ($1.0 * 8) }) + targetOffset).bitPattern

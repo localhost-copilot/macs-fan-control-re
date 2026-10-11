@@ -6,15 +6,15 @@ public final class AppleSMC {
     private var connection: io_connect_t = 0
     private var metadata: [String: (Int, String)] = [:]
     private var exchange: (([UInt8]) throws -> [UInt8])?
-    private var waitForMode: () -> Void = { usleep(100_000) }
+    private var waitForSMC: () -> Void = { usleep(100_000) }
     private var controlledFans = Set<Int>()
     private var ownsUnlock = false
     private var ledger: URL?
 
     // Exercise the real wire decoding and control sequence without opening hardware.
-    init(exchange: @escaping ([UInt8]) throws -> [UInt8], waitForMode: @escaping () -> Void = {}, ledger: URL? = nil) throws {
+    init(exchange: @escaping ([UInt8]) throws -> [UInt8], waitForSMC: @escaping () -> Void = {}, ledger: URL? = nil) throws {
         self.exchange = exchange
-        self.waitForMode = waitForMode
+        self.waitForSMC = waitForSMC
         try restore(ledger: ledger)
     }
 
@@ -197,25 +197,36 @@ public final class AppleSMC {
             let desired: UInt8 = manual ? 1 : 0
             let current = try number(key)
             if current == Double(desired) || (!manual && current == 3) { return }
-            func writeAndCheckMode() throws -> Bool {
+            enum ModeWriteResult { case applied, pending, refused }
+            func writeAndCheckMode() throws -> ModeWriteResult {
                 do {
                     try write(key, bytes: [desired])
                 } catch let error as DeviceError where manual && error.status == 0x82 {
-                    return false
+                    return .refused
                 }
                 let mode = try number(key)
                 // Releasing may hand the fan straight to the system (mode 3).
-                return mode == Double(desired) || (!manual && mode == 3)
+                return mode == Double(desired) || (!manual && mode == 3) ? .applied : .pending
             }
-            if try writeAndCheckMode() { return }
-            if manual {
+            var result = try writeAndCheckMode()
+            if result == .applied { return }
+            // Mode changes can become visible asynchronously, including
+            // automatic recovery on machines that have no Ftst key. Explicit
+            // refusals proceed directly to the unlock path.
+            for _ in 0..<10 {
+                if result == .refused { break }
+                waitForSMC()
+                result = try writeAndCheckMode()
+                if result == .applied { return }
+            }
+            if manual, (try? info("Ftst")) != nil {
                 try acquireUnlock()
                 // A successful write can still leave system control active.
                 // Use the same bounded handoff for this and explicit 0x82 refusals;
                 // transport, permission and read errors still propagate immediately.
                 for _ in 0..<20 {
-                    waitForMode()
-                    if try writeAndCheckMode() { return }
+                    waitForSMC()
+                    if try writeAndCheckMode() == .applied { return }
                 }
             }
             let mode = try number(key)
@@ -267,8 +278,19 @@ public final class AppleSMC {
         do {
             try setManual(true, fan: fan.id)
             try write(key, bytes: bytes)
-            // Firmware may round or clamp the stored target slightly.
-            guard try abs(number(key) - Double(rpm)) <= 1 else { throw FanError.message("SMC did not accept the requested fan speed.") }
+            var target = try number(key)
+            // The first target write after a mode change may be ignored or its
+            // readback may lag. Retry only successful writes with mismatched
+            // readback; a transport/device error still triggers recovery.
+            for _ in 0..<10 {
+                if target.isFinite && abs(target - Double(rpm)) <= 1 { return }
+                waitForSMC()
+                try write(key, bytes: bytes)
+                target = try number(key)
+            }
+            guard target.isFinite && abs(target - Double(rpm)) <= 1 else {
+                throw FanError.message("SMC did not accept the requested fan speed (\(key): requested \(rpm) RPM, read back \(target) RPM).")
+            }
         } catch {
             let original = error
             do { try setAutomatic(fan: fan.id) }

@@ -62,8 +62,10 @@ final class HelperClient {
                     if let error { completion.finish(.failure(FanError.message(error))) }
                     else { completion.finish(.success(())) }
                 }
-                DispatchQueue.global().asyncAfter(deadline: .now() + 5) {
-                    completion.finish(.failure(FanError.message("The fan helper did not respond within 5 seconds.")))
+                // Mode/target retries and automatic recovery share the helper's
+                // serial queue; allow a reply after those bounded hardware waits.
+                DispatchQueue.global().asyncAfter(deadline: .now() + 15) {
+                    completion.finish(.failure(FanError.message("The fan helper did not respond within 15 seconds.")))
                 }
             } catch { completion.finish(.failure(error)) }
         }
