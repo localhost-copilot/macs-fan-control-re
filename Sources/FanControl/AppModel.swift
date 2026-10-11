@@ -67,6 +67,13 @@ final class AppModel: ObservableObject {
     private var tick = 0
     private var refreshGeneration = 0
     private var installing: Task<Void, Error>?
+    private struct SavedControl: Codable {
+        var modes: [Int: ControlMode]
+        var preset: String
+    }
+    private var pendingControl: SavedControl?
+    // Keep simulated changes separate even when demo is toggled in the same process.
+    private var controlKey: String { demo ? "demoControl" : "lastControl" }
     var showWindow: (() -> Void)?
     var hideWindow: (() -> Void)?
     var openPreferences: (() -> Void)?
@@ -77,6 +84,7 @@ final class AppModel: ObservableObject {
         defaults = suppliedDefaults ?? (demoRequested ? UserDefaults(suiteName: "local.macsfancontrol.swift.demo")! : .standard)
         if let data = defaults.data(forKey: "preferences"), let prefs = try? JSONDecoder().decode(Preferences.self, from: data) { preferences = prefs }
         if let data = defaults.data(forKey: "presets"), let values = try? JSONDecoder().decode([Preset].self, from: data) { presets = values }
+        if let data = defaults.data(forKey: controlKey) { pendingControl = try? JSONDecoder().decode(SavedControl.self, from: data) }
     }
     var unit: TemperatureUnit { preferences.unit }
     var visibleSensors: [Sensor] {
@@ -150,6 +158,24 @@ final class AppModel: ObservableObject {
         if monitorError != snapshot.error { monitorError = snapshot.error }
         if loading { loading = false }
         statusChanged?()
+        await restoreControlIfReady()
+    }
+    private func restoreControlIfReady() async {
+        guard !Task.isCancelled, !busy, monitorError == nil, !fans.isEmpty,
+              let saved = pendingControl else { return }
+        // Consume before applying: perform() refreshes, and a failed restore must not
+        // retry every polling tick or take control again after a safety release.
+        pendingControl = nil
+        guard !saved.modes.isEmpty else { return }
+        for mode in saved.modes.values {
+            if case .sensor(let key, _, _) = mode,
+               !sensors.contains(where: { $0.id == key && $0.celsius?.isFinite == true }) {
+                error = text("Cannot restore fan control: the saved temperature sensor is unavailable.", "无法恢复风扇控制：保存的温度传感器不可用。")
+                return
+            }
+        }
+        // The normal apply path validates every fan and RPM before contacting the helper.
+        await apply(saved.modes, preset: saved.preset)
     }
     @discardableResult
     func apply(_ changes: [Int: ControlMode], preset: String = PresetName.custom) async -> Bool {
@@ -184,6 +210,8 @@ final class AppModel: ObservableObject {
                 if mode == .automatic { modes.removeValue(forKey: id) } else { modes[id] = mode }
             }
             activePreset = modes.isEmpty ? PresetName.automatic : preset
+            pendingControl = nil
+            persistControl()
             record("Applied \(activePreset) to \(changes.count) fan(s).")
         } catch { record(error.localizedDescription); throw error }
         await refresh()
@@ -211,7 +239,9 @@ final class AppModel: ObservableObject {
         return StatusDisplay(segments: segments, icon: icon, manual: manual, demo: demo)
     }
     /// Forget local control state after the helper has already returned fans to automatic.
+    /// Keep the saved choice for the next launch, but never restore again this session.
     func releaseControl() {
+        pendingControl = nil
         modes = [:]; activePreset = PresetName.automatic
     }
     func applyPreset(_ name: String) async {
@@ -237,11 +267,13 @@ final class AppModel: ObservableObject {
             guard !modes.isEmpty else { throw FanError.message("Change at least one fan to Custom before saving a preset.") }
             presets.append(Preset(name: name, modes: modes)); activePreset = name
         }
+        if !modes.isEmpty { persistControl() }
         persist(); statusChanged?()
     }
     func deletePreset(_ preset: Preset) {
         presets.removeAll { $0.id == preset.id }
         if activePreset == preset.name { activePreset = modes.isEmpty ? PresetName.automatic : PresetName.custom }
+        if !modes.isEmpty { persistControl() }
         persist(); statusChanged?()
     }
     func switchDemo(_ enabled: Bool) async {
@@ -254,6 +286,7 @@ final class AppModel: ObservableObject {
         } catch { self.error = error.localizedDescription }
     }
     func prepareToQuit() async -> Bool {
+        pendingControl = nil
         polling?.cancel()
         do { if !demo { try await helper.reset() }; return true }
         catch { self.error = error.localizedDescription; start(); return false }
@@ -265,6 +298,11 @@ final class AppModel: ObservableObject {
     func persist() {
         if let data = try? JSONEncoder().encode(presets) { defaults.set(data, forKey: "presets") }
         persistPreferences()
+    }
+    private func persistControl() {
+        if let data = try? JSONEncoder().encode(SavedControl(modes: modes, preset: activePreset)) {
+            defaults.set(data, forKey: controlKey)
+        }
     }
     private func persistPreferences() {
         if let data = try? JSONEncoder().encode(preferences) { defaults.set(data, forKey: "preferences") }

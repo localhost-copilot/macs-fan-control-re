@@ -36,7 +36,7 @@ swift run FanControl --probe-json
 
 - 可调整左右宽度的双列表主窗口；风扇最低/当前/最高 RPM、自动/自定义切换、双击和右键菜单。
 - 固定 RPM 的滑块、数值输入；基于传感器的起始/最高温度、曲线预览、输入校验和取消语义。
-- Automatic、Full blast、自定义预设保存/重命名/删除/应用，以及把单个风扇的更改保存到当前预设。预设持久化，但启动时不会擅自重新应用硬件控制。
+- Automatic、Full blast、自定义预设保存/重命名/删除/应用，以及把单个风扇的更改保存到当前预设。上次成功应用的控制设置会自动保存，无需另存预设；重启或升级后，在硬件发现与校验通过后恢复。主动切回 Automatic 后，下次启动也保持自动控制；恢复失败会提示且不会反复尝试。
 - 菜单栏：单色/彩色/无图标、风扇 RPM、指定传感器读数；数值使用固定宽度槽位，读数变化时不左右跳动。手动控制时彩色图标变橙，高温读数着色。预设切换、逐风扇控制、隐藏/重新打开与退出。
 - 调速对话框实时生效：拖动滑块、切换到基于传感器或修改温度后立即作用于风扇，曲线实时显示当前工作点；取消恢复打开前的设置。
 - 工具栏式偏好设置窗口（General、T° Sensors、Menu bar display），另有 Advanced 页管理 helper 与诊断；登录最小化启动、Dock 图标、摄氏/华氏、精确显示、传感器显示管理、中英文主要界面。
@@ -91,4 +91,4 @@ SIGNING_IDENTITY='Developer ID Application: YOUR NAME (TEAMID)' bash scripts/bui
 - `Tests/FanCoreTests`：温度解码、输入边界、控制器限幅、过期回退、传感器失效、部分写入失败与恢复重试等真实行为测试。
 - `docs/COMPATIBILITY.md`：机型验证状态、排查方法与控制协议参考。第三方资源来源声明见 [README](README.md#disclaimer)。
 
-演示模式命令行启动使用独立的 UserDefaults 域 `local.macsfancontrol.swift.demo`。普通启动的设置域是 `local.macsfancontrol.swift`；主窗口的“Use real sensors”可从演示切回真实硬件。应用不保存手动硬件控制以便开机自动恢复。
+演示模式命令行启动使用独立的 UserDefaults 域 `local.macsfancontrol.swift.demo`。普通启动的设置域是 `local.macsfancontrol.swift`；主窗口的“Use real sensors”可从演示切回真实硬件。演示和真实硬件的控制设置分别保存，演示设置不会应用到真实风扇。旧版本未保存的 Custom 参数无法找回，升级到支持恢复的版本后需重新设置一次。

@@ -130,7 +130,7 @@ Move the app to a stable location (for example `/Applications/Macs Fan Control.a
 - **Constant RPM** via slider or numeric input.
 - **Sensor-based** control with start / max temperatures, live curve preview showing the current operating point, and input validation.
 - Changes take effect immediately; **Cancel** restores the previous settings.
-- Presets: Automatic, Full blast, and custom presets (save / rename / delete / apply). Presets persist, but the app never re-applies hardware control on its own at launch.
+- Presets: Automatic, Full blast, and custom presets (save / rename / delete / apply). The last successfully applied control settings also persist without saving a preset, and are restored after hardware discovery on launch, including after upgrades. Selecting Automatic clears custom control for the next launch.
 
 </details>
 
@@ -216,7 +216,7 @@ The app is designed to fail toward the system's automatic fan control:
 | Client disconnects / heartbeat times out | Helper releases all fans |
 | Helper receives `SIGTERM` | Fans restored to automatic |
 | System sleep or app quit | App releases the fans it controls |
-| App launch | Manual control is **never** restored automatically |
+| App launch | Restore the last applied settings after hardware discovery and validation; report failures without repeated restore attempts |
 
 Closing the main window only hides the app to the menu bar; quitting releases control.
 
