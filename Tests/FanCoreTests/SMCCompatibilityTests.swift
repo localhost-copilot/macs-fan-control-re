@@ -148,6 +148,66 @@ final class SMCCompatibilityTests: XCTestCase {
         XCTAssertEqual(try smc.number("F1Md"), 1)
     }
 
+    func testReleaseAcceptsImmediateSystemMode() throws {
+        let device = SMCFixture(modeKey: "F0md", locked: true)
+        device.releaseToSystemMode = true
+        let smc = device.client()
+        try smc.setRPM(2400, fan: XCTUnwrap(smc.fans().first))
+        XCTAssertEqual(try smc.number("Ftst"), 1, "Lowercase md uses the same unlock path")
+        try smc.setAutomatic(fan: 0)
+        XCTAssertEqual(try smc.number("F0md"), 3)
+        XCTAssertEqual(try smc.number("Ftst"), 0)
+    }
+
+    func testRoundedTargetIsAccepted() throws {
+        let device = SMCFixture(modeKey: "F0md")
+        device.targetOffset = 0.5
+        let smc = device.client()
+        let session = ControlSession(hardware: smc)
+        try session.apply(ControlRequest(modes: [0: .constant(2400)]), now: 0)
+        XCTAssertEqual(try XCTUnwrap(smc.fans().first).target, 2401)
+        let writes = device.writes.count
+        try session.tick(now: 1)
+        XCTAssertEqual(device.writes.count, writes, "A rounded target must not be rewritten every tick")
+        try session.reset()
+        device.targetOffset = 40
+        XCTAssertThrowsError(try smc.setRPM(2500, fan: XCTUnwrap(smc.fans().first)))
+        XCTAssertEqual(try smc.number("F0md"), 0)
+    }
+
+    func testRestartedHelperReleasesFansAndUnlockLeftByCrash() throws {
+        let ledger = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: ledger) }
+        let device = SMCFixture(modeKey: "F0Md", locked: true)
+        var crashed: AppleSMC? = device.client(ledger: ledger)
+        try crashed?.setRPM(2400, fan: XCTUnwrap(crashed?.fans().first))
+        crashed = nil
+        XCTAssertEqual(try device.client().number("Ftst"), 1)
+
+        let session = ControlSession(hardware: device.client(ledger: ledger))
+        XCTAssertTrue(session.needsRecovery)
+        try session.reset()
+        XCTAssertEqual(try device.client().number("F0Md"), 0)
+        XCTAssertEqual(try device.client().number("Ftst"), 0)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: ledger.path))
+        XCTAssertFalse(ControlSession(hardware: device.client(ledger: ledger)).needsRecovery)
+    }
+
+    func testRecoveredLedgerDoesNotClearUnlockSetByOthers() throws {
+        let ledger = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: ledger) }
+        try Data(#"{"fans":[0],"unlock":true}"#.utf8).write(to: ledger)
+        let device = SMCFixture(modeKey: "F0Md")
+        // The flag was cleared after the crash; adopting it later would be wrong.
+        try ControlSession(hardware: device.client(ledger: ledger)).reset()
+        XCTAssertFalse(device.writes.contains { $0.0 == "Ftst" })
+    }
+
+    func testUnknownFamilyOnAppleSiliconHostUsesAppleSiliconCatalog() {
+        XCTAssertFalse(SensorCatalog.isAppleSilicon(model: "VirtualMac2,1"))
+        XCTAssertTrue(SensorCatalog.isAppleSilicon(model: "VirtualMac2,1", nativeArm: true))
+    }
+
     func testSilentlyIgnoredModeCannotReportSuccessfulControl() throws {
         for mode in ["F0Md", "FS! "] {
             let device = SMCFixture(modeKey: mode == "FS! " ? nil : mode)
@@ -168,6 +228,10 @@ private final class SMCFixture {
     var rejectedKeys = Set<String>()
     var ignoredKeys = Set<String>()
     var refusalsAfterUnlock = 0
+    /// Firmware that hands a released fan straight back to the system.
+    var releaseToSystemMode = false
+    /// Firmware that stores targets with an offset, e.g. after rounding.
+    var targetOffset: Float = 0
     var waits = 0
     private let locked: Bool
 
@@ -192,8 +256,8 @@ private final class SMCFixture {
         }
     }
 
-    func client() -> AppleSMC {
-        AppleSMC(exchange: { self.exchange($0) }, waitForMode: { self.waits += 1 })
+    func client(ledger: URL? = nil) -> AppleSMC {
+        try! AppleSMC(exchange: { self.exchange($0) }, waitForMode: { self.waits += 1 }, ledger: ledger)
     }
 
     private func exchange(_ input: [UInt8]) -> [UInt8] {
@@ -210,11 +274,17 @@ private final class SMCFixture {
             let payload = Array(input[48..<(48 + bytes.count)])
             writes.append((key, payload))
             if rejectedKeys.contains(key) { output[40] = 0x85; return output }
-            if locked, key.hasSuffix("Md"), payload == [1] {
+            if locked, key.lowercased().hasSuffix("md"), payload == [1] {
                 if values["Ftst"]?.1 != [1] { output[40] = 0x82; return output }
                 if refusalsAfterUnlock > 0 { refusalsAfterUnlock -= 1; output[40] = 0x82; return output }
             }
-            if !ignoredKeys.contains(key) { values[key] = (type, payload) }
+            if ignoredKeys.contains(key) { return output }
+            if releaseToSystemMode, key.lowercased().hasSuffix("md"), payload == [0] { values[key] = (type, [3]); return output }
+            if targetOffset != 0, key.hasSuffix("Tg"), type == "flt " {
+                let bits = (Float(bitPattern: payload.enumerated().reduce(UInt32(0)) { $0 | UInt32($1.1) << ($1.0 * 8) }) + targetOffset).bitPattern
+                values[key] = (type, (0..<4).map { UInt8(truncatingIfNeeded: bits >> ($0 * 8)) }); return output
+            }
+            values[key] = (type, payload)
         default: output[40] = 0x85
         }
         return output

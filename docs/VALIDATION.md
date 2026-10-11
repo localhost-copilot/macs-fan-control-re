@@ -7,6 +7,7 @@
 - `bash scripts/check-packaged-app.sh`：隐藏构建目录并移动 app 后，主程序与 helper 均成功读取资源。
 - `swift build --arch x86_64 --scratch-path /tmp/mfc-compatibility-intel-build`：Intel 交叉编译通过。当前 SDK 提示 macOS 27 已弃用 x86_64；没有在 Intel 硬件运行或执行 Intel 测试套件。
 - 打包 app `--probe-json`：`Mac18,5`，1 个风扇（`F0md`），428 个通道、399 个有效值、428 个唯一 ID；CPU/GPU 推断分组和电气监控保持可用。此次探测只读，未改变机器已有的风扇模式。
+- 审查修正：`swift test` 共 41 项通过（XCTest 36 项、Swift Testing 5 项），新增覆盖释放后立即进入模式 3、小写 `md` 解锁、目标取整容差及不重复写入、崩溃后按记录恢复风扇与 `Ftst`、记录中的解锁已被他人清除时不写入、未知 Apple Silicon 机型族。x86_64 交叉编译通过。
 - 未执行真实风扇写入、`Ftst` 解锁、helper 安装或睡眠恢复；M1–M5、Intel 和无风扇机型仍需实机验证。兼容性说明见 [COMPATIBILITY.md](COMPATIBILITY.md)。
 
 ## 安装包资源修复与 DMG（2026-10-11）

@@ -98,4 +98,10 @@ public enum Hardware {
         sysctlbyname("hw.model", &bytes, &size, nil, 0)
         return String(cString: bytes)
     }
+    /// True for Apple Silicon hosts even when this process runs under Rosetta.
+    public static var isAppleSilicon: Bool {
+        var value: Int32 = 0
+        var size = MemoryLayout<Int32>.size
+        return sysctlbyname("hw.optional.arm64", &value, &size, nil, 0) == 0 && value == 1
+    }
 }

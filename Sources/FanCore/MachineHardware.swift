@@ -9,7 +9,8 @@ public final class MachineHardware: FanHardware {
     private var keys: [String] = []
     private var cache: [String: Sensor] = [:]
     private var curated = true
-    public init() throws { smc = try AppleSMC() }
+    public init(ledger: URL? = nil) throws { smc = try AppleSMC(ledger: ledger) }
+    public var recoveredFans: Set<Int> { smc.recoveredFans }
     public func fans() throws -> [Fan] {
         try smc.fans().map { fan in
             var result = fan; result.name = catalog.fanNames[fan.id] ?? fan.name; return result

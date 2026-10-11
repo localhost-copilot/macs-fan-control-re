@@ -36,8 +36,8 @@ public final class SensorCatalog: NSObject, XMLParserDelegate {
         if let url = resources.url(forResource: "idSwapRules", withExtension: "xml", subdirectory: "Resources"), let parser = XMLParser(contentsOf: url) {
             parser.delegate = self; _ = parser.parse()
         }
-        // Model identity also works for an Intel binary running under Rosetta.
-        let database = Self.isAppleSilicon(model: model) ? "smcSensors-appleSilicon" : "smcSensors-intel"
+        let database = Self.isAppleSilicon(model: model, nativeArm: model == Hardware.model && Hardware.isAppleSilicon)
+            ? "smcSensors-appleSilicon" : "smcSensors-intel"
         for file in [database, "fanInfo", "iokitSensors"] {
             if let url = resources.url(forResource: file, withExtension: "xml", subdirectory: "Resources"),
                let parser = XMLParser(contentsOf: url) {
@@ -49,7 +49,7 @@ public final class SensorCatalog: NSObject, XMLParserDelegate {
     /// Fill missing CPU/GPU families on Apple Silicon without claiming core identities.
     /// Existing model-specific SMC groups take precedence; HID may be unavailable.
     public func addDiscoveredSensors(_ keys: [String]) {
-        guard Self.isAppleSilicon(model: model) else { return }
+        guard Self.isAppleSilicon(model: model, nativeArm: model == Hardware.model && Hardware.isAppleSilicon) else { return }
         let mappedCategories = Set(sensors.filter {
             !$0.key.hasPrefix("hid:") && !$0.value.name.hasSuffix("(inferred)")
         }.map { $0.value.category })
@@ -65,7 +65,10 @@ public final class SensorCatalog: NSObject, XMLParserDelegate {
         }
     }
 
-    static func isAppleSilicon(model: String) -> Bool {
+    /// The host CPU is authoritative for this machine (including Rosetta and
+    /// unknown families such as VirtualMac); the model table covers other models.
+    static func isAppleSilicon(model: String, nativeArm: Bool = false) -> Bool {
+        if nativeArm { return true }
         let family = String(model.prefix { !$0.isNumber })
         guard let major = Int(model.dropFirst(family.count).split(separator: ",").first ?? "") else { return false }
         switch family {

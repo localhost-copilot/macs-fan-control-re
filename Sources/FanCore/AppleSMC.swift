@@ -9,19 +9,47 @@ public final class AppleSMC {
     private var waitForMode: () -> Void = { usleep(100_000) }
     private var controlledFans = Set<Int>()
     private var ownsUnlock = false
+    private var ledger: URL?
 
     // Exercise the real wire decoding and control sequence without opening hardware.
-    init(exchange: @escaping ([UInt8]) throws -> [UInt8], waitForMode: @escaping () -> Void = {}) {
+    init(exchange: @escaping ([UInt8]) throws -> [UInt8], waitForMode: @escaping () -> Void = {}, ledger: URL? = nil) throws {
         self.exchange = exchange
         self.waitForMode = waitForMode
+        try restore(ledger: ledger)
     }
 
-    public init() throws {
+    /// `ledger` records fans and the global unlock before they are claimed, so a
+    /// restarted helper can release what a crashed instance left behind.
+    public init(ledger: URL? = nil) throws {
         let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("AppleSMC"))
         guard service != 0 else { throw FanError.message("AppleSMC is not available on this computer.") }
         defer { IOObjectRelease(service) }
         let result = IOServiceOpen(service, mach_task_self_, 0, &connection)
         guard result == KERN_SUCCESS else { throw FanError.message("Cannot open AppleSMC (\(result)).") }
+        try restore(ledger: ledger)
+    }
+
+    /// Fans claimed by a previous process that this connection must return to automatic.
+    public var recoveredFans: Set<Int> { controlledFans }
+
+    private struct Ledger: Codable { var fans: [Int]; var unlock: Bool }
+    private func restore(ledger: URL?) throws {
+        self.ledger = ledger
+        guard let ledger, let data = try? Data(contentsOf: ledger) else { return }
+        let state = try JSONDecoder().decode(Ledger.self, from: data)
+        controlledFans = Set(state.fans.filter { (0..<16).contains($0) })
+        // Only adopt an unlock that is still set; never clear one set by someone else later.
+        ownsUnlock = state.unlock && (try? number("Ftst")) == 1
+        try saveLedger()
+    }
+    /// Written ahead of each hardware claim; a failed write refuses the claim.
+    private func saveLedger() throws {
+        guard let ledger else { return }
+        if controlledFans.isEmpty && !ownsUnlock {
+            if FileManager.default.fileExists(atPath: ledger.path) { try FileManager.default.removeItem(at: ledger) }
+        } else {
+            try JSONEncoder().encode(Ledger(fans: controlledFans.sorted(), unlock: ownsUnlock)).write(to: ledger, options: .atomic)
+        }
     }
     deinit { if connection != 0 { IOServiceClose(connection) } }
 
@@ -136,7 +164,7 @@ public final class AppleSMC {
             } else { manual = false; modeKey = nil }
             var fan = Fan(id: id, name: "Fan \(id)", minimum: Int(values[0]), current: Int(values[1]), maximum: Int(values[2]), manual: manual)
             fan.modeKey = modeKey
-            if let target = try? number(Self.fanKey(id, "Tg")), target.isFinite, (0...30000).contains(target) { fan.target = Int(target) }
+            if let target = try? number(Self.fanKey(id, "Tg")), target.isFinite, (0...30000).contains(target) { fan.target = Int(target.rounded()) }
             return fan
         }
     }
@@ -157,8 +185,10 @@ public final class AppleSMC {
             try write("Ftst", bytes: [0])
             guard try number("Ftst") == 0 else { throw FanError.message("Could not release the SMC fan-control unlock.") }
             ownsUnlock = false
+            try saveLedger()
         }
         controlledFans.remove(fan)
+        try saveLedger()
     }
     private func setManual(_ manual: Bool, fan: Int) throws {
         guard (0..<16).contains(fan) else { throw FanError.message("Invalid fan index.") }
@@ -183,7 +213,9 @@ public final class AppleSMC {
                     }
                 }
             }
-            guard try number(key) == Double(desired) else {
+            // Releasing may hand the fan straight to the system (mode 3).
+            let mode = try number(key)
+            guard mode == Double(desired) || (!manual && mode == 3) else {
                 throw FanError.message("SMC did not accept the requested mode for fan \(fan).")
             }
         } else {
@@ -208,6 +240,7 @@ public final class AppleSMC {
             throw FanError.message("Another fan is under manual control. Release it before acquiring the global SMC unlock.")
         }
         ownsUnlock = true
+        try saveLedger()
         try write("Ftst", bytes: [1])
     }
     public func setRPM(_ rpm: Int, fan: Fan) throws {
@@ -224,11 +257,14 @@ public final class AppleSMC {
             bytes = [UInt8((rpm * 4) >> 8), UInt8((rpm * 4) & 255)]
         default: throw FanError.message("Unsupported fan target encoding: \(type).")
         }
-        controlledFans.insert(fan.id)
+        if controlledFans.insert(fan.id).inserted {
+            do { try saveLedger() } catch { controlledFans.remove(fan.id); throw error }
+        }
         do {
             try setManual(true, fan: fan.id)
             try write(key, bytes: bytes)
-            guard try number(key) == Double(rpm) else { throw FanError.message("SMC did not accept the requested fan speed.") }
+            // Firmware may round or clamp the stored target slightly.
+            guard try abs(number(key) - Double(rpm)) <= 1 else { throw FanError.message("SMC did not accept the requested fan speed.") }
         } catch {
             let original = error
             do { try setAutomatic(fan: fan.id) }

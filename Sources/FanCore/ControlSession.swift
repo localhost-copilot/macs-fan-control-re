@@ -5,7 +5,10 @@ public protocol FanHardware: AnyObject {
     func temperature(_ key: String) throws -> Double
     func setRPM(_ rpm: Int, fan: Fan) throws
     func setAutomatic(fan: Int) throws
+    /// Fans a previous process left under manual control.
+    var recoveredFans: Set<Int> { get }
 }
+extension FanHardware { public var recoveredFans: Set<Int> { [] } }
 extension AppleSMC: FanHardware {}
 
 /// Owns only fans explicitly claimed by this session; it never resets another app's fans.
@@ -16,7 +19,13 @@ public final class ControlSession {
     private var owned = Set<Int>()
     private var heartbeatTime: TimeInterval = 0
     private var recoveryPending = false
-    public init(hardware: FanHardware) { self.hardware = hardware }
+    public init(hardware: FanHardware) {
+        self.hardware = hardware
+        // Release anything a crashed helper left behind before accepting new control.
+        owned = hardware.recoveredFans
+        recoveryPending = !owned.isEmpty
+    }
+    public var needsRecovery: Bool { recoveryPending }
     public func heartbeat(now: TimeInterval) throws {
         // Renewal cannot revive a control session that expired during sleep.
         if !owned.isEmpty && now - heartbeatTime > 8 {
@@ -72,7 +81,7 @@ public final class ControlSession {
                 case .automatic: break
                 case .constant(let rpm):
                     // Skip redundant SMC writes while the hardware already holds the target.
-                    if !fan.manual || fan.target != rpm { try hardware.setRPM(rpm, fan: fan) }
+                    if !fan.manual || abs((fan.target ?? -2) - rpm) > 1 { try hardware.setRPM(rpm, fan: fan) }
                 case .sensor(let key, let start, let maximum):
                     let temperature = try hardware.temperature(key)
                     if let rpm = try controllers[id, default: TemperatureController()].update(temperature: temperature, fan: fan, start: start, maximum: maximum, now: now) {

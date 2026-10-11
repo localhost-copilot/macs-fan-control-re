@@ -16,15 +16,26 @@ final class Helper: NSObject, NSXPCListenerDelegate, FanHelperProtocol {
     private var termination: DispatchSourceSignal?
     private var shuttingDown = false
 
+    // /var/run is cleared at boot, when the SMC also returns to automatic control.
+    private static let ledger = URL(fileURLWithPath: "/var/run/\(helperServiceName).json")
+
     init(clientRequirement: String) {
         self.clientRequirement = clientRequirement
         super.init()
+        if FileManager.default.fileExists(atPath: Self.ledger.path) {
+            do {
+                let session = try ControlSession(hardware: MachineHardware(ledger: Self.ledger))
+                self.session = session
+                try session.reset()
+            } catch { failure = error.localizedDescription }
+        }
         let timer = DispatchSource.makeTimerSource(queue: queue)
         timer.schedule(deadline: .now() + 1, repeating: 1.5)
         timer.setEventHandler { [weak self] in
             guard let self else { return }
             do {
                 if self.shuttingDown { try self.session?.reset(); exit(0) }
+                if self.session?.needsRecovery == true { try self.session?.reset() }
                 try self.session?.tick(now: continuousTime())
             }
             catch { self.failure = error.localizedDescription }
@@ -70,7 +81,7 @@ final class Helper: NSObject, NSXPCListenerDelegate, FanHelperProtocol {
                 guard !self.shuttingDown else { throw FanError.message("The helper is shutting down and restoring automatic control.") }
                 guard data.count < 16384 else { throw FanError.message("Request exceeds maximum size.") }
                 let request = try JSONDecoder().decode(ControlRequest.self, from: data)
-                if self.session == nil { self.session = try ControlSession(hardware: MachineHardware()) }
+                if self.session == nil { self.session = try ControlSession(hardware: MachineHardware(ledger: Self.ledger)) }
                 try self.session?.apply(request, now: continuousTime())
                 self.failure = nil; reply(nil)
             } catch { reply(error.localizedDescription) }
