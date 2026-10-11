@@ -14,10 +14,25 @@ public final class SensorCatalog: NSObject, XMLParserDelegate {
     private var group: String?
     private var hideGroupMembers = false
 
+    private static let resources: Bundle? = {
+        // SwiftPM's generated accessor can search the build machine's absolute
+        // path. Packaged app and helper executables share Contents/Resources.
+        if let executable = Bundle.main.executableURL,
+           executable.deletingLastPathComponent().lastPathComponent == "MacOS" {
+            let contents = executable.deletingLastPathComponent().deletingLastPathComponent()
+            return Bundle(url: contents.appendingPathComponent("Resources/MacsFanControlSwift_FanCore.bundle"))
+        }
+        return Bundle.module
+    }()
+
     public init(model: String = Hardware.model) {
         self.model = model
         super.init()
-        if let url = Bundle.module.url(forResource: "idSwapRules", withExtension: "xml", subdirectory: "Resources"), let parser = XMLParser(contentsOf: url) {
+        guard let resources = Self.resources else {
+            fputs("Sensor catalog resources are missing from the application bundle.\n", stderr)
+            return
+        }
+        if let url = resources.url(forResource: "idSwapRules", withExtension: "xml", subdirectory: "Resources"), let parser = XMLParser(contentsOf: url) {
             parser.delegate = self; _ = parser.parse()
         }
         #if arch(arm64)
@@ -26,7 +41,7 @@ public final class SensorCatalog: NSObject, XMLParserDelegate {
         let database = "smcSensors-intel"
         #endif
         for file in [database, "fanInfo", "iokitSensors"] {
-            if let url = Bundle.module.url(forResource: file, withExtension: "xml", subdirectory: "Resources"),
+            if let url = resources.url(forResource: file, withExtension: "xml", subdirectory: "Resources"),
                let parser = XMLParser(contentsOf: url) {
                 parser.delegate = self
                 _ = parser.parse()

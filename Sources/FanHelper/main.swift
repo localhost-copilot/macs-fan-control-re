@@ -92,6 +92,14 @@ final class Helper: NSObject, NSXPCListenerDelegate, FanHelperProtocol {
     }
 }
 
+// This read-only packaging check must also work on unprivileged CI runners.
+if CommandLine.arguments.contains("--check-resources") {
+    let catalog = SensorCatalog(model: "MacBookPro18,1")
+    guard !catalog.sensors.isEmpty, !catalog.fanNames.isEmpty else { exit(1) }
+    print("Sensor catalog resources loaded successfully.")
+    exit(0)
+}
+
 guard getuid() == 0 else {
     fputs("FanHelper must run as the installed root service.\n", stderr)
     exit(1)

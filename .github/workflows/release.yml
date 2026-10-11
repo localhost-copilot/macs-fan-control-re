@@ -34,14 +34,20 @@ jobs:
         run: swift test
       - name: Build and verify signed app
         run: bash scripts/build-app.sh
+      - name: Check relocated app and helper resources
+        run: bash scripts/check-packaged-app.sh
+      - name: Build disk image
+        run: bash scripts/build-dmg.sh
       - name: Package
         env:
           ARCH: ${{ matrix.arch }}
         run: |
           mkdir -p release
-          ditto -c -k --sequesterRsrc --keepParent "dist/Macs Fan Control Swift.app" "release/Macs-Fan-Control-$ARCH.zip"
+          ditto -c -k --sequesterRsrc --keepParent "dist/Macs Fan Control.app" "release/Macs-Fan-Control-$ARCH.zip"
+          cp "dist/Macs-Fan-Control-$ARCH.dmg" release/
           cd release
           shasum -a 256 "Macs-Fan-Control-$ARCH.zip" > "Macs-Fan-Control-$ARCH.zip.sha256"
+          shasum -a 256 "Macs-Fan-Control-$ARCH.dmg" > "Macs-Fan-Control-$ARCH.dmg.sha256"
       - uses: actions/upload-artifact@v4
         with:
           name: macs-fan-control-${{ matrix.arch }}

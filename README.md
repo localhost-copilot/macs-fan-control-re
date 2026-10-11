@@ -54,7 +54,11 @@ Monitor every temperature, voltage, current, and power channel your Mac exposes,
 
 ## Quick Start
 
-Download a packaged app from [Releases](https://github.com/localhost-copilot/macs-fan-control-re/releases): `arm64` for Apple Silicon (including M6), or `x86_64` for Intel. Builds are ad-hoc signed and not notarized. To build from source:
+Download a packaged app from [Releases](https://github.com/localhost-copilot/macs-fan-control-re/releases): `arm64` for Apple Silicon (including M6), or `x86_64` for Intel. Builds are ad-hoc signed and not notarized.
+
+For the DMG, open the disk image and drag **Macs Fan Control** to **Applications**. ZIP downloads are also available.
+
+To build from source:
 
 ```sh
 git clone <repository-url> macs-fan-control
@@ -62,7 +66,7 @@ cd macs-fan-control
 
 swift test                          # run unit tests
 bash scripts/build-app.sh           # build and ad-hoc sign the .app
-open "dist/Macs Fan Control Swift.app"
+open "dist/Macs Fan Control.app"
 ```
 
 You can also open `Package.swift` directly in Xcode.
@@ -71,7 +75,7 @@ You can also open `Package.swift` directly in Xcode.
 
 ```sh
 # Full interactive demo with two simulated fans — never writes to hardware
-open -n "dist/Macs Fan Control Swift.app" --args --demo
+open -n "dist/Macs Fan Control.app" --args --demo
 ```
 
 ### Command-line probing
@@ -108,7 +112,7 @@ SIGNING_IDENTITY='Developer ID Application: YOUR NAME (TEAMID)' bash scripts/bui
 # An Apple Development identity also works for testing.
 ```
 
-Move the app to a stable location (for example `/Applications/Macs Fan Control Swift.app`), enable the helper, and approve it under **System Settings → General → Login Items**. The app and helper must share a Team ID. Before switching installation methods, remove the old helper with **Remove helper…** from the previous build.
+Move the app to a stable location (for example `/Applications/Macs Fan Control.app`), enable the helper, and approve it under **System Settings → General → Login Items**. The app and helper must share a Team ID. Before switching installation methods, remove the old helper with **Remove helper…** from the previous build.
 
 ### Removing the helper
 
@@ -232,6 +236,8 @@ Closing the main window only hides the app to the menu bar; quitting releases co
 swift build                         # debug build
 swift test                          # run all tests
 CONFIGURATION=debug bash scripts/build-app.sh
+bash scripts/check-packaged-app.sh  # check resources outside the build directory
+bash scripts/build-dmg.sh           # create a drag-to-install disk image
 ```
 
 | UserDefaults domain | Used by |

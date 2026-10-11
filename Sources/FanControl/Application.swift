@@ -5,6 +5,12 @@ import FanCore
 @main
 enum FanControlApplication {
     static func main() {
+        if CommandLine.arguments.contains("--check-resources") {
+            let catalog = SensorCatalog(model: "MacBookPro18,1")
+            guard !catalog.sensors.isEmpty, !catalog.fanNames.isEmpty else { exit(1) }
+            print("Sensor catalog resources loaded successfully.")
+            return
+        }
         if CommandLine.arguments.contains("--probe") || CommandLine.arguments.contains("--probe-json") {
             do {
                 let hardware = try MachineHardware()
@@ -50,7 +56,7 @@ final class ApplicationDelegate: NSObject, NSApplicationDelegate, NSWindowDelega
     func applicationDidFinishLaunching(_ notification: Notification) {
         configureMenu()
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 840, height: 430), styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
-        window.title = "Macs Fan Control · Swift (\(Hardware.model))"
+        window.title = "Macs Fan Control (\(Hardware.model))"
         window.contentView = NSHostingView(rootView: MainView(model: model))
         window.minSize = NSSize(width: 810, height: 410)
         window.isReleasedWhenClosed = false
@@ -95,11 +101,11 @@ final class ApplicationDelegate: NSObject, NSApplicationDelegate, NSWindowDelega
     private func configureMenu() {
         let main = NSMenu()
         let app = NSMenu()
-        app.addItem(withTitle: "About Macs Fan Control · Swift", action: #selector(about), keyEquivalent: "")
+        app.addItem(withTitle: "About Macs Fan Control", action: #selector(about), keyEquivalent: "")
         app.addItem(withTitle: "Preferences…", action: #selector(preferences), keyEquivalent: ",")
         app.addItem(.separator())
-        app.addItem(withTitle: "Hide Macs Fan Control · Swift", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
-        app.addItem(withTitle: "Quit Macs Fan Control · Swift", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        app.addItem(withTitle: "Hide Macs Fan Control", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
+        app.addItem(withTitle: "Quit Macs Fan Control", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         let root = NSMenuItem(); root.submenu = app; main.addItem(root)
         let edit = NSMenu(title: "Edit")
         for (title, action, key) in [("Undo", "undo:", "z"), ("Cut", "cut:", "x"), ("Copy", "copy:", "c"), ("Paste", "paste:", "v"), ("Select All", "selectAll:", "a")] {
@@ -148,7 +154,7 @@ final class ApplicationDelegate: NSObject, NSApplicationDelegate, NSWindowDelega
             button.image = StatusItemRenderer.image(display, appearance: button.effectiveAppearance)
             button.imagePosition = .imageOnly
         }
-        button.toolTip = "Macs Fan Control · Swift — \(model.activePreset)"
+        button.toolTip = "Macs Fan Control — \(model.activePreset)"
     }
     func menuNeedsUpdate(_ menu: NSMenu) {
         menu.removeAllItems(); actions = []

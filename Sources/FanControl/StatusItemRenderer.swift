@@ -71,7 +71,7 @@ enum StatusItemRenderer {
             return true
         }
         image.isTemplate = !tinted
-        image.accessibilityDescription = "Macs Fan Control Swift"
+        image.accessibilityDescription = "Macs Fan Control"
         return image
     }
 

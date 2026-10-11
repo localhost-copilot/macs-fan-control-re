@@ -12,17 +12,19 @@
 
 需要 macOS 13+、Xcode / Swift 5.9+。无需第三方 Swift 包。
 
+使用 DMG 时，打开磁盘映像，将 **Macs Fan Control** 拖到 **Applications** 即可安装。也提供 ZIP 下载。
+
 ```sh
 swift test
 bash scripts/build-app.sh
-open "dist/Macs Fan Control Swift.app"
+open "dist/Macs Fan Control.app"
 ```
 
 也可用 Xcode 打开 `Package.swift`。打包脚本生成可双击运行的 `.app`，默认使用本地 ad-hoc 签名。
 
 ```sh
 # 完整交互演示：模拟两个风扇，不写入硬件
-open -n "dist/Macs Fan Control Swift.app" --args --demo
+open -n "dist/Macs Fan Control.app" --args --demo
 
 # 只读探测风扇、温度、电压、电流、功耗，随后退出
 swift run FanControl --probe
@@ -62,7 +64,7 @@ SIGNING_IDENTITY='Developer ID Application: YOUR NAME (TEAMID)' bash scripts/bui
 # Apple Development 身份也可用于开发测试。
 ```
 
-把团队签名的 app 放到稳定位置（例如 `/Applications/Macs Fan Control Swift.app`），启用后在系统设置的登录项/后台项目批准。主应用和 helper 必须由同一个 Team ID 签名。辅助程序只接受本项目 app identifier；客户端也验证 helper 身份。切换安装方式前先使用旧版本的 Remove helper 移除服务。
+把团队签名的 app 放到稳定位置（例如 `/Applications/Macs Fan Control.app`），启用后在系统设置的登录项/后台项目批准。主应用和 helper 必须由同一个 Team ID 签名。辅助程序只接受本项目 app identifier；客户端也验证 helper 身份。切换安装方式前先使用旧版本的 Remove helper 移除服务。
 
 通过 **Remove helper…** 先恢复自动控制再注销服务。不要与其他调速工具同时设置同一个风扇。普通关闭窗口仅隐藏到菜单栏；退出会释放本应用的控制。
 

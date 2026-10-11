@@ -30,9 +30,9 @@ struct AboutView: View {
     var body: some View {
         VStack(spacing: 14) {
             Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 96, height: 96)
-            Text("Macs Fan Control · Swift").font(.title2.bold())
-            Text("Version 1.0.0 · \(Hardware.model)").foregroundStyle(.secondary)
-            Text(model.text("An independent native Swift implementation of the fan monitoring and control workflow. Custom presets are included.", "使用原生 Swift 独立实现的风扇监控与控制应用，包含自定义预设功能。"))
+            Text("Macs Fan Control").font(.title2.bold())
+            Text("Version \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "Development") · \(Hardware.model)").foregroundStyle(.secondary)
+            Text(model.text("A native fan monitoring and control app. Custom presets are included.", "原生风扇监控与控制应用，包含自定义预设功能。"))
                 .multilineTextAlignment(.center)
             Text(model.text("Not affiliated with CrystalIDEA. Original product names belong to their respective owners.", "本项目与 CrystalIDEA 无关联，原产品名称归其所有者所有。"))
                 .font(.caption).foregroundStyle(.secondary).multilineTextAlignment(.center)
