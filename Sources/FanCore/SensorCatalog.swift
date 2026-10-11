@@ -17,10 +17,11 @@ public final class SensorCatalog: NSObject, XMLParserDelegate {
     private static let resources: Bundle? = {
         // SwiftPM's generated accessor can search the build machine's absolute
         // path. Packaged app and helper executables share Contents/Resources.
-        if let executable = Bundle.main.executableURL,
-           executable.deletingLastPathComponent().lastPathComponent == "MacOS" {
-            let contents = executable.deletingLastPathComponent().deletingLastPathComponent()
-            return Bundle(url: contents.appendingPathComponent("Resources/MacsFanControlSwift_FanCore.bundle"))
+        if let directory = Bundle.main.executableURL?.deletingLastPathComponent() {
+            let contents = directory.deletingLastPathComponent()
+            if directory.lastPathComponent == "MacOS", contents.deletingLastPathComponent().pathExtension == "app" {
+                return Bundle(url: contents.appendingPathComponent("Resources/MacsFanControlSwift_FanCore.bundle"))
+            }
         }
         return Bundle.module
     }()
