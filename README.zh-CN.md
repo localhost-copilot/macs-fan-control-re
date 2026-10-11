@@ -4,7 +4,11 @@
 
 原生 macOS 风扇控制与硬件监控工具。支持温度、电压、电流和功耗监控，通过独立的特权 helper 调节风扇转速，无需第三方依赖。
 
+**支持 M6 处理器，已在 Mac mini M6（`Mac18,5`）上测试传感器读取与 GUI。** 真实调速与恢复行为仍需实机验证。
+
 ## 构建与启动
+
+可在 [Releases](https://github.com/localhost-copilot/macs-fan-control-re/releases) 下载打包版本：Apple Silicon（包括 M6）选择 `arm64`，Intel 选择 `x86_64`。安装包采用 ad-hoc 签名，未公证；Intel 硬件兼容性尚未实测。也可按以下步骤从源码构建。
 
 需要 macOS 13+、Xcode / Swift 5.9+。无需第三方 Swift 包。
 

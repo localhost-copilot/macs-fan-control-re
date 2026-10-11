@@ -8,6 +8,7 @@ Monitor every temperature, voltage, current, and power channel your Mac exposes,
 
 ![Platform](https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey?logo=apple)
 ![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-supported-black)
+![M6](https://img.shields.io/badge/M6-tested%20on%20Mac%20mini-brightgreen)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **English** | [简体中文](README.zh-CN.md)
@@ -34,6 +35,7 @@ Monitor every temperature, voltage, current, and power channel your Mac exposes,
 
 ## Highlights
 
+- 💻 **M6 support** — sensor reads and the GUI tested on Mac mini M6 (`Mac18,5`); real fan-speed writes and recovery still need hardware validation.
 - 🌀 **Fan control** — constant RPM or sensor-based curves, applied live while you drag the slider.
 - 🌡️ **Full telemetry** — enumerates all SMC `T*` / `V*` / `I*` / `P*` keys, HID sensors, and IOReport Energy Model channels (428 channels on a `Mac18,5`).
 - 📊 **Menu bar** — fan RPM and any sensor reading in fixed-width slots that never jitter.
@@ -48,9 +50,11 @@ Monitor every temperature, voltage, current, and power channel your Mac exposes,
 | --- | --- |
 | OS | macOS 13 Ventura or later |
 | Toolchain | Xcode / Swift 5.9 or later |
-| Hardware | Apple Silicon (verified on `Mac18,5`); Intel support is untested |
+| Hardware | Apple Silicon, including M6 (sensor reads and GUI tested on Mac mini M6, `Mac18,5`); Intel hardware support is untested |
 
 ## Quick Start
+
+Download a packaged app from [Releases](https://github.com/localhost-copilot/macs-fan-control-re/releases): `arm64` for Apple Silicon (including M6), or `x86_64` for Intel. Builds are ad-hoc signed and not notarized. To build from source:
 
 ```sh
 git clone <repository-url> macs-fan-control
