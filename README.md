@@ -8,7 +8,7 @@ Monitor every temperature, voltage, current, and power channel your Mac exposes,
 
 ![Platform](https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey?logo=apple)
 ![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-supported-black)
-![M6](https://img.shields.io/badge/M6-tested%20on%20Mac%20mini-brightgreen)
+![M4](https://img.shields.io/badge/M4-fan%20control%20confirmed-brightgreen)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **English** | [简体中文](README.zh-CN.md)
@@ -35,9 +35,9 @@ Monitor every temperature, voltage, current, and power channel your Mac exposes,
 
 ## Highlights
 
-- 💻 **Apple Silicon and Intel compatibility** — M1–M6 / Intel sensor catalogs and discovery, with capability-based fan control. Sensor reads and the GUI tested on Mac mini M6 (`Mac18,5`); other models and real fan writes need hardware validation. See [compatibility](docs/COMPATIBILITY.md).
+- 💻 **Apple Silicon and Intel compatibility** — sensor catalogs and discovery, with capability-based fan control. Fan control confirmed by the user on M4 Mac mini (`Mac16,10`), macOS 27. Other models and recovery scenarios need hardware validation. See [compatibility](docs/COMPATIBILITY.md).
 - 🌀 **Fan control** — constant RPM or sensor-based curves, applied live while you drag the slider.
-- 🌡️ **Full telemetry** — enumerates all SMC `T*` / `V*` / `I*` / `P*` keys, HID sensors, and IOReport Energy Model channels (428 channels on a `Mac18,5`).
+- 🌡️ **Full telemetry** — enumerates available SMC `T*` / `V*` / `I*` / `P*` keys, HID sensors, and IOReport Energy Model channels.
 - 📊 **Menu bar** — fan RPM and any sensor reading in fixed-width slots that never jitter.
 - 🔐 **Secure helper** — root XPC helper with mutual code-signature verification; no paid developer account required.
 - 🛟 **Fail-safe** — hands fans back to the system on sensor failure, write errors, disconnects, heartbeat timeout, sleep, and quit.
@@ -199,8 +199,8 @@ scripts/
 ├── build-app.sh    Build, bundle, and sign the .app
 └── make-icon.swift App icon drawn in code
 docs/
-├── VALIDATION.md   What was actually verified, and what was not
-└── REFERENCE.md    Implementation notes, API references, and resource provenance
+├── COMPATIBILITY.md Hardware validation status and troubleshooting
+└── screenshots/    README screenshot
 ```
 
 The helper discovers `F{i}md` / `F{i}Md` mode keys or the legacy Intel `FS! ` bitmask and writes float or `fpe2` target RPM. Firmware mode 3 is system control. Per-fan mode changes (including automatic recovery) and target writes retry briefly when successful writes have mismatched readback. If manual mode still fails or returns `0x82`, machines exposing `Ftst` use the unlock path with bounded retries. An unlock acquired by this connection is released after its last controlled fan returns to automatic mode; failed recovery remains retryable. Mode and target writes are read back before reporting success.
@@ -228,7 +228,7 @@ Closing the main window only hides the app to the menu bar; quitting releases co
 - **"All" means publicly enumerable.** Firmware-hidden sensors are inaccessible. HID and SMC may expose the same physical sensor, so the channel count is not the number of physical sensors. Missing Apple Silicon CPU / GPU mappings use inferred `Tp*` / `Te*` / `Tg*` groups, preserving existing model-specific mappings. These are not verified core identities or package temperatures.
 - **Low temperatures.** Some Apple Silicon hardware refuses to spin fans up manually when cold.
 - **Localization.** English and Simplified Chinese only.
-- **Not notarized.** Build, unit tests, live sensor reads, and GUI are verified. Admin install, real RPM writes, Intel and other Apple Silicon models, and post-sleep recovery still need real-hardware testing. See [`docs/VALIDATION.md`](docs/VALIDATION.md).
+- **Not notarized.** M4 Mac mini fan control is user-confirmed; other models and post-sleep recovery still need real-hardware testing. See [compatibility](docs/COMPATIBILITY.md).
 
 ## Development
 
@@ -247,7 +247,7 @@ bash scripts/build-dmg.sh           # create a drag-to-install disk image
 
 In demo mode, **Use real sensors** in the main window switches back to real hardware.
 
-Contributions are welcome. Please keep hardware writes behind the helper, add tests for new decoding or control logic, and record real-hardware verification in `docs/VALIDATION.md`.
+Contributions are welcome. Please keep hardware writes behind the helper, add tests for new decoding or control logic, and update `docs/COMPATIBILITY.md` when verifying another model.
 
 ## Acknowledgements
 
@@ -255,8 +255,6 @@ Contributions are welcome. Please keep hardware writes behind the helper, add te
 - [Stats](https://github.com/exelban/stats) — reference for HID usage pages, event types, and IOReport signatures.
 - [Chromium `m1_sensors_mac.mm`](https://chromium.googlesource.com/chromium/src/+/refs/tags/123.0.6285.0/components/power_metrics/m1_sensors_mac.mm) — IOKit HID C signatures.
 - [Mac-mini-M6-fan-control-LLM](https://github.com/HDZucht/Mac-mini-M6-fan-control-LLM) — notes on the lowercase `F0md` mode key.
-
-See [`docs/REFERENCE.md`](docs/REFERENCE.md) for details.
 
 ## Disclaimer
 

@@ -4,7 +4,7 @@
 
 原生 macOS 风扇控制与硬件监控工具。支持温度、电压、电流和功耗监控，通过独立的特权 helper 调节风扇转速，无需第三方依赖。
 
-**面向 Apple Silicon M1–M6 和 Intel Mac，按实际 SMC 能力选择控制协议。** 已在 Mac mini M6（`Mac18,5`）上测试传感器读取与 GUI；其他机型、真实调速与恢复行为仍需实机验证。无风扇机型仅提供监控。详见[机型兼容性与验证边界](docs/COMPATIBILITY.md)。
+**面向 Apple Silicon 和 Intel Mac，按实际 SMC 能力选择控制协议。** 用户已确认 M4 Mac mini（`Mac16,10`，macOS 27）调速可用；其他机型与睡眠等恢复场景仍需实机验证。无风扇机型仅提供监控。详见[机型兼容性](docs/COMPATIBILITY.md)。
 
 ## 构建与启动
 
@@ -77,7 +77,7 @@ SIGNING_IDENTITY='Developer ID Application: YOUR NAME (TEAMID)' bash scripts/bui
 - “全部”指系统当前公开且可枚举的通道，不能访问固件未公开的传感器。未确定物理位置的通道保留原始名称。本机 IOReport 公开 GPU 与 PCIe 能耗，未枚举到 CPU/ANE/DRAM 能耗，不伪造这些通道。
 - 低温时部分 Apple Silicon 硬件可能不接受手动启动风扇；具体机型的专用模式键兼容性仍需实机验证。
 - 主要界面提供英文和简体中文，硬件名称与底层错误可能保留英文。
-- 未公证。已验证构建、单元测试、实机读取和 GUI；管理员安装/授权、真实转速写入、Intel/其他 Apple Silicon 机型及睡眠后的真实硬件恢复仍需实测。
+- 未公证。M4 Mac mini 调速已获用户确认；Intel/其他 Apple Silicon 机型及睡眠后的真实硬件恢复仍需实测。
 
 ## 代码结构与验证
 
@@ -89,7 +89,6 @@ SIGNING_IDENTITY='Developer ID Application: YOUR NAME (TEAMID)' bash scripts/bui
 - `scripts/make-icon.swift`：以代码绘制应用图标。
 - `Sources/FanHelper`：签名约束的 XPC 服务，串行执行硬件访问，每 1.5 秒更新。
 - `Tests/FanCoreTests`：温度解码、输入边界、控制器限幅、过期回退、传感器失效、部分写入失败与恢复重试等真实行为测试。
-- `docs/VALIDATION.md`：本次实际执行的检查及未验证部分。
-- `docs/REFERENCE.md`：实现说明、外部 API 参考与第三方资源来源。
+- `docs/COMPATIBILITY.md`：机型验证状态、排查方法与控制协议参考。第三方资源来源声明见 [README](README.md#disclaimer)。
 
 演示模式命令行启动使用独立的 UserDefaults 域 `local.macsfancontrol.swift.demo`。普通启动的设置域是 `local.macsfancontrol.swift`；主窗口的“Use real sensors”可从演示切回真实硬件。应用不保存手动硬件控制以便开机自动恢复。
