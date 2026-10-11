@@ -1,4 +1,4 @@
-import Foundation
+import AppKit
 import FanCore
 
 /// Development builds have no Apple team certificate. An administrator installs
@@ -83,17 +83,40 @@ struct LocalHelperInstaller {
     }
 
     private static func authorize(_ command: String) async throws {
-        try await Task.detached(priority: .userInitiated) {
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
-            process.arguments = ["-e", "on run argv\n do shell script (item 1 of argv) with administrator privileges\nend run", command]
-            let output = Pipe(); process.standardOutput = output; process.standardError = output
-            try process.run()
-            let data = output.fileHandleForReading.readDataToEndOfFile()
-            process.waitUntilExit()
-            guard process.terminationStatus == 0 else {
-                throw FanError.message("Helper installation/removal was not completed: " + String(decoding: data, as: UTF8.self))
+        try await restoringAuthorizationWindow {
+            try await Task.detached(priority: .userInitiated) {
+                let process = Process()
+                process.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
+                process.arguments = ["-e", "on run argv\n do shell script (item 1 of argv) with administrator privileges\nend run", command]
+                let output = Pipe(); process.standardOutput = output; process.standardError = output
+                try process.run()
+                let data = output.fileHandleForReading.readDataToEndOfFile()
+                process.waitUntilExit()
+                guard process.terminationStatus == 0 else {
+                    throw FanError.message("Helper installation/removal was not completed: " + String(decoding: data, as: UTF8.self))
+                }
+            }.value
+        }
+    }
+
+    @MainActor
+    static func restoringAuthorizationWindow(_ operation: () async throws -> Void) async rethrows {
+        // osascript owns the authorization dialog, so focus does not reliably
+        // return to this menu-bar app when the external process exits.
+        let candidate = NSApp.keyWindow ?? NSApp.mainWindow ?? NSApp.orderedWindows.first {
+            $0.isVisible && $0.canBecomeKey && !$0.isMiniaturized
+        }
+        let window = candidate.flatMap { $0.isVisible && !$0.isMiniaturized && !NSApp.isHidden ? $0 : nil }
+        defer {
+            // Do not open a window for background launches or resurrect one
+            // explicitly closed/minimized while authorization was pending.
+            if let window, !window.isMiniaturized, window.isVisible || NSApp.isHidden {
+                NSApp.unhide(nil)
+                window.makeKeyAndOrderFront(nil)
+                NSApp.activate(ignoringOtherApps: true)
+                window.orderFrontRegardless()
             }
-        }.value
+        }
+        try await operation()
     }
 }
