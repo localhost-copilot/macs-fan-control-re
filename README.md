@@ -131,6 +131,7 @@ Move the app to a stable location (for example `/Applications/Macs Fan Control.a
 - **Sensor-based** control with start / max temperatures, live curve preview showing the current operating point, and input validation.
 - Changes take effect immediately; **Cancel** restores the previous settings.
 - CPU / GPU Maximum Temperature shows the highest currently available reading among each family's identified channels, and can drive menu bar readings and fan control. These are current maxima, not historical peaks; losing every reading makes the value unavailable and returns temperature-based control to automatic.
+- Explicit CPU / GPU energy channels from macOS IOReport Energy Model appear as power readings by default when available. Values are interval averages calculated from reported energy, not direct wattmeter measurements. Missing channels are not guessed from utilization or unidentified SMC rails.
 - Presets: Automatic, Full blast, and custom presets (save / rename / delete / apply). The last successfully applied control settings also persist without saving a preset, and are restored after hardware discovery on launch, including after upgrades. Selecting Automatic clears custom control for the next launch.
 
 </details>

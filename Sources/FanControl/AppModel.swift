@@ -103,6 +103,10 @@ final class AppModel: ObservableObject {
     // Only change presentation: average IDs include the catalog name and are
     // persisted in presets and used by the helper to resolve their members.
     func sensorName(_ sensor: Sensor) -> String {
+        if sensor.source == "IOReport" {
+            if sensor.name == "CPU Power" { return text("CPU Power", "CPU 功率") }
+            if sensor.name == "GPU Power" { return text("GPU Power", "GPU 功率") }
+        }
         if let maximum = MaximumTemperature(rawValue: sensor.id) {
             return maximum == .cpu ? text("CPU Maximum Temperature", "CPU 最高温度") : text("GPU Maximum Temperature", "GPU 最高温度")
         }
@@ -117,6 +121,9 @@ final class AppModel: ObservableObject {
     }
     func sensorHelp(_ sensor: Sensor) -> String {
         var details = "\(sensorName(sensor)) · \(sensor.source) · \(sensor.id)\n\(sensor.issue ?? reading(sensor))"
+        if sensor.source == "IOReport" {
+            details += "\n" + text("Average power calculated from energy reported by macOS IOReport Energy Model over the sampling interval; not a direct wattmeter measurement.", "由 macOS IOReport Energy Model 上报的能量差分计算采样期间的平均功率，并非功率计直接测量。")
+        }
         if MaximumTemperature(rawValue: sensor.id) != nil {
             details += "\n" + text("Highest currently available temperature in this group, not a historical peak.", "此值为组内当前可用温度读数的最大值，并非历史最高温度。")
         }

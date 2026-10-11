@@ -81,7 +81,11 @@ public final class PowerReader {
             let occurrence = occurrences[base, default: 0]; occurrences[base] = occurrence + 1
             let id = base + ":\(occurrence)"
             let value = deltas[id, default: EnergyDelta()].watts(energy: integer(channel, 0), unit: unit, now: now)
-            result.append(Sensor(id: id, name: name.replacingOccurrences(of: "Energy", with: "Power"), value: value, quantity: .power, source: "IOReport", issue: value == nil ? "Waiting for two valid energy samples; source unit: \(unit)." : nil, category: "psu"))
+            var sensor = Sensor(id: id, name: name.replacingOccurrences(of: "Energy", with: "Power"), value: value, quantity: .power, source: "IOReport", issue: value == nil ? "Waiting for two valid energy samples; source unit: \(unit)." : nil, category: "psu")
+            // Only expose explicitly named processor channels by default; raw
+            // rails and overlapping energy counters have no confirmed CPU/GPU mapping.
+            sensor.isVisibleByDefault = name == "CPU Energy" || name == "GPU Energy"
+            result.append(sensor)
         }
         let active = Set(result.map(\.id))
         deltas = deltas.filter { active.contains($0.key) }

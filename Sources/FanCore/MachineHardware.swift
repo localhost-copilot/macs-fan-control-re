@@ -74,9 +74,7 @@ public final class MachineHardware: FanHardware {
             readings.append(Sensor(id: "avg:" + name, name: name, celsius: available.reduce(0, +) / Double(available.count), category: members.compactMap { values[$0]?.category }.first ?? "temperature"))
         }
         readings += MaximumTemperature.allCases.compactMap { $0.sensor(from: readings) }
-        readings += (power?.readings() ?? []).map { sensor in
-            var item = sensor; item.isVisibleByDefault = false; return item
-        }
+        readings += power?.readings() ?? []
         // Models without a sensor database still get a useful default list.
         curated = readings.contains { $0.isVisibleByDefault && $0.quantity == .temperature && $0.source != "Calculated" }
         if !curated {
