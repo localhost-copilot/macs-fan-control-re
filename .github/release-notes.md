@@ -1,14 +1,14 @@
-Native macOS fan control and hardware monitoring with live sensor readings, fan curves, presets, and menu bar status.
+Fixes fan-control failures caused by delayed SMC mode and target readback, including automatic recovery on machines without an `Ftst` unlock key. The user confirmed fan control works on M4 Mac mini (`Mac16,10`) running macOS 27 after this fix.
 
-- Expands Apple Silicon and Intel compatibility: selects the sensor database using hardware identity, including Rosetta, and adds explicitly inferred CPU/GPU groups where Apple Silicon mappings are missing.
-- Adds capability-based `Ftst` unlock for firmware that rejects manual fan mode with `0x82`, with bounded retries and coordinated recovery across multiple fans.
-- Correctly treats firmware mode 3 as system control, verifies mode and target writes, and tolerates target rounding within 1 RPM.
-- Persists fan and unlock ownership so a restarted helper can recover control left behind by a previous process before accepting new requests.
-- Includes the latest SMC recovery hardening from `1567390`, with fresh builds for both architectures. Sensor reads and the GUI have been tested on Mac mini M6 (`Mac18,5`); other models and real fan-control behavior still need hardware validation. Fanless models provide monitoring only.
-- Includes DMG drag-to-Applications installers and ZIP downloads.
-- Download `arm64` for Apple Silicon or `x86_64` for Intel. Requires macOS 13 or later.
-- Both builds pass automated tests and code-signature verification in CI. Intel hardware compatibility, privileged helper installation, real fan-speed writes, and sleep recovery still need hardware validation.
-- Apps are ad-hoc signed and not notarized. macOS may require approval in Privacy & Security before opening.
-- SHA-256 checksum files are included with each DMG and ZIP. After replacing an older build, authorize the helper update when prompted so its signature binding matches the new app.
+- Adds bounded retries for mode and target writes while retaining readback verification and recovery on failure. Errors now include the requested and actual values.
+- Allows more time for the helper to reply while hardware retries and recovery run.
+- Restores the original app window to the foreground after administrator authorization succeeds, fails, or is cancelled.
+- Removes obsolete documentation, sensor snapshots, and unused screenshots; consolidates current hardware validation status in the compatibility guide.
 
-See the README for helper setup, usage, and hardware limitations.
+Download `arm64` for Apple Silicon or `x86_64` for Intel. Both architectures include a drag-to-Applications DMG, a ZIP, and SHA-256 checksums. Requires macOS 13 or later.
+
+After replacing the old app, quit the old process and authorize the helper update when prompted. The helper's signature binding must match the new app.
+
+Apps are ad-hoc signed and not notarized. Other hardware models and sleep/crash recovery still need real-hardware validation; the authorization-window change was checked with simulated AppKit window transitions, without replaying a real password prompt.
+
+See the README and `docs/COMPATIBILITY.md` for setup and hardware limitations.
