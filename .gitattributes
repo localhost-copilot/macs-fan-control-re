@@ -1,0 +1,2 @@
+# Preserve the reference XML files' original CRLF line endings.
+Sources/FanCore/Resources/*.xml -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<smcSensors>
+  <modelMatch models="all">
+    <smc name="TA0P">Ambient</smc>
+    <smc name="TB0T">Battery</smc>
+    <smc name="Th1H">Heatsink Proximity</smc>
+    <smc name="TPMP" type="psu">Power Supply Proximity</smc>
+    <smc name="TW0P" type="airport">Airport Proximity</smc>
+  </modelMatch>
+  <modelMatch models="MacBookPro17,1+;MacBookAir10,1+">
+    <smc name="Ts0P">Trackpad</smc>
+    <smc name="Ts1P">Trackpad Actuator</smc>
+  </modelMatch>
+  <modelMatch models="iMac21,1+">
+    <smc name="TL0p">LCD Proximity</smc>
+    <smc name="TL1P">LCD Proximity 2</smc>
+  </modelMatch>
+  <modelMatch models="Macmini9,1">
+    <smc name="TIOP">Thunderbolt Proximity</smc>
+  </modelMatch>
+  <modelMatch models="MacBookPro18,1;MacBookPro18,2;MacBookPro18,3;MacBookPro18,4;MacStudio1,1;MacStudio1,2">
+    <group name="GPU Cluster Average" hideSensors="0">
+      <smc name="Tg05" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg0D" type="gpu">GPU Cluster 2</smc>
+      <smc name="Tg0L" type="gpu">GPU Cluster 3</smc>
+      <smc name="Tg0T" type="gpu">GPU Cluster 4</smc>
+      <smc name="Tg0b" type="gpu">GPU Cluster 5</smc>
+      <smc name="Tg0j" type="gpu">GPU Cluster 6</smc>
+      <smc name="Tg0r" type="gpu">GPU Cluster 7</smc>
+      <smc name="Tg0z" type="gpu">GPU Cluster 8</smc>
+    </group>
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp01" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp05" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp0D" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp0H" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Tp0L" type="cpu">CPU Performance Core 5</smc>
+      <smc name="Tp0P" type="cpu">CPU Performance Core 6</smc>
+      <smc name="Tp0X" type="cpu">CPU Performance Core 7</smc>
+      <smc name="Tp0b" type="cpu">CPU Performance Core 8</smc>
+      <smc name="Tp09" type="cpu">CPU Efficiency Core 1</smc>
+      <smc name="Tp0T" type="cpu">CPU Efficiency Core 2</smc>
+      <smc name="Tp21" type="cpu">CPU Performance Core 9</smc>
+      <smc name="Tp25" type="cpu">CPU Performance Core 10</smc>
+      <smc name="Tp2D" type="cpu">CPU Performance Core 11</smc>
+      <smc name="Tp2H" type="cpu">CPU Performance Core 12</smc>
+      <smc name="Tp2L" type="cpu">CPU Performance Core 13</smc>
+      <smc name="Tp2P" type="cpu">CPU Performance Core 14</smc>
+      <smc name="Tp2X" type="cpu">CPU Performance Core 15</smc>
+      <smc name="Tp2b" type="cpu">CPU Performance Core 16</smc>
+      <smc name="Tp29" type="cpu">CPU Efficiency Core 3</smc>
+      <smc name="Tp2T" type="cpu">CPU Efficiency Core 4</smc>
+    </group>
+    <smc name="Tm00">Memory Bank 1</smc>
+    <smc name="Tm04">Memory Bank 2</smc>
+    <smc name="Tm08">Memory Bank 3</smc>
+    <smc name="Tm0C">Memory Bank 4</smc>
+  </modelMatch>
+  <modelMatch models="MacStudio1,1+">
+    <smc name="TaFL">Airflow Front Left</smc>
+    <smc name="TaFR">Airflow Front Right</smc>
+    <smc name="TaRL">Airflow Rear Left</smc>
+    <smc name="TaRR">Airflow Rear Right</smc>
+  </modelMatch>
+  <modelMatch models="MacStudio2,1;MacStudio2,2">
+    <group name="GPU Cluster Average" hideSensors="0">
+      <smc name="Tg0f" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg0j" type="gpu">GPU Cluster 2</smc>
+      <smc name="Tg1h" type="gpu">GPU Cluster 3</smc>
+      <smc name="Tg1l" type="gpu">GPU Cluster 4</smc>
+      <smc name="Tg2f" type="gpu">GPU Cluster 5</smc>
+    </group>
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp01" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp09" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp0X" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp0f" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Tp1B" type="cpu">CPU Performance Core 5</smc>
+      <smc name="Tp1J" type="cpu">CPU Performance Core 6</smc>
+      <smc name="Tp1h" type="cpu">CPU Performance Core 7</smc>
+      <smc name="Tp1p" type="cpu">CPU Performance Core 8</smc>
+      <smc name="Tp05" type="cpu">CPU Efficiency Core 1</smc>
+      <smc name="Tp0b" type="cpu">CPU Efficiency Core 2</smc>
+      <smc name="Tp0D" type="cpu">CPU Efficiency Core 3</smc>
+      <smc name="Tp0j" type="cpu">CPU Efficiency Core 4</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="MacBookPro17,2;MacBookAir11,1;MacBookAir11,2">
+    <smc name="Tg0f" type="gpu">GPU Cluster 1</smc>
+    <smc name="Tg0n" type="gpu">GPU Cluster 2</smc>
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp01" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp09" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp0f" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp0n" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Tp05" type="cpu">CPU Efficiency Core 1</smc>
+      <smc name="Tp0D" type="cpu">CPU Efficiency Core 2</smc>
+      <smc name="Tp0j" type="cpu">CPU Efficiency Core 3</smc>
+      <smc name="Tp0r" type="cpu">CPU Efficiency Core 4</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="MacBookPro19,1;MacBookPro19,2;MacBookPro19,3;MacBookPro19,4;Macmini10,1;Macmini10,2">
+    <smc name="Tg0f" type="gpu">GPU Cluster 1</smc>
+    <smc name="Tg1l" type="gpu">GPU Cluster 2</smc>
+    <smc name="TaLP">Airflow Left</smc>
+    <smc name="TaRF">Airflow Right</smc>
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp01" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp09" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp0X" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp0f" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Tp1B" type="cpu">CPU Performance Core 5</smc>
+      <smc name="Tp1J" type="cpu">CPU Performance Core 6</smc>
+      <smc name="Tp1h" type="cpu">CPU Performance Core 7</smc>
+      <smc name="Tp1p" type="cpu">CPU Performance Core 8</smc>
+      <smc name="Tp05" type="cpu">CPU Efficiency Core 1</smc>
+      <smc name="Tp0b" type="cpu">CPU Efficiency Core 2</smc>
+      <smc name="Tp0D" type="cpu">CPU Efficiency Core 3</smc>
+      <smc name="Tp0j" type="cpu">CPU Efficiency Core 4</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="Macmini10,1">
+    <smc name="Tp0n" type="cpu">CPU Performance Core 3</smc>
+  </modelMatch>
+  <modelMatch models="MacBookPro20,1;iMac22,1;iMac22,2;MacBookAir12,1;MacBookAir12,2">
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp01" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp09" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp0X" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp0f" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Tp05" type="cpu">CPU Efficiency Core 1</smc>
+      <smc name="Tp0b" type="cpu">CPU Efficiency Core 2</smc>
+      <smc name="Tp0D" type="cpu">CPU Efficiency Core 3</smc>
+      <smc name="Tp0j" type="cpu">CPU Efficiency Core 4</smc>
+    </group>
+    <group name="GPU Core Average" hideSensors="1">
+      <smc name="Tg0D" type="gpu">GPU Cores</smc>
+      <smc name="Tg0P" type="gpu">GPU Cores</smc>
+      <smc name="Tg0X" type="gpu">GPU Cores</smc>
+      <smc name="Tg0b" type="gpu">GPU Cores</smc>
+      <smc name="Tg0j" type="gpu">GPU Cores</smc>
+      <smc name="Tg0v" type="gpu">GPU Cores</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="MacBookPro20,2;MacBookPro20,5">
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp05" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp0D" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp0L" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp0S" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Tp17" type="cpu">CPU Performance Core 5</smc>
+      <smc name="Tp1F" type="cpu">CPU Performance Core 6</smc>
+      <smc name="Te05" type="cpu">CPU Efficiency Core 1</smc>
+      <smc name="Te0P" type="cpu">CPU Efficiency Core 2</smc>
+      <smc name="Te0H" type="cpu">CPU Efficiency Core 3</smc>
+      <smc name="Te04" type="cpu">CPU Efficiency Core 4</smc>
+      <smc name="Te0S" type="cpu">CPU Efficiency Core 5</smc>
+      <smc name="Te0U" type="cpu">CPU Efficiency Core 6</smc>
+    </group>
+    <group name="GPU Clusters Average" hideSensors="0">
+      <smc name="Tg05" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg0D" type="gpu">GPU Cluster 2</smc>
+      <smc name="Tg0v" type="gpu">GPU Cluster 3</smc>
+      <smc name="Tg1B" type="gpu">GPU Cluster 4</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="MacBookPro20,3;MacBookPro20,4;MacBookPro20,6;MacBookPro20,7">
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp05" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp0D" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp0L" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp1F" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Tp17" type="cpu">CPU Performance Core 5</smc>
+      <smc name="Tp0S" type="cpu">CPU Performance Core 6</smc>
+      <smc name="Tp1h" type="cpu">CPU Performance Core 7</smc>
+      <smc name="Tp1p" type="cpu">CPU Performance Core 8</smc>
+      <smc name="Tp1y" type="cpu">CPU Performance Core 9</smc>
+      <smc name="Tp30" type="cpu">CPU Performance Core 10</smc>
+      <smc name="Tp26" type="cpu">CPU Performance Core 11</smc>
+      <smc name="Tp3s" type="cpu">CPU Performance Core 12</smc>
+      <smc name="Te05" type="cpu">CPU Efficiency Core 1;CPU Efficiency Core 2</smc>
+      <smc name="Te0L" type="cpu">CPU Efficiency Core 3;CPU Efficiency Core 4</smc>
+    </group>
+    <group name="GPU Clusters Average" hideSensors="0">
+      <smc name="Tg05" type="gpu" add_no_fail="1">GPU Cluster 1</smc>
+      <smc name="Tg0z" type="gpu" add_no_fail="1">GPU Cluster 2</smc>
+      <smc name="Tg34" type="gpu" add_no_fail="1">GPU Cluster 3</smc>
+      <smc name="Tg3y" type="gpu" add_no_fail="1">GPU Cluster 4</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="Macmini11,1;MacBookPro21,1;iMac23,1;iMac23,2;MacBookAir13,1;MacBookAir13,2">
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp01" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp05" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp09" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp0D" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Te05" type="cpu">CPU Efficiency Core 1</smc>
+      <smc name="Te09" type="cpu">CPU Efficiency Core 2</smc>
+      <smc name="Te0H" type="cpu">CPU Efficiency Core 3</smc>
+      <smc name="Te0S" type="cpu">CPU Efficiency Core 4</smc>
+      <smc name="Te0U" type="cpu">CPU Efficiency Core 5</smc>
+      <smc name="Te0V" type="cpu">CPU Efficiency Core 6</smc>
+    </group>
+    <group name="GPU Cluster Average" hideSensors="0">
+      <smc name="Tg04" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg12" type="gpu">GPU Cluster 2</smc>
+    </group>
+    <smc name="Tm1p">Memory Proximity</smc>
+  </modelMatch>
+  <modelMatch models="MacStudio3,1;Macmini11,2;MacBookPro21,2;MacBookPro21,3;MacBookPro21,4;MacBookPro21,5">
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp01" type="cpu">CPU Performance Core 1;CPU Performance Core 7</smc>
+      <smc name="Tp09" type="cpu">CPU Performance Core 2;CPU Performance Core 8</smc>
+      <smc name="Tp0H" type="cpu">CPU Performance Core 3;CPU Performance Core 9</smc>
+      <smc name="Tp0P" type="cpu">CPU Performance Core 4;CPU Performance Core 10</smc>
+      <smc name="Tp0X" type="cpu">CPU Performance Core 5;CPU Performance Core 11</smc>
+      <smc name="Tp0Y" type="cpu">CPU Performance Core 6;CPU Performance Core 12</smc>
+      <smc name="Te05" type="cpu">CPU Efficiency Core 1;CPU Efficiency Core 2</smc>
+      <smc name="Te0S" type="cpu">CPU Efficiency Core 3;CPU Efficiency Core 4</smc>
+    </group>
+    <group name="GPU Cluster Average" hideSensors="0">
+      <smc name="Tg05" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg0S" type="gpu">GPU Cluster 2</smc>
+      <smc name="Tg0Y" type="gpu">GPU Cluster 3</smc>
+      <smc name="Tg0k" type="gpu">GPU Cluster 4</smc>
+      <smc name="Tg0z" type="gpu">GPU Cluster 5</smc>
+    </group>
+    <smc name="TaLT">Thunderbolt Left Proximity</smc>
+    <smc name="TaRT">Thunderbolt Right Proximity</smc>
+  </modelMatch>
+  <modelMatch models="MacBookPro22,1;MacBookAir14,1;MacBookAir14,2">
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp00" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp0C" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tp0O" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tp0X" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Te04" type="cpu">CPU Efficiency Core 1;CPU Efficiency Core 4</smc>
+      <smc name="Te08" type="cpu">CPU Efficiency Core 2;CPU Efficiency Core 5</smc>
+      <smc name="Te0C" type="cpu">CPU Efficiency Core 3;CPU Efficiency Core 6</smc>
+    </group>
+    <group name="GPU Cluster Average" hideSensors="0">
+      <smc name="Tg04" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg12" type="gpu">GPU Cluster 2</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="MacBookPro22,2+">
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tm04" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tm0G" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Tm0R" type="cpu">CPU Performance Core 3</smc>
+      <smc name="Tm0a" type="cpu">CPU Performance Core 4</smc>
+      <smc name="Tm0j" type="cpu">CPU Performance Core 5</smc>
+      <smc name="Tm1Q" type="cpu">CPU Performance Core 6</smc>
+      <smc name="Tm1c" type="cpu">CPU Performance Core 7</smc>
+      <smc name="Tm1o" type="cpu">CPU Performance Core 8</smc>
+      <smc name="Tm21" type="cpu">CPU Performance Core 9</smc>
+      <smc name="Tm2D" type="cpu">CPU Performance Core 10</smc>
+      <smc name="Tm2P" type="cpu">CPU Performance Core 11</smc>
+      <smc name="Tm2n" type="cpu">CPU Performance Core 12</smc>
+      <smc name="Tp04" type="cpu">CPU Super Core 1</smc>
+      <smc name="Tp0G" type="cpu">CPU Super Core 2</smc>
+      <smc name="Tp0R" type="cpu">CPU Super Core 3</smc>
+      <smc name="Tp0a" type="cpu">CPU Super Core 4</smc>
+      <smc name="Tp0j" type="cpu">CPU Super Core 5</smc>
+      <smc name="Tp0u" type="cpu">CPU Super Core 6</smc>
+      <smc name="Tp1I" type="cpu">CPU Super Core 7</smc>
+      <smc name="Tp1g" type="cpu">CPU Super Core 8</smc>
+    </group>
+    <group name="GPU Cluster Average" hideSensors="0">
+      <smc name="Tg08" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg12" type="gpu">GPU Cluster 2</smc>
+      <smc name="Tg1x" type="gpu">GPU Cluster 3</smc>
+      <smc name="Tg29" type="gpu">GPU Cluster 4</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="MacStudio3,2">
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp06" type="cpu">CPU Performance Core 1;CPU Performance Core 9</smc>
+      <smc name="Tp0E" type="cpu">CPU Performance Core 2;CPU Performance Core 10</smc>
+      <smc name="Tp0M" type="cpu">CPU Performance Core 3;CPU Performance Core 11</smc>
+      <smc name="Tp0T" type="cpu">CPU Performance Core 4;CPU Performance Core 12</smc>
+      <smc name="Tp0W" type="cpu">CPU Performance Core 5;CPU Performance Core 13</smc>
+      <smc name="Tp0c" type="cpu">CPU Performance Core 6;CPU Performance Core 14</smc>
+      <smc name="Tp0i" type="cpu">CPU Performance Core 7;CPU Performance Core 15</smc>
+      <smc name="Tp0o" type="cpu">CPU Performance Core 8;CPU Performance Core 16</smc>
+      <smc name="Tp18" type="cpu">CPU Performance Core 17;CPU Performance Core 21</smc>
+      <smc name="Tp1G" type="cpu">CPU Performance Core 18;CPU Performance Core 22</smc>
+      <smc name="Tp1K" type="cpu">CPU Performance Core 19;CPU Performance Core 23</smc>
+      <smc name="Tp1S" type="cpu">CPU Performance Core 20;CPU Performance Core 24</smc>
+      <smc name="Te06" type="cpu">CPU Efficiency Core 1;CPU Efficiency Core 5</smc>
+      <smc name="Te0M" type="cpu">CPU Efficiency Core 2;CPU Efficiency Core 6</smc>
+      <smc name="Te0Q" type="cpu">CPU Efficiency Core 3;CPU Efficiency Core 7</smc>
+      <smc name="Te0T" type="cpu">CPU Efficiency Core 4;CPU Efficiency Core 8</smc>
+    </group>
+    <group name="GPU Cluster Average" hideSensors="0">
+      <smc name="Tg05" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg0z" type="gpu">GPU Cluster 2</smc>
+      <smc name="Tg22" type="gpu">GPU Cluster 3</smc>
+      <smc name="Tg2I" type="gpu">GPU Cluster 4</smc>
+      <smc name="Tg34" type="gpu">GPU Cluster 5</smc>
+      <smc name="Tg3K" type="gpu">GPU Cluster 6</smc>
+    </group>
+    <smc name="TaLT">Thunderbolt Left Proximity</smc>
+    <smc name="TaRT">Thunderbolt Right Proximity</smc>
+  </modelMatch>
+  <modelMatch models="MacBookNeo1,1">
+    <smc name="TW0p" type="airport">Airport Proximity</smc>
+    <group name="CPU Core Average" hideSensors="0">
+      <smc name="Tp01" type="cpu">CPU Performance Core 1</smc>
+      <smc name="Tp09" type="cpu">CPU Performance Core 2</smc>
+      <smc name="Te05" type="cpu">CPU Efficiency Core 1</smc>
+      <smc name="Te06" type="cpu">CPU Efficiency Core 2</smc>
+      <smc name="Tex0" type="cpu">CPU Efficiency Core 3</smc>
+      <smc name="Tex1" type="cpu">CPU Efficiency Core 4</smc>
+    </group>
+    <group name="GPU Cluster Average" hideSensors="0">
+      <smc name="Tg05" type="gpu">GPU Cluster 1</smc>
+      <smc name="Tg0D" type="gpu">GPU Cluster 2</smc>
+    </group>
+  </modelMatch>
+</smcSensors>

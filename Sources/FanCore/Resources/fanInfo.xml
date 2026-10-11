@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fanInfo>
+  <modelMatch models="iMacPro1,1">
+    <fan0>Dual-fan cooler</fan0>
+  </modelMatch>
+  <modelMatch models="MacBookPro15,1;MacBookPro15,2;MacBookPro15,3;MacBookPro16,1;MacBookPro16,2;MacBookPro16,4;MacBookPro18,1+">
+    <fan0>Left side</fan0>
+    <fan1>Right side</fan1>
+  </modelMatch>
+  <modelMatch models="MacBookPro15,4;MacBookPro16,3;MacBookPro17,1;MacBookPro17,2">
+    <fan0>Right side</fan0>
+  </modelMatch>
+  <modelMatch models="MacBookPro20,1">
+    <fan0>Left side</fan0>
+  </modelMatch>
+  <modelMatch models="MacBookAir8,1;MacBookAir8,2;MacBookAir9,1;ADP3,2;Macmini8,1+">
+    <fan0>Exhaust</fan0>
+  </modelMatch>
+  <modelMatch models="MacPro7,1">
+    <fan0>Exhaust</fan0>
+    <fan1>Intake 1</fan1>
+    <fan2>Intake 2</fan2>
+    <fan3>Intake 3</fan3>
+  </modelMatch>
+  <modelMatch models="iMac20,1;iMac20,2">
+    <fan0>Main</fan0>
+  </modelMatch>
+  <modelMatch models="iMac21,1+">
+    <fan0>Left side</fan0>
+    <fan1>Right side</fan1>
+  </modelMatch>
+  <modelMatch models="MacStudio1,1+">
+    <fan0>Dual-fan exhaust</fan0>
+  </modelMatch>
+</fanInfo>

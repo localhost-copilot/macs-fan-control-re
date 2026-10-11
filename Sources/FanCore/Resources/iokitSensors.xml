@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<iokitSensors>
+  <modelMatch models="all">
+    <group name="GPU Proximity">
+      <iokit name="GPU MTR Temp Sensor1" type="gpu">GPU Sensor 1</iokit>
+      <iokit name="GPU MTR Temp Sensor4" type="gpu">GPU Sensor 2</iokit>
+    </group>
+    <iokit name="gas gauge battery">Battery Gas Gauge</iokit>
+    <iokit name="NAND CH0 temp" type="ssd">SSD</iokit>
+    <iokit name="SOC MTR Temp Sensor0">M1 SOC Sensor 1</iokit>
+    <iokit name="SOC MTR Temp Sensor1">M1 SOC Sensor 2</iokit>
+    <iokit name="SOC MTR Temp Sensor2">M1 SOC Sensor 3</iokit>
+    <group name="CPU Efficiency Cores Average">
+      <iokit name="eACC MTR Temp Sensor0" type="cpu">CPU Efficiency Cores Package 1</iokit>
+      <iokit name="eACC MTR Temp Sensor3" type="cpu">CPU Efficiency Cores Package 2</iokit>
+    </group>
+    <group name="CPU Performance Cores Average">
+      <iokit name="pACC MTR Temp Sensor2" type="cpu">CPU Performance Cores Package 1</iokit>
+      <iokit name="pACC MTR Temp Sensor3" type="cpu">CPU Performance Cores Package 2</iokit>
+      <iokit name="pACC MTR Temp Sensor4" type="cpu">CPU Performance Cores Package 3</iokit>
+      <iokit name="pACC MTR Temp Sensor5" type="cpu">CPU Performance Cores Package 4</iokit>
+      <iokit name="pACC MTR Temp Sensor7" type="cpu">CPU Performance Cores Package 5</iokit>
+      <iokit name="pACC MTR Temp Sensor8" type="cpu">CPU Performance Cores Package 6</iokit>
+      <iokit name="pACC MTR Temp Sensor9" type="cpu">CPU Performance Cores Package 7</iokit>
+    </group>
+    <iokit name="ANE MTR Temp Sensor1">M1 Neural Engine</iokit>
+    <iokit name="ISP MTR Temp Sensor5">M1 Image Signal Processor</iokit>
+    <group name="Power Manager SOC Die Average">
+      <iokit name="PMGR SOC Die Temp Sensor0" type="psu">Power Manager SOC Die 1</iokit>
+      <iokit name="PMGR SOC Die Temp Sensor1" type="psu">Power Manager SOC Die 2</iokit>
+      <iokit name="PMGR SOC Die Temp Sensor2" type="psu">Power Manager SOC Die 3</iokit>
+    </group>
+    <group name="Power Manager Die Average">
+      <iokit name="PMU tdie1" type="psu">Power Manager Die 1</iokit>
+      <iokit name="PMU tdie2" type="psu">Power Manager Die 2</iokit>
+      <iokit name="PMU tdie4" type="psu">Power Manager Die 4</iokit>
+      <iokit name="PMU tdie5" type="psu">Power Manager Die 5</iokit>
+      <iokit name="PMU tdie6" type="psu">Power Manager Die 6</iokit>
+      <iokit name="PMU tdie7" type="psu">Power Manager Die 7</iokit>
+      <iokit name="PMU tdie8" type="psu">Power Manager Die 8</iokit>
+    </group>
+    <iokit name="Charger TQ0d" type="psu">Charger Proximity</iokit>
+  </modelMatch>
+</iokitSensors>

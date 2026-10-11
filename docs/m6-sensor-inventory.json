@@ -1,0 +1,4125 @@
+{
+  "fans" : [
+    {
+      "current" : 1000,
+      "id" : 0,
+      "manual" : false,
+      "maximum" : 4900,
+      "minimum" : 1000,
+      "modeKey" : "F0md",
+      "name" : "Fan 0",
+      "target" : 1000
+    }
+  ],
+  "model" : "Mac18,5",
+  "sensors" : [
+    {
+      "category" : "airport",
+      "id" : "TW0P",
+      "isVisibleByDefault" : true,
+      "name" : "Airport Proximity",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 31.094894409179688
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te07",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te07 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 43.546875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te08",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te08 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.890625
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te09",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te09 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.046875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te0c",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te0c (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.125
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te0e",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te0e (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.265625
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te0f",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te0f (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te0g",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te0g (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te0h",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te0h (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Te0i",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Te0i (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.375
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp05",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp05 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.78125
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp07",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp07 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.8125
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp09",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp09 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.171875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0A",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0A (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.59375
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0E",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0E (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.359375
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0G",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0G (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.859375
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0I",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0I (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.203125
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0L",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0L (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.234375
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0b",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0b (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.765625
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0d",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0d (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.71875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0g",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0g (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.703125
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0j",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0j (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.171875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0m",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0m (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.328125
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0o",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0o (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.453125
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0r",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0r (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.1875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0t",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0t (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.046875
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0u",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0u (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.359375
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0w",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0w (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.328125
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0x",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0x (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.9375
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0y",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0y (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.390625
+    },
+    {
+      "category" : "cpu",
+      "id" : "Tp0z",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensor Tp0z (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.171875
+    },
+    {
+      "category" : "cpu",
+      "id" : "avg:CPU Sensors Average (inferred)",
+      "isVisibleByDefault" : true,
+      "name" : "CPU Sensors Average (inferred)",
+      "quantity" : "temperature",
+      "source" : "Calculated",
+      "value" : 41.128125
+    },
+    {
+      "category" : "current",
+      "id" : "IA2R",
+      "isVisibleByDefault" : true,
+      "name" : "Current IA2R",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "ID0R",
+      "isVisibleByDefault" : true,
+      "name" : "Current ID0R",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.8921188116073608
+    },
+    {
+      "category" : "current",
+      "id" : "IF5R",
+      "isVisibleByDefault" : true,
+      "name" : "Current IF5R",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "II3R",
+      "isVisibleByDefault" : true,
+      "name" : "Current II3R",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IMVC",
+      "isVisibleByDefault" : true,
+      "name" : "Current IMVC",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 7.735328197479248
+    },
+    {
+      "category" : "current",
+      "id" : "IMVR",
+      "isVisibleByDefault" : true,
+      "name" : "Current IMVR",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IO5R",
+      "isVisibleByDefault" : true,
+      "name" : "Current IO5R",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.02083725668489933
+    },
+    {
+      "category" : "current",
+      "id" : "IP0b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP0b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 2.607374429702759
+    },
+    {
+      "category" : "current",
+      "id" : "IP1b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP1b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.596640408039093
+    },
+    {
+      "category" : "current",
+      "id" : "IP2b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP2b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.9908017516136169
+    },
+    {
+      "category" : "current",
+      "id" : "IP2l",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP2l",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IP3b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP3b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IP4b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP4b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.1484832763671875
+    },
+    {
+      "category" : "current",
+      "id" : "IP5l",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP5l",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.009765625
+    },
+    {
+      "category" : "current",
+      "id" : "IP7b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP7b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IP7l",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP7l",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IP8l",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP8l",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IP9b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP9b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IP9l",
+      "isVisibleByDefault" : true,
+      "name" : "Current IP9l",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.017852783203125
+    },
+    {
+      "category" : "current",
+      "id" : "IPMR",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPMR",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 2.2683355808258057
+    },
+    {
+      "category" : "current",
+      "id" : "IPSR",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPSR",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.06858748942613602
+    },
+    {
+      "category" : "current",
+      "id" : "IPal",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPal",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.0177764892578125
+    },
+    {
+      "category" : "current",
+      "id" : "IPbb",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPbb",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 1.0855028629302979
+    },
+    {
+      "category" : "current",
+      "id" : "IPbl",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPbl",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IPcl",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPcl",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.0459442138671875
+    },
+    {
+      "category" : "current",
+      "id" : "IPdb",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPdb",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IPdl",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPdl",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IPeb",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPeb",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IPel",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPel",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.1099853515625
+    },
+    {
+      "category" : "current",
+      "id" : "IPgb",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPgb",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IPjl",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPjl",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.1870269775390625
+    },
+    {
+      "category" : "current",
+      "id" : "IPkl",
+      "isVisibleByDefault" : true,
+      "name" : "Current IPkl",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IR5b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IR5b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.0045318603515625
+    },
+    {
+      "category" : "current",
+      "id" : "IR6b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IR6b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IR8b",
+      "isVisibleByDefault" : true,
+      "name" : "Current IR8b",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IR9l",
+      "isVisibleByDefault" : true,
+      "name" : "Current IR9l",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IRab",
+      "isVisibleByDefault" : true,
+      "name" : "Current IRab",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IRal",
+      "isVisibleByDefault" : true,
+      "name" : "Current IRal",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IRcb",
+      "isVisibleByDefault" : true,
+      "name" : "Current IRcb",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.0024261474609375
+    },
+    {
+      "category" : "current",
+      "id" : "IReb",
+      "isVisibleByDefault" : true,
+      "name" : "Current IReb",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IRfb",
+      "isVisibleByDefault" : true,
+      "name" : "Current IRfb",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "current",
+      "id" : "IUFC",
+      "isVisibleByDefault" : true,
+      "name" : "Current IUFC",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.001894935849122703
+    },
+    {
+      "category" : "current",
+      "id" : "IURC",
+      "isVisibleByDefault" : true,
+      "name" : "Current IURC",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0.18854326009750366
+    },
+    {
+      "category" : "current",
+      "id" : "IW3C",
+      "isVisibleByDefault" : true,
+      "name" : "Current IW3C",
+      "quantity" : "current",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "psu",
+      "id" : "ioreport::GPU Energy:0",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Power",
+      "quantity" : "power",
+      "source" : "IOReport",
+      "value" : 0.4587809289283575
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg01",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg01 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.890625
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg07",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg07 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.1875
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg08",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg08 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.90625
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg09",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg09 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.65625
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg0a",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg0a (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.234375
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg0b",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg0b (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.9375
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg0c",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg0c (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.671875
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg0d",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg0d (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.78125
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg10",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg10 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.96875
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg17",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg17 (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.984375
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg1a",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg1a (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.03125
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg1b",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg1b (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.203125
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg1c",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg1c (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.96875
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg1d",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg1d (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.90625
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg1e",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg1e (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.109375
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg1f",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg1f (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.03125
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg1g",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg1g (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.203125
+    },
+    {
+      "category" : "gpu",
+      "id" : "Tg1h",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensor Tg1h (inferred)",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.046875
+    },
+    {
+      "category" : "gpu",
+      "id" : "avg:GPU Sensors Average (inferred)",
+      "isVisibleByDefault" : true,
+      "name" : "GPU Sensors Average (inferred)",
+      "quantity" : "temperature",
+      "source" : "Calculated",
+      "value" : 39.984375
+    },
+    {
+      "category" : "psu",
+      "id" : "ioreport::PCIe Port 0 Energy:0",
+      "isVisibleByDefault" : true,
+      "name" : "PCIe Port 0 Power",
+      "quantity" : "power",
+      "source" : "IOReport",
+      "value" : 0
+    },
+    {
+      "category" : "psu",
+      "id" : "ioreport::PCIe Port 2 Energy:0",
+      "isVisibleByDefault" : true,
+      "name" : "PCIe Port 2 Power",
+      "quantity" : "power",
+      "source" : "IOReport",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "VP0B",
+      "category" : "temperature",
+      "id" : "hid:voltage:3dbf27866094d04a208e6e1441e0548e2a84278ba673d1632d731b9339b247f5",
+      "isVisibleByDefault" : true,
+      "name" : "PMU VP0B",
+      "quantity" : "voltage",
+      "rawValue" : 0.3393402099609375,
+      "source" : "HID",
+      "value" : 0.3393402099609375
+    },
+    {
+      "backingSMCKey" : "VP0u",
+      "category" : "temperature",
+      "id" : "hid:voltage:f8bd9858ba7c75fa466d3983e6c13e4de2d196e3978729dec2e737ab33227570",
+      "isVisibleByDefault" : true,
+      "name" : "PMU VP0u",
+      "quantity" : "voltage",
+      "rawValue" : 3.8075714111328125,
+      "source" : "HID",
+      "value" : 3.8075714111328125
+    },
+    {
+      "backingSMCKey" : "IP0b",
+      "category" : "temperature",
+      "id" : "hid:current:15bf54e0c696483e38481481e4ecce7395d3da29b4b29ee4cea1b8ed5f8bbad2",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck0",
+      "quantity" : "current",
+      "rawValue" : 16422.871963500977,
+      "source" : "HID\/SMC",
+      "value" : 2.607374429702759
+    },
+    {
+      "backingSMCKey" : "IP1b",
+      "category" : "temperature",
+      "id" : "hid:current:666a86d70116a4dafe9fd03c5a4dc018476f723d22a1619ea87235e2e7a4a710",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck1",
+      "quantity" : "current",
+      "rawValue" : 16152.739944458008,
+      "source" : "HID\/SMC",
+      "value" : 0.596640408039093
+    },
+    {
+      "backingSMCKey" : "IPbb",
+      "category" : "temperature",
+      "id" : "hid:current:6fe215b0ffe32c78961aa9ca607b4dd36618dcd1bc89f8e1a0dc691308fb0374",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck11",
+      "quantity" : "current",
+      "rawValue" : 16266.944366455078,
+      "source" : "HID\/SMC",
+      "value" : 1.0855028629302979
+    },
+    {
+      "backingSMCKey" : "IPdb",
+      "category" : "temperature",
+      "id" : "hid:current:c027817b547bce35d97e1adff212cd4c2131e49bb8d0692090dac1795b2bdbc4",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck13",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IPgb",
+      "category" : "temperature",
+      "id" : "hid:current:11c1845b8d669eccd8c43ec01c40089aedd14aa594932759c412e75e447721ab",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck16",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IPhb",
+      "category" : "temperature",
+      "id" : "hid:current:85debce1904291d379013908debfa9b1fe190656e37cd4cb347689728913609a",
+      "isVisibleByDefault" : true,
+      "issue" : "No valid HID measurement (registry 4294969614); raw value: unavailable.",
+      "name" : "PMU ibuck17",
+      "quantity" : "current",
+      "source" : "HID"
+    },
+    {
+      "backingSMCKey" : "IPib",
+      "category" : "temperature",
+      "id" : "hid:current:88d0d4059e6870f277881d079c85f613a5ae58d63db153a986542b120f11421a",
+      "isVisibleByDefault" : true,
+      "issue" : "No valid HID measurement (registry 4294969619); raw value: unavailable.",
+      "name" : "PMU ibuck18",
+      "quantity" : "current",
+      "source" : "HID"
+    },
+    {
+      "backingSMCKey" : "IPjb",
+      "category" : "temperature",
+      "id" : "hid:current:c601e3dc49a14a5727fe6c5723623cae19bf4b88e6317f1c9fd52b3fb0840fbf",
+      "isVisibleByDefault" : true,
+      "issue" : "No valid HID measurement (registry 4294969626); raw value: unavailable.",
+      "name" : "PMU ibuck19",
+      "quantity" : "current",
+      "source" : "HID"
+    },
+    {
+      "backingSMCKey" : "IP2b",
+      "category" : "temperature",
+      "id" : "hid:current:296391a8e3f0bac7a50f3a3721a8d654dc601c10824b226d121c27836af527a5",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck2",
+      "quantity" : "current",
+      "rawValue" : 16253.645248413086,
+      "source" : "HID\/SMC",
+      "value" : 0.9908017516136169
+    },
+    {
+      "backingSMCKey" : "IP3b",
+      "category" : "temperature",
+      "id" : "hid:current:4cae2701b50159749c80a7097eca6bb3d64d9a58c64e069f14d6afe93c686d76",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck3",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IP4b",
+      "category" : "temperature",
+      "id" : "hid:current:421a28fbf8a2af1ce6bb8576345d83bc09cc07dba2a8f4620b1cf3cf121d7bc3",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck4",
+      "quantity" : "current",
+      "rawValue" : 15896.046875,
+      "source" : "HID\/SMC",
+      "value" : 0.1484832763671875
+    },
+    {
+      "backingSMCKey" : "IP7b",
+      "category" : "temperature",
+      "id" : "hid:current:d92d4c8fba27a6c71ea4da49b6f470b861963bc94f439925eb9440d2257eb7fb",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck7",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IP9b",
+      "category" : "temperature",
+      "id" : "hid:current:602a120f29d1945cb46b6d3de219efd3f419dd43997ced0e3b3de832af2b89b4",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ibuck9",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IP1l",
+      "category" : "temperature",
+      "id" : "hid:current:e0e6a46021cc6903e7429b44e91314441e82a373d77834c3ff59235342f3cf37",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo1",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IPal",
+      "category" : "temperature",
+      "id" : "hid:current:507ec8cbb40c972ae5967291147a4bf33bc72e4b48a4e39ba502a9632159e424",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo10",
+      "quantity" : "current",
+      "rawValue" : 15505.625,
+      "source" : "HID\/SMC",
+      "value" : 0.0177764892578125
+    },
+    {
+      "backingSMCKey" : "IPbl",
+      "category" : "temperature",
+      "id" : "hid:current:e0c3ed0fa6170856631eed7263995ff5e328ff867e10ff6c43fc85eed505c237",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo11",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IPdl",
+      "category" : "temperature",
+      "id" : "hid:current:cefe79a24e4718e390cb08983620e86e48cdc05c58f451ea2c9e93ed5c6dabba",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo13",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IPel",
+      "category" : "temperature",
+      "id" : "hid:current:2d1760909ef08caaed8a49bae908700085cd773af9fb5025efddf6ad4129f3e5",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo14",
+      "quantity" : "current",
+      "rawValue" : 15841.25,
+      "source" : "HID\/SMC",
+      "value" : 0.1099853515625
+    },
+    {
+      "backingSMCKey" : "IPgl",
+      "category" : "temperature",
+      "id" : "hid:current:53736f9074919c7949fb982b4d3c205e4d27f4c43b80034318e4fc14ba3cfc32",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo16",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IPjl",
+      "category" : "temperature",
+      "id" : "hid:current:57f4fbcd6961462c50dae1c9ad31e8c6012e8f5da73a02e439abbe6edfb30456",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo19",
+      "quantity" : "current",
+      "rawValue" : 15935.515625,
+      "source" : "HID\/SMC",
+      "value" : 0.1870269775390625
+    },
+    {
+      "backingSMCKey" : "IP2l",
+      "category" : "temperature",
+      "id" : "hid:current:c946a7bd3eee1e6851a9ae1ce6e740f84acee1e9fca2dd7620d963cbc81604b7",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo2",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IPkl",
+      "category" : "temperature",
+      "id" : "hid:current:a9e4c09ee11a3f13cd3166b26b7522982a246604b0fce1a865d130e58208fe9e",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo20",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IP3l",
+      "category" : "temperature",
+      "id" : "hid:current:3afdff6a7e4dcf58498a0c1f0165eb141ba7d9deb898b57fe8b5205e5e53f0ef",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo3",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IP5l",
+      "category" : "temperature",
+      "id" : "hid:current:d8b3bb8f70ded0d49a7717a7a3aefe2f1b209a0aa0c7f3d6e777fc99b477ac82",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo5",
+      "quantity" : "current",
+      "rawValue" : 15392,
+      "source" : "HID\/SMC",
+      "value" : 0.009765625
+    },
+    {
+      "backingSMCKey" : "IP7l",
+      "category" : "temperature",
+      "id" : "hid:current:9e6edb1211723040538c2692d28f5f75634097a840091375ef10d8ecd1289e7a",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo7",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IP8l",
+      "category" : "temperature",
+      "id" : "hid:current:006d8e551ca4f39461eff6fc36d6916ffc74918ac7efaa408964b5c09b5051b2",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo8",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IP9l",
+      "category" : "temperature",
+      "id" : "hid:current:fd45c0a0709e14557a50e763f7f8c34b4c90b5e9a2e8d08740db9aa7a05fd3bd",
+      "isVisibleByDefault" : true,
+      "name" : "PMU ildo9",
+      "quantity" : "current",
+      "rawValue" : 15506.25,
+      "source" : "HID\/SMC",
+      "value" : 0.017852783203125
+    },
+    {
+      "backingSMCKey" : "TP0Z",
+      "category" : "temperature",
+      "id" : "hid:PMU tcal",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tcal",
+      "quantity" : "temperature",
+      "rawValue" : 51.82000732421875,
+      "source" : "HID",
+      "value" : 51.82000732421875
+    },
+    {
+      "backingSMCKey" : "TP1d",
+      "category" : "temperature",
+      "id" : "hid:PMU tdev1",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdev1",
+      "quantity" : "temperature",
+      "rawValue" : 39.175689697265625,
+      "source" : "HID",
+      "value" : 39.175689697265625
+    },
+    {
+      "backingSMCKey" : "TP2d",
+      "category" : "temperature",
+      "id" : "hid:PMU tdev2",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdev2",
+      "quantity" : "temperature",
+      "rawValue" : 38.57658386230469,
+      "source" : "HID",
+      "value" : 38.57658386230469
+    },
+    {
+      "backingSMCKey" : "TP3d",
+      "category" : "temperature",
+      "id" : "hid:PMU tdev3",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdev3",
+      "quantity" : "temperature",
+      "rawValue" : 37.27027893066406,
+      "source" : "HID",
+      "value" : 37.27027893066406
+    },
+    {
+      "backingSMCKey" : "TP4d",
+      "category" : "temperature",
+      "id" : "hid:PMU tdev4",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdev4",
+      "quantity" : "temperature",
+      "rawValue" : 35.96397399902344,
+      "source" : "HID",
+      "value" : 35.96397399902344
+    },
+    {
+      "backingSMCKey" : "TP5d",
+      "category" : "temperature",
+      "id" : "hid:PMU tdev5",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdev5",
+      "quantity" : "temperature",
+      "rawValue" : 36.833343505859375,
+      "source" : "HID",
+      "value" : 36.833343505859375
+    },
+    {
+      "backingSMCKey" : "TP6d",
+      "category" : "temperature",
+      "id" : "hid:PMU tdev6",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdev6",
+      "quantity" : "temperature",
+      "rawValue" : 37.6396484375,
+      "source" : "HID",
+      "value" : 37.6396484375
+    },
+    {
+      "backingSMCKey" : "TP7d",
+      "category" : "temperature",
+      "id" : "hid:PMU tdev7",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdev7",
+      "quantity" : "temperature",
+      "rawValue" : 38.14414978027344,
+      "source" : "HID",
+      "value" : 38.14414978027344
+    },
+    {
+      "backingSMCKey" : "TP8d",
+      "category" : "temperature",
+      "id" : "hid:PMU tdev8",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdev8",
+      "quantity" : "temperature",
+      "rawValue" : 36.94145202636719,
+      "source" : "HID",
+      "value" : 36.94145202636719
+    },
+    {
+      "backingSMCKey" : "TP0b",
+      "category" : "temperature",
+      "id" : "hid:PMU tdie0",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie0",
+      "quantity" : "temperature",
+      "rawValue" : 39.77302551269531,
+      "source" : "HID",
+      "value" : 39.77302551269531
+    },
+    {
+      "backingSMCKey" : "TP1l",
+      "category" : "temperature",
+      "id" : "hid:temperature:fb3f88d3208ebe6613e02702067a79c5eed0c73decec253108620e7e353ed799",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie1 [3ed799]",
+      "quantity" : "temperature",
+      "rawValue" : 41.21144104003906,
+      "source" : "HID",
+      "value" : 41.21144104003906
+    },
+    {
+      "backingSMCKey" : "TP1b",
+      "category" : "temperature",
+      "id" : "hid:temperature:f72dd8326933e771708b1af422fede5d654285034dda18bc769efb465956ee84",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie1 [56ee84]",
+      "quantity" : "temperature",
+      "rawValue" : 40.5721435546875,
+      "source" : "HID",
+      "value" : 40.5721435546875
+    },
+    {
+      "backingSMCKey" : "TPbb",
+      "category" : "temperature",
+      "id" : "hid:PMU tdie11",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie11",
+      "quantity" : "temperature",
+      "rawValue" : 41.930633544921875,
+      "source" : "HID",
+      "value" : 41.930633544921875
+    },
+    {
+      "backingSMCKey" : "TPdb",
+      "category" : "temperature",
+      "id" : "hid:PMU tdie13",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie13",
+      "quantity" : "temperature",
+      "rawValue" : 41.291351318359375,
+      "source" : "HID",
+      "value" : 41.291351318359375
+    },
+    {
+      "backingSMCKey" : "TPgb",
+      "category" : "temperature",
+      "id" : "hid:PMU tdie16",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie16",
+      "quantity" : "temperature",
+      "rawValue" : 40.412322998046875,
+      "source" : "HID",
+      "value" : 40.412322998046875
+    },
+    {
+      "backingSMCKey" : "TPhb",
+      "category" : "temperature",
+      "id" : "hid:PMU tdie17",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie17",
+      "quantity" : "temperature",
+      "rawValue" : 41.13153076171875,
+      "source" : "HID",
+      "value" : 41.13153076171875
+    },
+    {
+      "backingSMCKey" : "TPib",
+      "category" : "temperature",
+      "id" : "hid:PMU tdie18",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie18",
+      "quantity" : "temperature",
+      "rawValue" : 40.65205383300781,
+      "source" : "HID",
+      "value" : 40.65205383300781
+    },
+    {
+      "backingSMCKey" : "TPjb",
+      "category" : "temperature",
+      "id" : "hid:PMU tdie19",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie19",
+      "quantity" : "temperature",
+      "rawValue" : 40.731964111328125,
+      "source" : "HID",
+      "value" : 40.731964111328125
+    },
+    {
+      "backingSMCKey" : "TP2l",
+      "category" : "temperature",
+      "id" : "hid:temperature:1b58ae84ec78bd8daf82bcc5d77ff01fe2c66b66455044190ab848b443604f6c",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie2 [604f6c]",
+      "quantity" : "temperature",
+      "rawValue" : 41.451171875,
+      "source" : "HID",
+      "value" : 41.451171875
+    },
+    {
+      "backingSMCKey" : "TP2b",
+      "category" : "temperature",
+      "id" : "hid:temperature:ffa15af00a1a5cb80f0bc1240e9696ca0fd5d247555802f3b1d560e33bcfa968",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie2 [cfa968]",
+      "quantity" : "temperature",
+      "rawValue" : 40.33241271972656,
+      "source" : "HID",
+      "value" : 40.33241271972656
+    },
+    {
+      "backingSMCKey" : "TP3b",
+      "category" : "temperature",
+      "id" : "hid:temperature:68c906420985071bf14c27768817eea9d5f8d6a552a42e699441fda1e5202aaa",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie3 [202aaa]",
+      "quantity" : "temperature",
+      "rawValue" : 41.291351318359375,
+      "source" : "HID",
+      "value" : 41.291351318359375
+    },
+    {
+      "backingSMCKey" : "TP3l",
+      "category" : "temperature",
+      "id" : "hid:temperature:bbcf4fe26db3d5f5f83987ab77dfd89a94a5db355c4b8d437a3deeb312cf3b59",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie3 [cf3b59]",
+      "quantity" : "temperature",
+      "rawValue" : 41.21144104003906,
+      "source" : "HID",
+      "value" : 41.21144104003906
+    },
+    {
+      "backingSMCKey" : "TP4l",
+      "category" : "temperature",
+      "id" : "hid:temperature:ef7119634dfcc0459394e5582b4a1832c602e85215f7b1d62ef65345400bce4d",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie4 [0bce4d]",
+      "quantity" : "temperature",
+      "rawValue" : 41.37126159667969,
+      "source" : "HID",
+      "value" : 41.37126159667969
+    },
+    {
+      "backingSMCKey" : "TP4b",
+      "category" : "temperature",
+      "id" : "hid:temperature:255c1fa04f3dd756de03fe87f0b11bc7148de5976bbfe7492d5f8b2920b0dce1",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie4 [b0dce1]",
+      "quantity" : "temperature",
+      "rawValue" : 41.53108215332031,
+      "source" : "HID",
+      "value" : 41.53108215332031
+    },
+    {
+      "backingSMCKey" : "TP9b",
+      "category" : "temperature",
+      "id" : "hid:PMU tdie9",
+      "isVisibleByDefault" : true,
+      "name" : "PMU tdie9",
+      "quantity" : "temperature",
+      "rawValue" : 41.05162048339844,
+      "source" : "HID",
+      "value" : 41.05162048339844
+    },
+    {
+      "backingSMCKey" : "VP0b",
+      "category" : "temperature",
+      "id" : "hid:voltage:d563f52929308106a92b38a396587a1889c6cfa64677fe6fa079de8b011d2d1b",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck0",
+      "quantity" : "voltage",
+      "rawValue" : 16206.369232177734,
+      "source" : "HID\/SMC",
+      "value" : 0.8061298131942749
+    },
+    {
+      "backingSMCKey" : "VP1b",
+      "category" : "temperature",
+      "id" : "hid:voltage:928fab6bb7facbb6f759d47443d1b9714c7281db661e4b39e52a23777e1007a7",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck1",
+      "quantity" : "voltage",
+      "rawValue" : 15913.544662475586,
+      "source" : "HID\/SMC",
+      "value" : 0.1655709594488144
+    },
+    {
+      "backingSMCKey" : "VPbb",
+      "category" : "temperature",
+      "id" : "hid:voltage:46a1b6ca6092b55e6e497dc90c4e23dfe62744e7a062e45709a5654488d250fa",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck11",
+      "quantity" : "voltage",
+      "rawValue" : 16115.225845336914,
+      "source" : "HID\/SMC",
+      "value" : 0.4750504791736603
+    },
+    {
+      "backingSMCKey" : "VPdb",
+      "category" : "temperature",
+      "id" : "hid:voltage:e07822f0a52c9068ef046f1676c0fc00a5424496a06ae93fba997a0bd065d6ed",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck13",
+      "quantity" : "voltage",
+      "rawValue" : 16288.236328125,
+      "source" : "HID\/SMC",
+      "value" : 1.2518463134765625
+    },
+    {
+      "backingSMCKey" : "VPgb",
+      "category" : "temperature",
+      "id" : "hid:voltage:4449f8a7a9ec74d8e0ffff55ef37e44a31f85831cfa837bf0d9e5feb887bbe19",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck16",
+      "quantity" : "voltage",
+      "rawValue" : 16280.6015625,
+      "source" : "HID\/SMC",
+      "value" : 1.19219970703125
+    },
+    {
+      "backingSMCKey" : "VPhb",
+      "category" : "temperature",
+      "id" : "hid:voltage:d168161abe04496e12e7314455cc4d7d07dc8f7276e9fa5f902b157d09beaf71",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck17",
+      "quantity" : "voltage",
+      "rawValue" : 1.19171142578125,
+      "source" : "HID",
+      "value" : 1.19171142578125
+    },
+    {
+      "backingSMCKey" : "VPib",
+      "category" : "temperature",
+      "id" : "hid:voltage:fbfca6511e384a2fe9bd0c26978be331537276be431b11e3db3458c5f7adcfb8",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck18",
+      "quantity" : "voltage",
+      "rawValue" : 0.00042724609375,
+      "source" : "HID",
+      "value" : 0.00042724609375
+    },
+    {
+      "backingSMCKey" : "VPjb",
+      "category" : "temperature",
+      "id" : "hid:voltage:d728425e4bcde7ae3d166c51e62c960e2cbc75d9a4e9e3edc723193f5c57c174",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck19",
+      "quantity" : "voltage",
+      "rawValue" : 0.00042724609375,
+      "source" : "HID",
+      "value" : 0.00042724609375
+    },
+    {
+      "backingSMCKey" : "VP2b",
+      "category" : "temperature",
+      "id" : "hid:voltage:80b61d3ecb338c017fc3e1e417b8850c7dfc0ec095c229bfc57056f32a65e027",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck2",
+      "quantity" : "voltage",
+      "rawValue" : 16123.495208740234,
+      "source" : "HID\/SMC",
+      "value" : 0.49120157957077026
+    },
+    {
+      "backingSMCKey" : "VP3b",
+      "category" : "temperature",
+      "id" : "hid:voltage:912da775630bf8b9a1fbdd3ae3c1172ac0087d0e1c2d9d77e047c60c98330e3e",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck3",
+      "quantity" : "voltage",
+      "rawValue" : 16358.501953125,
+      "source" : "HID\/SMC",
+      "value" : 1.8007965087890625
+    },
+    {
+      "backingSMCKey" : "VP4b",
+      "category" : "temperature",
+      "id" : "hid:voltage:df2467b301c266a39f4cfb5e52d6a7eb0d4d30a462ecd1546d962e5fba5c276e",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck4",
+      "quantity" : "voltage",
+      "rawValue" : 16252.35546875,
+      "source" : "HID\/SMC",
+      "value" : 0.9857635498046875
+    },
+    {
+      "backingSMCKey" : "VP7b",
+      "category" : "temperature",
+      "id" : "hid:voltage:912f97b679af91f216dcd1814c25c8238e0ef43670adf8fc50d47d26b5626627",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck7",
+      "quantity" : "voltage",
+      "rawValue" : 16234.375,
+      "source" : "HID\/SMC",
+      "value" : 0.91552734375
+    },
+    {
+      "backingSMCKey" : "VP9b",
+      "category" : "temperature",
+      "id" : "hid:voltage:483c48db3dd99ce01953e86231cfb742ed7ae1e1c9a0ba039e4471f5df7da143",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vbuck9",
+      "quantity" : "voltage",
+      "rawValue" : 16168.42578125,
+      "source" : "HID\/SMC",
+      "value" : 0.6579132080078125
+    },
+    {
+      "backingSMCKey" : "VP1l",
+      "category" : "temperature",
+      "id" : "hid:voltage:770951516defd3bb97045adf809522b656a883ee463598ac84122a7cd1293d3d",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo1",
+      "quantity" : "voltage",
+      "rawValue" : 3.79412841796875,
+      "source" : "HID",
+      "value" : 3.79412841796875
+    },
+    {
+      "backingSMCKey" : "VPal",
+      "category" : "temperature",
+      "id" : "hid:voltage:4ca874d2a3d030c08e2728da110122171c8a55d314eae99e0025ceb886ed220c",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo10",
+      "quantity" : "voltage",
+      "rawValue" : 16281.603515625,
+      "source" : "HID\/SMC",
+      "value" : 1.2000274658203125
+    },
+    {
+      "backingSMCKey" : "VPbl",
+      "category" : "temperature",
+      "id" : "hid:voltage:0cab1c1e97d3a34afaba2131691e2a764753bd49e60d03d8989b1b0069478082",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo11",
+      "quantity" : "voltage",
+      "rawValue" : 16195.21875,
+      "source" : "HID\/SMC",
+      "value" : 0.7625732421875
+    },
+    {
+      "backingSMCKey" : "VPcl",
+      "category" : "temperature",
+      "id" : "hid:voltage:ac71420fd31c06444486a1e6f5d7a6c5459c1b07540591b7d6030bc874f6ec1e",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo12",
+      "quantity" : "voltage",
+      "rawValue" : 16467.13671875,
+      "source" : "HID\/SMC",
+      "value" : 3.29901123046875
+    },
+    {
+      "backingSMCKey" : "VPel",
+      "category" : "temperature",
+      "id" : "hid:voltage:d8bd042b5fda1e349d7bd012dfca4df9bfc6bb134261e8fbeffd62c049880e82",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo14",
+      "quantity" : "voltage",
+      "rawValue" : 16263.70703125,
+      "source" : "HID\/SMC",
+      "value" : 1.060211181640625
+    },
+    {
+      "backingSMCKey" : "VPfl",
+      "category" : "temperature",
+      "id" : "hid:voltage:0d8c8ebc85bfc6a23d6c2b3ac7621b256a4f0fb4492b4330756144730eb6de03",
+      "isVisibleByDefault" : true,
+      "issue" : "No valid HID measurement (registry 4294969506); raw value: unavailable.",
+      "name" : "PMU vldo15",
+      "quantity" : "voltage",
+      "source" : "HID"
+    },
+    {
+      "backingSMCKey" : "VPhl",
+      "category" : "temperature",
+      "id" : "hid:voltage:e3ea3d8640de187a6dff594607c65e284d46b93f7a193666d9245b7bd16223b6",
+      "isVisibleByDefault" : true,
+      "issue" : "No valid HID measurement (registry 4294969508); raw value: unavailable.",
+      "name" : "PMU vldo17",
+      "quantity" : "voltage",
+      "source" : "HID"
+    },
+    {
+      "backingSMCKey" : "VP2l",
+      "category" : "temperature",
+      "id" : "hid:voltage:14ab87de0862f173982d6705fe470742ce3e3cde881ae0c90d3c12f76f8439a5",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo2",
+      "quantity" : "voltage",
+      "rawValue" : 16281.728515625,
+      "source" : "HID\/SMC",
+      "value" : 1.2010040283203125
+    },
+    {
+      "backingSMCKey" : "VPkl",
+      "category" : "temperature",
+      "id" : "hid:voltage:5c5fbfdb13097b2f00942da15af931c15ce97f53f55ef010601f160ab4cc210e",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo20",
+      "quantity" : "voltage",
+      "rawValue" : 16263.900390625,
+      "source" : "HID\/SMC",
+      "value" : 1.0617218017578125
+    },
+    {
+      "backingSMCKey" : "VPll",
+      "category" : "temperature",
+      "id" : "hid:voltage:380912f771e77fbccb6fd7a11d982023a21d82a89e60a57de79ebfc7919ecc28",
+      "isVisibleByDefault" : true,
+      "issue" : "No valid HID measurement (registry 4294969521); raw value: unavailable.",
+      "name" : "PMU vldo21",
+      "quantity" : "voltage",
+      "source" : "HID"
+    },
+    {
+      "backingSMCKey" : "VP3l",
+      "category" : "temperature",
+      "id" : "hid:voltage:d44ef46339c7b6c7cbda323a9e211fb6f138d013be7ef9089c1fc4f3f113de43",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo3",
+      "quantity" : "voltage",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "VP5l",
+      "category" : "temperature",
+      "id" : "hid:voltage:36224d29b82515acff86203d1a10db2b64efb41ed8c25b9939d4f7e4d8d0fb71",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo5",
+      "quantity" : "voltage",
+      "rawValue" : 16358.439453125,
+      "source" : "HID\/SMC",
+      "value" : 1.8003082275390625
+    },
+    {
+      "backingSMCKey" : "VP7l",
+      "category" : "temperature",
+      "id" : "hid:voltage:72c95af10a128abba24c2696331c531daa559c304ff328d347e577a0a3a11795",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo7",
+      "quantity" : "voltage",
+      "rawValue" : 16467.3720703125,
+      "source" : "HID\/SMC",
+      "value" : 3.3026885986328125
+    },
+    {
+      "backingSMCKey" : "VP8l",
+      "category" : "temperature",
+      "id" : "hid:voltage:45d5a75328d720ed70de4959f1e1e84b891105ff131bc52589f83922a7e4b6af",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo8",
+      "quantity" : "voltage",
+      "rawValue" : 16263.75,
+      "source" : "HID\/SMC",
+      "value" : 1.060546875
+    },
+    {
+      "backingSMCKey" : "VP9l",
+      "category" : "temperature",
+      "id" : "hid:voltage:768330b6c6321dc4599c9718fa2572e8e11b96f8df4fae8b70ac772b75f5c5ca",
+      "isVisibleByDefault" : true,
+      "name" : "PMU vldo9",
+      "quantity" : "voltage",
+      "rawValue" : 16358.314453125,
+      "source" : "HID\/SMC",
+      "value" : 1.7993316650390625
+    },
+    {
+      "backingSMCKey" : "VR0u",
+      "category" : "temperature",
+      "id" : "hid:voltage:bbf436933d9cca566850af1b100eaa704eb4f0ae163039f02f7457b0a4f10718",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 VR0u",
+      "quantity" : "voltage",
+      "rawValue" : 3.8056793212890625,
+      "source" : "HID",
+      "value" : 3.8056793212890625
+    },
+    {
+      "backingSMCKey" : "IRab",
+      "category" : "temperature",
+      "id" : "hid:current:c6cabc10e557408143967fce875b396040ce6873e20dfd6d2b1c2cfc1ee5424b",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ibuck10",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IRcb",
+      "category" : "temperature",
+      "id" : "hid:current:9850ec7bc9a2b7e91ba8db66efad04f46291ce386ea086ae18a05369e5745b8b",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ibuck12",
+      "quantity" : "current",
+      "rawValue" : 15135,
+      "source" : "HID\/SMC",
+      "value" : 0.0024261474609375
+    },
+    {
+      "backingSMCKey" : "IReb",
+      "category" : "temperature",
+      "id" : "hid:current:1568fc74861f44ff4eea1145b2b79ad0989edd2e01559ae8bb6563f0cd1e10cb",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ibuck14",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IRfb",
+      "category" : "temperature",
+      "id" : "hid:current:414a618a419de263dad83937fb8c3ca55843ed2bfdd6b13c507e2287b2003a02",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ibuck15",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IR5b",
+      "category" : "temperature",
+      "id" : "hid:current:93cf478a57707480fe861193292263e8e24f0b6fb0bfdf1c788a1e387a2cb3e2",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ibuck5",
+      "quantity" : "current",
+      "rawValue" : 15252.5,
+      "source" : "HID\/SMC",
+      "value" : 0.0045318603515625
+    },
+    {
+      "backingSMCKey" : "IR6b",
+      "category" : "temperature",
+      "id" : "hid:current:365e5f373dcb6c06284e95c46b2b43d977d7bce237ddd885e0b33e7d71bcfc76",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ibuck6",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IR8b",
+      "category" : "temperature",
+      "id" : "hid:current:f9dcbfdb7c292d001022aff01d38fb4c4588fab41874b1e19381d9736160035f",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ibuck8",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IRal",
+      "category" : "temperature",
+      "id" : "hid:current:df5efe3454b86b0ee86788b920fae87b125bdf510191c81a7d5876bc5c7da758",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ildo10",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IRdl",
+      "category" : "temperature",
+      "id" : "hid:current:e6b0e25a5945bf8e5925d6eb35522667645aa2257ab4c1f28a347c1b5d6b9cd8",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ildo13",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IRgl",
+      "category" : "temperature",
+      "id" : "hid:current:388d2d808dc13945e504b3eb397c9fcbd5d10c2f79977d1db8370e639f5ba338",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ildo16",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IRil",
+      "category" : "temperature",
+      "id" : "hid:current:b8f61b7c15ed61ce210bc46cb5d8af0f1c22cfeebcecbb616dbbac9f3082cc01",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ildo18",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IRjl",
+      "category" : "temperature",
+      "id" : "hid:current:cd40ff394e2ec298329cbebde236df677145fdf2c7dd6933b1d414777178b393",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ildo19",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IR4l",
+      "category" : "temperature",
+      "id" : "hid:current:9246621ae963762955c4ae355477a4968c55e28137da31e42cbc97afb96528d6",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ildo4",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IR6l",
+      "category" : "temperature",
+      "id" : "hid:current:04f8b5b99ff141c5b78eebe8ac8324e43d1244ac676d961a8ddd2f5c3391c80a",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ildo6",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "IR9l",
+      "category" : "temperature",
+      "id" : "hid:current:feb73354e080bd39dbcfd038e2822b160a6f1a57fc72c9b37ea92e258a9cbc89",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 ildo9",
+      "quantity" : "current",
+      "rawValue" : 0,
+      "source" : "HID\/SMC",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "TR0Z",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tcal",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tcal",
+      "quantity" : "temperature",
+      "rawValue" : 51.82000732421875,
+      "source" : "HID",
+      "value" : 51.82000732421875
+    },
+    {
+      "backingSMCKey" : "TR1d",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdev1",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdev1",
+      "quantity" : "temperature",
+      "rawValue" : 35.96397399902344,
+      "source" : "HID",
+      "value" : 35.96397399902344
+    },
+    {
+      "backingSMCKey" : "TR2d",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdev2",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdev2",
+      "quantity" : "temperature",
+      "rawValue" : 31.364974975585938,
+      "source" : "HID",
+      "value" : 31.364974975585938
+    },
+    {
+      "backingSMCKey" : "TR3d",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdev3",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdev3",
+      "quantity" : "temperature",
+      "rawValue" : 37.05406188964844,
+      "source" : "HID",
+      "value" : 37.05406188964844
+    },
+    {
+      "backingSMCKey" : "TR4d",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdev4",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdev4",
+      "quantity" : "temperature",
+      "rawValue" : 35.11712646484375,
+      "source" : "HID",
+      "value" : 35.11712646484375
+    },
+    {
+      "backingSMCKey" : "TR5d",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdev5",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdev5",
+      "quantity" : "temperature",
+      "rawValue" : 36.79730224609375,
+      "source" : "HID",
+      "value" : 36.79730224609375
+    },
+    {
+      "backingSMCKey" : "TR1b",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie1",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie1",
+      "quantity" : "temperature",
+      "rawValue" : 36.049652099609375,
+      "source" : "HID",
+      "value" : 36.049652099609375
+    },
+    {
+      "backingSMCKey" : "TRal",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie10",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie10",
+      "quantity" : "temperature",
+      "rawValue" : 35.889739990234375,
+      "source" : "HID",
+      "value" : 35.889739990234375
+    },
+    {
+      "backingSMCKey" : "TR2b",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie2",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie2",
+      "quantity" : "temperature",
+      "rawValue" : 36.8492431640625,
+      "source" : "HID",
+      "value" : 36.8492431640625
+    },
+    {
+      "backingSMCKey" : "TR3b",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie3",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie3",
+      "quantity" : "temperature",
+      "rawValue" : 35.25006103515625,
+      "source" : "HID",
+      "value" : 35.25006103515625
+    },
+    {
+      "backingSMCKey" : "TR4b",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie4",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie4",
+      "quantity" : "temperature",
+      "rawValue" : 35.64985656738281,
+      "source" : "HID",
+      "value" : 35.64985656738281
+    },
+    {
+      "backingSMCKey" : "TR5b",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie5",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie5",
+      "quantity" : "temperature",
+      "rawValue" : 35.17010498046875,
+      "source" : "HID",
+      "value" : 35.17010498046875
+    },
+    {
+      "backingSMCKey" : "TR6b",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie6",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie6",
+      "quantity" : "temperature",
+      "rawValue" : 35.729827880859375,
+      "source" : "HID",
+      "value" : 35.729827880859375
+    },
+    {
+      "backingSMCKey" : "TR7b",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie7",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie7",
+      "quantity" : "temperature",
+      "rawValue" : 35.48994445800781,
+      "source" : "HID",
+      "value" : 35.48994445800781
+    },
+    {
+      "backingSMCKey" : "TR8l",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie8",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie8",
+      "quantity" : "temperature",
+      "rawValue" : 35.809783935546875,
+      "source" : "HID",
+      "value" : 35.809783935546875
+    },
+    {
+      "backingSMCKey" : "TR9l",
+      "category" : "temperature",
+      "id" : "hid:PMU2 tdie9",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 tdie9",
+      "quantity" : "temperature",
+      "rawValue" : 35.56990051269531,
+      "source" : "HID",
+      "value" : 35.56990051269531
+    },
+    {
+      "backingSMCKey" : "VRab",
+      "category" : "temperature",
+      "id" : "hid:voltage:2d6a596de68122469d4ae08088317b6ae4104daaba0b4c80c26ec476eaad4d04",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vbuck10",
+      "quantity" : "voltage",
+      "rawValue" : 16141.625,
+      "source" : "HID\/SMC",
+      "value" : 0.55322265625
+    },
+    {
+      "backingSMCKey" : "VRcb",
+      "category" : "temperature",
+      "id" : "hid:voltage:2905dfff9860941e8e3bcba32f9e68b0cd96a4d0dce98805171255986512d7e0",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vbuck12",
+      "quantity" : "voltage",
+      "rawValue" : 16225.9921875,
+      "source" : "HID\/SMC",
+      "value" : 0.882781982421875
+    },
+    {
+      "backingSMCKey" : "VReb",
+      "category" : "temperature",
+      "id" : "hid:voltage:a8550e8ed3fd15fa1ff841527910eaf0e6b6bcaf6ce01482a824db85586450a1",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vbuck14",
+      "quantity" : "voltage",
+      "rawValue" : 16192.44140625,
+      "source" : "HID\/SMC",
+      "value" : 0.7517242431640625
+    },
+    {
+      "backingSMCKey" : "VRfb",
+      "category" : "temperature",
+      "id" : "hid:voltage:0073bd151a0c23c796bd1ab4b5dbdfe66a647ac94889b1055e62550f376dd9bd",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vbuck15",
+      "quantity" : "voltage",
+      "rawValue" : 16284.220703125,
+      "source" : "HID\/SMC",
+      "value" : 1.2204742431640625
+    },
+    {
+      "backingSMCKey" : "VR5b",
+      "category" : "temperature",
+      "id" : "hid:voltage:a62a50c4d5b3cfe21395ed7f66be40914e354592ca13dadc382b6e965ebad816",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vbuck5",
+      "quantity" : "voltage",
+      "rawValue" : 16199.796875,
+      "source" : "HID\/SMC",
+      "value" : 0.78045654296875
+    },
+    {
+      "backingSMCKey" : "VR6b",
+      "category" : "temperature",
+      "id" : "hid:voltage:4f1e92de0893ade459ee1bfc8a92eda75a00f2e4f7b6077f656d142f591edb32",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vbuck6",
+      "quantity" : "voltage",
+      "rawValue" : 16421.4873046875,
+      "source" : "HID\/SMC",
+      "value" : 2.5857391357421875
+    },
+    {
+      "backingSMCKey" : "VR8b",
+      "category" : "temperature",
+      "id" : "hid:voltage:38371c640553eb95d4e30bb99aa42f701121f85a4120a1a17045f79c37fa0884",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vbuck8",
+      "quantity" : "voltage",
+      "rawValue" : 16168.6484375,
+      "source" : "HID\/SMC",
+      "value" : 0.658782958984375
+    },
+    {
+      "backingSMCKey" : "VRal",
+      "category" : "temperature",
+      "id" : "hid:voltage:ab36d141b4d998788d3183e917780a9f08fbf926f918f5d5af00aa84737885df",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vldo10",
+      "quantity" : "voltage",
+      "rawValue" : 16281.876953125,
+      "source" : "HID\/SMC",
+      "value" : 1.2021636962890625
+    },
+    {
+      "backingSMCKey" : "VRdl",
+      "category" : "temperature",
+      "id" : "hid:voltage:5582876be2a2a4d58c6d26af1f13bb707709c5f8d181ae382b2b7621f7ddecdb",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vldo13",
+      "quantity" : "voltage",
+      "rawValue" : 0.0017547607421875,
+      "source" : "HID",
+      "value" : 0.0017547607421875
+    },
+    {
+      "backingSMCKey" : "VRgl",
+      "category" : "temperature",
+      "id" : "hid:voltage:83034c4a4c214df1bddad58599d729ad71c0768a6ee581311890dbf868d24e62",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vldo16",
+      "quantity" : "voltage",
+      "rawValue" : 0.0005340576171875,
+      "source" : "HID",
+      "value" : 0.0005340576171875
+    },
+    {
+      "backingSMCKey" : "VRil",
+      "category" : "temperature",
+      "id" : "hid:voltage:17137b47d706a39d37cc32ae32b0fb79b3a741740ce7ce6f197fe0781c1bb248",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vldo18",
+      "quantity" : "voltage",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "VRjl",
+      "category" : "temperature",
+      "id" : "hid:voltage:510d92933e563d73f313727eac124d9248f76752f0dcb628b2bcce89767118aa",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vldo19",
+      "quantity" : "voltage",
+      "rawValue" : 0.0005340576171875,
+      "source" : "HID",
+      "value" : 0.0005340576171875
+    },
+    {
+      "backingSMCKey" : "VR4l",
+      "category" : "temperature",
+      "id" : "hid:voltage:185d6ac4180156a0433d17a6b5e42b7e90f835727408a395ff2ca85dc4dd02a3",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vldo4",
+      "quantity" : "voltage",
+      "rawValue" : 0,
+      "source" : "HID",
+      "value" : 0
+    },
+    {
+      "backingSMCKey" : "VR6l",
+      "category" : "temperature",
+      "id" : "hid:voltage:3ee63dd94f857ab043441c685d147f7eab12b1fa2db02ab93cea9e3f80774d53",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vldo6",
+      "quantity" : "voltage",
+      "rawValue" : 0.0005340576171875,
+      "source" : "HID",
+      "value" : 0.0005340576171875
+    },
+    {
+      "backingSMCKey" : "VR9l",
+      "category" : "temperature",
+      "id" : "hid:voltage:0749ddb44c35b5cd5835cabedb42f7f37c5ec1d9ccb3e8a1b30ef94acd05b3e2",
+      "isVisibleByDefault" : true,
+      "name" : "PMU2 vldo9",
+      "quantity" : "voltage",
+      "rawValue" : 16358.625,
+      "source" : "HID\/SMC",
+      "value" : 1.8017578125
+    },
+    {
+      "backingSMCKey" : "TP7b",
+      "category" : "psu",
+      "id" : "hid:PMU tdie7",
+      "isVisibleByDefault" : true,
+      "name" : "Power Manager Die 7",
+      "quantity" : "temperature",
+      "rawValue" : 40.89178466796875,
+      "source" : "HID",
+      "value" : 40.89178466796875
+    },
+    {
+      "category" : "psu",
+      "id" : "avg:Power Manager Die Average",
+      "isVisibleByDefault" : true,
+      "name" : "Power Manager Die Average",
+      "quantity" : "temperature",
+      "source" : "Calculated",
+      "value" : 40.89178466796875
+    },
+    {
+      "category" : "power",
+      "id" : "PA2R",
+      "isVisibleByDefault" : true,
+      "name" : "Power PA2R",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PD0R",
+      "isVisibleByDefault" : true,
+      "name" : "Power PD0R",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 11.203633308410645
+    },
+    {
+      "category" : "power",
+      "id" : "PDTR",
+      "isVisibleByDefault" : true,
+      "name" : "Power PDTR",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 11.203633308410645
+    },
+    {
+      "category" : "power",
+      "id" : "PF5R",
+      "isVisibleByDefault" : true,
+      "name" : "Power PF5R",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PHPB",
+      "isVisibleByDefault" : true,
+      "name" : "Power PHPB",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PHPC",
+      "isVisibleByDefault" : true,
+      "name" : "Power PHPC",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 2.9421329498291016
+    },
+    {
+      "category" : "power",
+      "id" : "PHPM",
+      "isVisibleByDefault" : true,
+      "name" : "Power PHPM",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.8479999899864197
+    },
+    {
+      "category" : "power",
+      "id" : "PHPS",
+      "isVisibleByDefault" : true,
+      "name" : "Power PHPS",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PI3R",
+      "isVisibleByDefault" : true,
+      "name" : "Power PI3R",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PMVC",
+      "isVisibleByDefault" : true,
+      "name" : "Power PMVC",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 29.43341064453125
+    },
+    {
+      "category" : "power",
+      "id" : "PMVR",
+      "isVisibleByDefault" : true,
+      "name" : "Power PMVR",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PN00",
+      "isVisibleByDefault" : true,
+      "name" : "Power PN00",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.04600000008940697
+    },
+    {
+      "category" : "power",
+      "id" : "PO5R",
+      "isVisibleByDefault" : true,
+      "name" : "Power PO5R",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.2617073655128479
+    },
+    {
+      "category" : "power",
+      "id" : "PP0b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP0b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 2.4261791706085205
+    },
+    {
+      "category" : "power",
+      "id" : "PP1b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP1b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.13098594546318054
+    },
+    {
+      "category" : "power",
+      "id" : "PP2b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP2b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.4901101589202881
+    },
+    {
+      "category" : "power",
+      "id" : "PP2l",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP2l",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PP3b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP3b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PP4b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP4b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.14636939764022827
+    },
+    {
+      "category" : "power",
+      "id" : "PP5l",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP5l",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.017581135034561157
+    },
+    {
+      "category" : "power",
+      "id" : "PP7b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP7b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PP7l",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP7l",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PP8l",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP8l",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PP9b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP9b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PP9l",
+      "isVisibleByDefault" : true,
+      "name" : "Power PP9l",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.032123077660799026
+    },
+    {
+      "category" : "power",
+      "id" : "PPMR",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPMR",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 8.621345520019531
+    },
+    {
+      "category" : "power",
+      "id" : "PPSM",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPSM",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 2.9421329498291016
+    },
+    {
+      "category" : "power",
+      "id" : "PPSR",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPSR",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.2609767019748688
+    },
+    {
+      "category" : "power",
+      "id" : "PPal",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPal",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.0213322751224041
+    },
+    {
+      "category" : "power",
+      "id" : "PPbb",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPbb",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.5149405002593994
+    },
+    {
+      "category" : "power",
+      "id" : "PPbl",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPbl",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PPcl",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPcl",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.15157048404216766
+    },
+    {
+      "category" : "power",
+      "id" : "PPdb",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPdb",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PPdl",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPdl",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PPeb",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPeb",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PPel",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPel",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.11660769581794739
+    },
+    {
+      "category" : "power",
+      "id" : "PPgb",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPgb",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PPjl",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPjl",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.19813112914562225
+    },
+    {
+      "category" : "power",
+      "id" : "PPkl",
+      "isVisibleByDefault" : true,
+      "name" : "Power PPkl",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PR5b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PR5b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.0035369200631976128
+    },
+    {
+      "category" : "power",
+      "id" : "PR6b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PR6b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PR8b",
+      "isVisibleByDefault" : true,
+      "name" : "Power PR8b",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PR9l",
+      "isVisibleByDefault" : true,
+      "name" : "Power PR9l",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PRab",
+      "isVisibleByDefault" : true,
+      "name" : "Power PRab",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PRal",
+      "isVisibleByDefault" : true,
+      "name" : "Power PRal",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PRcb",
+      "isVisibleByDefault" : true,
+      "name" : "Power PRcb",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.002141759265214205
+    },
+    {
+      "category" : "power",
+      "id" : "PReb",
+      "isVisibleByDefault" : true,
+      "name" : "Power PReb",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PRfb",
+      "isVisibleByDefault" : true,
+      "name" : "Power PRfb",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PSTR",
+      "isVisibleByDefault" : true,
+      "name" : "Power PSTR",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 6.536043643951416
+    },
+    {
+      "category" : "power",
+      "id" : "PUFC",
+      "isVisibleByDefault" : true,
+      "name" : "Power PUFC",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.009474677965044975
+    },
+    {
+      "category" : "power",
+      "id" : "PURC",
+      "isVisibleByDefault" : true,
+      "name" : "Power PURC",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.9427163600921631
+    },
+    {
+      "category" : "power",
+      "id" : "PUTC",
+      "isVisibleByDefault" : true,
+      "name" : "Power PUTC",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.951870322227478
+    },
+    {
+      "category" : "power",
+      "id" : "PW3C",
+      "isVisibleByDefault" : true,
+      "name" : "Power PW3C",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PZC0",
+      "isVisibleByDefault" : true,
+      "name" : "Power PZC0",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 6.986081600189209
+    },
+    {
+      "category" : "power",
+      "id" : "PZC1",
+      "isVisibleByDefault" : true,
+      "name" : "Power PZC1",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 5.330978870391846
+    },
+    {
+      "category" : "power",
+      "id" : "PZCB",
+      "isVisibleByDefault" : true,
+      "name" : "Power PZCB",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0
+    },
+    {
+      "category" : "power",
+      "id" : "PZCU",
+      "isVisibleByDefault" : true,
+      "name" : "Power PZCU",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.12184619158506393
+    },
+    {
+      "category" : "power",
+      "id" : "PZD1",
+      "isVisibleByDefault" : true,
+      "name" : "Power PZD1",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 0.9046393036842346
+    },
+    {
+      "category" : "power",
+      "id" : "PZT0",
+      "isVisibleByDefault" : true,
+      "name" : "Power PZT0",
+      "quantity" : "power",
+      "source" : "SMC",
+      "value" : 128
+    },
+    {
+      "category" : "psu",
+      "id" : "TPMP",
+      "isVisibleByDefault" : true,
+      "name" : "Power Supply Proximity",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.558563232421875
+    },
+    {
+      "backingSMCKey" : "TN0n",
+      "category" : "ssd",
+      "id" : "hid:NAND CH0 temp",
+      "isVisibleByDefault" : true,
+      "name" : "SSD",
+      "quantity" : "temperature",
+      "rawValue" : 37,
+      "source" : "HID",
+      "value" : 37
+    },
+    {
+      "category" : "temperature",
+      "id" : "TCMb",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TCMb",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 51.696250915527344
+    },
+    {
+      "category" : "temperature",
+      "id" : "TH0a",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TH0a",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.833343505859375
+    },
+    {
+      "category" : "temperature",
+      "id" : "TH0b",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TH0b",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.43243408203125
+    },
+    {
+      "category" : "temperature",
+      "id" : "TH0x",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TH0x",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.833343505859375
+    },
+    {
+      "category" : "temperature",
+      "id" : "THSP",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature THSP",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 35.11712646484375
+    },
+    {
+      "category" : "temperature",
+      "id" : "TIED",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TIED",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 38.14414978027344
+    },
+    {
+      "category" : "temperature",
+      "id" : "TMVR",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TMVR",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 37.378387451171875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TN00",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TN00",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 37.5
+    },
+    {
+      "category" : "temperature",
+      "id" : "TN01",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TN01",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.75
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPD0",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPD0",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 47.33601379394531
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPD1",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPD1",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.75592041015625
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPD2",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPD2",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.108673095703125
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPD3",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPD3",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.770477294921875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPD4",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPD4",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.108673095703125
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPD7",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPD7",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 43.96870422363281
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPD9",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPD9",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.9395751953125
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDB",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDB",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 43.79960632324219
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDD",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDD",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.9395751953125
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDG",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDG",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.9395751953125
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDH",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDH",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.770477294921875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDI",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDI",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 43.27775573730469
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDJ",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDJ",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.43229675292969
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDK",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDK",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.9395751953125
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDL",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDL",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.44685363769531
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDM",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDM",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.27775573730469
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDN",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDN",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 42.27775573730469
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPDX",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPDX",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 47.33601379394531
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPSD",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPSD",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.07208251953125
+    },
+    {
+      "category" : "temperature",
+      "id" : "TPSP",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TPSP",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 35.7747802734375
+    },
+    {
+      "category" : "temperature",
+      "id" : "TR0Z",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: ioft.",
+      "name" : "Temperature TR0Z",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TR1d",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: ioft.",
+      "name" : "Temperature TR1d",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TR2d",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: ioft.",
+      "name" : "Temperature TR2d",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TR3d",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: ioft.",
+      "name" : "Temperature TR3d",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TR4d",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: ioft.",
+      "name" : "Temperature TR4d",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TR5d",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: ioft.",
+      "name" : "Temperature TR5d",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRD5",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRD5",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.52940368652344
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRD6",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRD6",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.28953552246094
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRD8",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRD8",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 35.809783935546875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRDA",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRDA",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.28953552246094
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRDC",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRDC",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 35.64985656738281
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRDE",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRDE",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 35.25006103515625
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRDF",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRDF",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 35.40998840332031
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRDG",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRDG",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 35.969696044921875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TRDX",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TRDX",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.52940368652344
+    },
+    {
+      "category" : "temperature",
+      "id" : "TSCB",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TSCB",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 38.468475341796875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TSCD",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TSCD",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 37.70721435546875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TT0P",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TT0P",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 37.09010314941406
+    },
+    {
+      "category" : "temperature",
+      "id" : "TUVS",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TUVS",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 36.94145202636719
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVAi",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: si32.",
+      "name" : "Temperature TVAi",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVCi",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: si32.",
+      "name" : "Temperature TVCi",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVD0",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVD0",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 51.74687576293945
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVDA",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVDA",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 47.89787292480469
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVDC",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVDC",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 51.74687576293945
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVDE",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVDE",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 51.74687576293945
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVDG",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVDG",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 47.634376525878906
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVDP",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVDP",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 51.1875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVDi",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: si32.",
+      "name" : "Temperature TVDi",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVEi",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: si32.",
+      "name" : "Temperature TVEi",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVGi",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: si32.",
+      "name" : "Temperature TVGi",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVMD",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVMD",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 1
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVN0",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVN0",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 38.10375213623047
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVN1",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVN1",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.282432556152344
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVNS",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVNS",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 41.282432556152344
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVNi",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: si32.",
+      "name" : "Temperature TVNi",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVPi",
+      "isVisibleByDefault" : true,
+      "issue" : "Raw SMC channel with unsupported measurement encoding: si32.",
+      "name" : "Temperature TVPi",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "TVS0",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TVS0",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 32.519798278808594
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0O",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0O",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0P",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0P",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0Q",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0Q",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0S",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0S",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0T",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0T",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0V",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0V",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0b",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0b",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0c",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0c",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0e",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0e",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0f",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0f",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0g",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0g",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ta0h",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ta0h",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "TfC1",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TfC1",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.04343795776367
+    },
+    {
+      "category" : "temperature",
+      "id" : "TfCD",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature TfCD",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.306095123291016
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts00",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts00",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.6875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts01",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts01",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.390625
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts02",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts02",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.96875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts03",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts03",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.953125
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts04",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts04",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.984375
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts05",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts05",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 40.671875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts06",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts06",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.59375
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts07",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts07",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.71875
+    },
+    {
+      "category" : "temperature",
+      "id" : "Ts08",
+      "isVisibleByDefault" : true,
+      "name" : "Temperature Ts08",
+      "quantity" : "temperature",
+      "source" : "SMC",
+      "value" : 39.828125
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz11",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz11 has no valid temperature.",
+      "name" : "Temperature Tz11",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz12",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz12 has no valid temperature.",
+      "name" : "Temperature Tz12",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz13",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz13 has no valid temperature.",
+      "name" : "Temperature Tz13",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz14",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz14 has no valid temperature.",
+      "name" : "Temperature Tz14",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz15",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz15 has no valid temperature.",
+      "name" : "Temperature Tz15",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz16",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz16 has no valid temperature.",
+      "name" : "Temperature Tz16",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz17",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz17 has no valid temperature.",
+      "name" : "Temperature Tz17",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz18",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz18 has no valid temperature.",
+      "name" : "Temperature Tz18",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "temperature",
+      "id" : "Tz1j",
+      "isVisibleByDefault" : true,
+      "issue" : "Sensor Tz1j has no valid temperature.",
+      "name" : "Temperature Tz1j",
+      "quantity" : "temperature",
+      "source" : "SMC"
+    },
+    {
+      "category" : "voltage",
+      "id" : "VD0R",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VD0R",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 12.559518814086914
+    },
+    {
+      "category" : "voltage",
+      "id" : "VMVC",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VMVC",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 3.79046630859375
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP0b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP0b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.8061298131942749
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP1b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP1b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.1655709594488144
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP2b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP2b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.49120157957077026
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP2l",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP2l",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.2010040283203125
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP3b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP3b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.8007965087890625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP4b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP4b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.9857635498046875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP5l",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP5l",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.8003082275390625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP7b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP7b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.91552734375
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP7l",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP7l",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 3.3026885986328125
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP8l",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP8l",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.060546875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP9b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP9b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.6579132080078125
+    },
+    {
+      "category" : "voltage",
+      "id" : "VP9l",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VP9l",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.7993316650390625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPal",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPal",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.2000274658203125
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPbb",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPbb",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.4750504791736603
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPbl",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPbl",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.7625732421875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPcl",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPcl",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 3.29901123046875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPdb",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPdb",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.2518463134765625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPdl",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPdl",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 3.30145263671875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPeb",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPeb",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.7728424072265625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPel",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPel",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.060211181640625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPgb",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPgb",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.19219970703125
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPjl",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPjl",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.0593719482421875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VPkl",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VPkl",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.0617218017578125
+    },
+    {
+      "category" : "voltage",
+      "id" : "VR5b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VR5b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.78045654296875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VR6b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VR6b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 2.5857391357421875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VR8b",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VR8b",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.658782958984375
+    },
+    {
+      "category" : "voltage",
+      "id" : "VR9l",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VR9l",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.8017578125
+    },
+    {
+      "category" : "voltage",
+      "id" : "VRTC",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VRTC",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 3.0349578857421875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VRab",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VRab",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.55322265625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VRal",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VRal",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.2021636962890625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VRcb",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VRcb",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.882781982421875
+    },
+    {
+      "category" : "voltage",
+      "id" : "VReb",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VReb",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 0.7517242431640625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VRfb",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VRfb",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 1.2204742431640625
+    },
+    {
+      "category" : "voltage",
+      "id" : "VSPC",
+      "isVisibleByDefault" : true,
+      "name" : "Voltage VSPC",
+      "quantity" : "voltage",
+      "source" : "SMC",
+      "value" : 3.8032376766204834
+    },
+    {
+      "category" : "voltage",
+      "id" : "Vlhb",
+      "isVisibleByDefault" : true,
+      "issue" : "Unsupported SMC data size for Vlhb.",
+      "name" : "Voltage Vlhb",
+      "quantity" : "voltage",
+      "source" : "SMC"
+    },
+    {
+      "category" : "psu",
+      "id" : "ioreport::apciec0 Energy:0",
+      "isVisibleByDefault" : true,
+      "name" : "apciec0 Power",
+      "quantity" : "power",
+      "source" : "IOReport",
+      "value" : 0
+    },
+    {
+      "category" : "psu",
+      "id" : "ioreport::apciec1 Energy:0",
+      "isVisibleByDefault" : true,
+      "name" : "apciec1 Power",
+      "quantity" : "power",
+      "source" : "IOReport",
+      "value" : 0
+    },
+    {
+      "category" : "psu",
+      "id" : "ioreport::apciec3 Energy:0",
+      "isVisibleByDefault" : true,
+      "name" : "apciec3 Power",
+      "quantity" : "power",
+      "source" : "IOReport",
+      "value" : 0
+    }
+  ]
+}

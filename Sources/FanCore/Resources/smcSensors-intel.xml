@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<smcSensors>
+  <modelMatch models="all">
+    <smc name="TA0P">Ambient</smc>
+    <smc name="TA1P">Ambient 2</smc>
+    <smc name="TB0T">Battery Max</smc>
+    <smc name="TB1T">Battery Sensor 1</smc>
+    <smc name="TB2T">Battery Sensor 2</smc>
+    <smc name="TB3T">Battery</smc>
+    <group name="CPU Core (average)" key="cpucoreavg" hideSensors="0">
+      <smc name="TC0c" type="cpu">CPU Core 1</smc>
+      <smc name="TC1c" type="cpu">CPU Core 2</smc>
+      <smc name="TC2c" type="cpu">CPU Core 3</smc>
+      <smc name="TC3c" type="cpu">CPU Core 4</smc>
+      <smc name="TC4c" type="cpu">CPU Core 5</smc>
+      <smc name="TC5c" type="cpu">CPU Core 6</smc>
+      <smc name="TC6c" type="cpu">CPU Core 7</smc>
+      <smc name="TC7c" type="cpu">CPU Core 8</smc>
+      <smc name="TC8c" type="cpu">CPU Core 9</smc>
+      <smc name="TC9c" type="cpu">CPU Core 10</smc>
+    </group>
+    <smc name="TCXC" type="cpu">CPU PECI</smc>
+    <smc name="TC0H" type="cpu">CPU Heatsink</smc>
+    <smc name="TC0D" type="cpu">CPU Diode</smc>
+    <smc name="TC0P" type="cpu">CPU Proximity</smc>
+    <smc name="TCGC" type="gpu">GPU PECI</smc>
+    <smc name="TG0D" type="gpu">GPU Diode</smc>
+    <smc name="TGDD" type="gpu">GPU Diode 2</smc>
+    <smc name="TG0H" type="gpu">GPU Heatsink</smc>
+    <smc name="TG0P" type="gpu">GPU Proximity</smc>
+    <smc name="TG1P" type="gpu">GPU Proximity 2</smc>
+    <smc name="TO0P" type="odd">Optical Drive</smc>
+    <smc name="TL0p">LCD Proximity</smc>
+    <smc name="TL1P">LCD Proximity 2</smc>
+    <smc name="Th1H">Heatsink Proximity</smc>
+    <smc name="TM0P">Memory Proximity</smc>
+    <smc name="TM0S">Memory Slot</smc>
+    <smc name="TN0D">MCP Diode</smc>
+    <smc name="TN0H">MCP Heatsink</smc>
+    <smc name="TN0P">Northbridge Proximity</smc>
+    <smc name="Tp0P" type="psu">Power Supply Proximity</smc>
+    <smc name="Tp3H" type="psu">PSU Primary</smc>
+    <smc name="Tp0C" type="psu">PSMI Supply AC/DC Supply 1</smc>
+    <smc name="TI0P">Thunderbolt Proximity</smc>
+    <smc name="Ts0P">Trackpad</smc>
+    <smc name="TW0P" type="airport">Airport Proximity</smc>
+    <smc name="TPCD">Platform Controller Hub Die</smc>
+  </modelMatch>
+  <modelMatch models="Macmini1,1">
+    <smc name="TC0P" type="cpu">CPU VR area</smc>
+    <smc name="TC1P" type="cpu">CPU Proximity</smc>
+  </modelMatch>
+  <modelMatch models="Macmini3,1">
+    <smc name="TN0P">MCP Proximity</smc>
+    <smc name="TH0P">HDD Case</smc>
+  </modelMatch>
+  <modelMatch models="MacBookAir2,1">
+    <smc name="Tp1P" type="psu">MLB Front Edge</smc>
+    <smc name="Ts0P" type="psu">Temperature Skin Proximity</smc>
+    <smc name="TV0P" type="psu">AIR Vent Exit</smc>
+  </modelMatch>
+  <modelMatch models="MacBook5,2">
+    <smc name="Th0H">Heat Pipe Heatsink</smc>
+  </modelMatch>
+  <modelMatch models="MacBook8,1"></modelMatch>
+  <modelMatch models="MacBookPro2,1;MacBookPro2,2;MacBookPro3,1;MacBookPro4,1">
+    <smc name="Tm0P">Clock Chip Proximity</smc>
+  </modelMatch>
+  <modelMatch models="MacBookPro5,1">
+    <smc name="TN0D" type="cpu">CPU Vcore</smc>
+  </modelMatch>
+  <modelMatch models="MacBookPro5,1;MacBookPro5,2;MacBookPro5,3">
+    <smc name="TN0P">MCP Proximity</smc>
+    <smc name="Tm0P">Battery Charger</smc>
+    <smc name="TG0H">Left Heatsink</smc>
+    <smc name="TG1H">Left Heatsink Proximity</smc>
+    <smc name="Th2H">Right Heatsink</smc>
+  </modelMatch>
+  <modelMatch models="MacBookPro6,1;MacBookPro6,2">
+    <smc name="Tm0P">Mainboard</smc>
+  </modelMatch>
+  <modelMatch models="MacBookPro5,1;MacBookPro5,2;MacBookPro5,3;MacBookPro6,2">
+    <smc name="TG0H">GPU Diode (Analog)</smc>
+  </modelMatch>
+  <modelMatch models="Macmini8,1;MacBook8,1+;MacBookAir6,1+;MacBookPro9,1;MacBookPro9,2;MacBookPro10,1;MacBookPro11,2;MacBookPro11,3;MacBookPro11,4;MacBookPro11,5;MacBookPro13,2+">
+    <smc name="TC0c" exclude="1"></smc>
+    <group name="CPU Core (average)" key="cpucoreavg" hideSensors="0">
+      <smc name="TC1C" type="cpu">CPU Core 1</smc>
+      <smc name="TC2C" type="cpu">CPU Core 2</smc>
+      <smc name="TC3C" type="cpu">CPU Core 3</smc>
+      <smc name="TC4C" type="cpu">CPU Core 4</smc>
+      <smc name="TC5C" type="cpu">CPU Core 5</smc>
+      <smc name="TC6C" type="cpu">CPU Core 6</smc>
+      <smc name="TC7C" type="cpu">CPU Core 7</smc>
+      <smc name="TC8C" type="cpu">CPU Core 8</smc>
+    </group>
+  </modelMatch>
+  <modelMatch models="MacBookPro8,3">
+    <smc name="TC4c" exclude="1"></smc>
+  </modelMatch>
+  <modelMatch models="iMac13,2;iMac14,2;iMac15,1;iMac17,1;iMacPro1,1;MacPro1,1;MacPro2,1;MacPro3,1;MacPro4,1;MacPro5,1">
+    <smc name="TM0p">DIMM Module 1 Proximity</smc>
+    <smc name="TM1p">DIMM Module 2 Proximity</smc>
+    <smc name="TM2p">DIMM Module 3 Proximity</smc>
+    <smc name="TM3p">DIMM Module 4 Proximity</smc>
+  </modelMatch>
+  <modelMatch models="iMac9,1;iMac10,1">
+    <smc name="TN0P">MCP Proximity</smc>
+  </modelMatch>
+  <modelMatch models="MacPro1,1;MacPro2,1;MacPro3,1">
+    <smc name="TC0C" type="cpu">CPU A Core 0</smc>
+    <smc name="TC1C" type="cpu">CPU A Core 1</smc>
+    <smc name="TC2C" type="cpu">CPU B Core 0</smc>
+    <smc name="TC3C" type="cpu">CPU B Core 1</smc>
+    <smc name="TH0P">Drive Bay 0</smc>
+    <smc name="TH1P">Drive Bay 1</smc>
+    <smc name="TH2P">Drive Bay 2</smc>
+    <smc name="TH3P">Drive Bay 3</smc>
+    <smc name="TM1P">FBDIMM Riser A Outgoing Air</smc>
+    <smc name="TM2P">FBDIMM Riser A Regulator Area</smc>
+    <smc name="TM3P">FBDIMM Ambient 3</smc>
+    <smc name="TM8P">FBDIMM Riser B Incoming Air</smc>
+    <smc name="TM9P">FBDIMM Riser B Outgoing Air</smc>
+    <smc name="TM9P">FBDIMM Riser B Regulator Area</smc>
+    <smc name="TM0S">FBDIMM Riser A Slot 1</smc>
+    <smc name="TM1S">FBDIMM Riser A Slot 2</smc>
+    <smc name="TS0C">Expansion Slots</smc>
+  </modelMatch>
+  <modelMatch models="MacPro4,1;MacPro5,1">
+    <smc name="TCAC" type="cpu">CPU A core from PCECI</smc>
+    <smc name="TCAH" type="cpu">CPU A HeatSink</smc>
+    <smc name="TCAD" type="cpu">CPU A Diode</smc>
+    <smc name="TCBC" type="cpu">CPU B core from PCECI</smc>
+    <smc name="TCBH" type="cpu">CPU B HeatSink</smc>
+    <smc name="TCBD" type="cpu">CPU B Diode</smc>
+    <smc name="TH1P">Drive Bay 0</smc>
+    <smc name="TH2P">Drive Bay 1</smc>
+    <smc name="TH3P">Drive Bay 2</smc>
+    <smc name="TH4P">Drive Bay 3</smc>
+    <smc name="TM1P">DIMM Proximity 1</smc>
+    <smc name="TM2P">DIMM Proximity 2</smc>
+    <smc name="TM3P">DIMM Proximity 3</smc>
+    <smc name="TM4P">DIMM Proximity 4</smc>
+    <smc name="TM5P">DIMM Proximity 5</smc>
+    <smc name="TM6P">DIMM Proximity 6</smc>
+    <smc name="TM7P">DIMM Proximity 7</smc>
+    <smc name="TM8P">DIMM Proximity 8</smc>
+    <smc name="Te1P">PCIE Ambient</smc>
+    <smc name="Te1S">PCIE slot 1</smc>
+    <smc name="Te2S">PCIE slot 2</smc>
+    <smc name="Te3S">PCIE slot 3</smc>
+    <smc name="Te4S">PCIE slot 4</smc>
+    <smc name="Te5S">PCIe RAID card</smc>
+    <smc name="TN0D">Northbridge Diode</smc>
+    <smc name="TN0H">Northbridge Heatsink</smc>
+  </modelMatch>
+  <modelMatch models="MacPro1,1;MacPro2,1;MacPro3,1;MacPro4,1;MacPro5,1">
+    <smc name="Tp1C" type="psu">PSMI Supply AC/DC Supply 2</smc>
+  </modelMatch>
+  <modelMatch models="MacPro6,1">
+    <smc name="TA0p">Ambient MLB</smc>
+    <smc name="TA2p">Ambient 3</smc>
+    <smc name="TC0p" type="cpu" exclude="1">CPU Local Proximity</smc>
+    <smc name="TC1p" type="cpu">CPU VCore Proximity</smc>
+    <smc name="Te0t">PCIe Switch Diode</smc>
+    <smc name="TG0D" type="gpu">GPU 1 Diode</smc>
+    <smc name="TG1D" type="gpu">GPU 2 Diode</smc>
+    <smc name="TM0p">DIMM 1,2 Proximity</smc>
+    <smc name="TM1p">DIMM 3,4 Proximity</smc>
+    <smc name="Tm0p" exclude="1">MLB Proximity</smc>
+    <smc name="Tp0T" type="psu">PSU Secondary Heatsink</smc>
+    <smc name="TI0P">I/O Board Proximity</smc>
+    <smc name="TC0C" type="cpu">CPU Sensor 1</smc>
+    <smc name="TC1C" type="cpu">CPU Sensor 2</smc>
+    <smc name="TC2C" type="cpu">CPU Sensor 3</smc>
+    <smc name="TC3C" type="cpu">CPU Sensor 4</smc>
+    <smc name="TG0p" type="gpu" exclude="1">GPU 1 Local</smc>
+    <smc name="TG1p" type="gpu" exclude="1">GPU 2 Local</smc>
+  </modelMatch>
+  <modelMatch models="iMac4,1;iMac5,1">
+    <smc name="Tm0P">Clock Chip Proximity</smc>
+  </modelMatch>
+  <modelMatch models="iMac9,1">
+    <smc name="TN0D">Northbridge Diode</smc>
+    <smc name="TN0H">Northbridge Heatsink</smc>
+    <smc name="Tm0P">MLB Proximity</smc>
+  </modelMatch>
+  <modelMatch models="iMac4,1;iMac5,1;iMac6,1;iMac7,1;iMac8,1;iMac9,1;MacMini3,1">
+    <smc name="TH0P">HDD Proximity</smc>
+  </modelMatch>
+  <modelMatch models="iMac15,1;iMac17,1">
+    <smc name="TG0p" type="gpu">GPU Proximity 1</smc>
+    <smc name="TG1p" type="gpu">GPU Proximity 2</smc>
+    <smc name="TG2p" type="gpu">GPU Proximity 3</smc>
+    <smc name="TG3p" type="gpu">GPU Proximity 4</smc>
+  </modelMatch>
+  <modelMatch models="iMac13,1;iMac13,2">
+    <smc name="TH1B" type="ssd">Apple SSD</smc>
+  </modelMatch>
+  <modelMatch models="iMac15,1;iMac17,1">
+    <smc name="TH1A" type="ssd">Apple SSD</smc>
+  </modelMatch>
+  <modelMatch models="MacBook8,1+;MacBookAir6,2+;MacBookPro10,1;MacBookPro11,1;MacBookPro11,3;MacBookPro11,4;MacBookPro12,1;MacBookPro13,1;MacBookPro13,2;MacBookPro13,3;MacBookPro14,1;MacBookPro14,2;MacBookPro14,3;MacBookPro15,1;MacBookPro15,2">
+    <smc name="TH0A" type="ssd">Apple SSD</smc>
+  </modelMatch>
+  <modelMatch models="iMacPro1,1">
+    <smc name="TH0A" type="ssd">SSD A</smc>
+    <smc name="TH1A" type="ssd">SSD B</smc>
+    <smc name="TG1P" type="gpu">GPU Proximity 1</smc>
+    <smc name="TG2P" type="gpu">GPU Proximity 2</smc>
+    <smc name="TG3P" type="gpu">GPU Proximity 3</smc>
+  </modelMatch>
+</smcSensors>
