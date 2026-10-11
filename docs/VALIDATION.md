@@ -1,5 +1,14 @@
 # 验证记录
 
+## 跨机型兼容补充（2026-10-11）
+
+- `swift test`：36 项 XCTest 通过（原有 22 项，新增 14 项兼容测试）。新测试使用 SMC wire-level 替身，覆盖 Intel / M1–M5 目录选择、基础款 M1 与未知 Apple Silicon 的发现分组、大小写模式键、float / `fpe2` 目标、Intel 高位位掩码保留、系统模式 3、延迟解锁、双风扇解锁生命周期、超时与失败恢复、外部手动风扇保护和零风扇机器。
+- `bash scripts/build-app.sh`：arm64 Release 编译、打包和严格签名验证通过。
+- `bash scripts/check-packaged-app.sh`：隐藏构建目录并移动 app 后，主程序与 helper 均成功读取资源。
+- `swift build --arch x86_64 --scratch-path /tmp/mfc-compatibility-intel-build`：Intel 交叉编译通过。当前 SDK 提示 macOS 27 已弃用 x86_64；没有在 Intel 硬件运行或执行 Intel 测试套件。
+- 打包 app `--probe-json`：`Mac18,5`，1 个风扇（`F0md`），428 个通道、399 个有效值、428 个唯一 ID；CPU/GPU 推断分组和电气监控保持可用。此次探测只读，未改变机器已有的风扇模式。
+- 未执行真实风扇写入、`Ftst` 解锁、helper 安装或睡眠恢复；M1–M5、Intel 和无风扇机型仍需实机验证。兼容性说明见 [COMPATIBILITY.md](COMPATIBILITY.md)。
+
 ## 安装包资源修复与 DMG（2026-10-11）
 
 - v1.0.0 的主应用崩溃报告指向 `Bundle.module` 的资源查找失败；管理员授权已完成，LaunchDaemon 仍在运行。CI 编译产物中的 SwiftPM 资源访问器包含构建机路径，未找到 app 内的资源包。

@@ -36,11 +36,8 @@ public final class SensorCatalog: NSObject, XMLParserDelegate {
         if let url = resources.url(forResource: "idSwapRules", withExtension: "xml", subdirectory: "Resources"), let parser = XMLParser(contentsOf: url) {
             parser.delegate = self; _ = parser.parse()
         }
-        #if arch(arm64)
-        let database = "smcSensors-appleSilicon"
-        #else
-        let database = "smcSensors-intel"
-        #endif
+        // Model identity also works for an Intel binary running under Rosetta.
+        let database = Self.isAppleSilicon(model: model) ? "smcSensors-appleSilicon" : "smcSensors-intel"
         for file in [database, "fanInfo", "iokitSensors"] {
             if let url = resources.url(forResource: file, withExtension: "xml", subdirectory: "Resources"),
                let parser = XMLParser(contentsOf: url) {
@@ -49,18 +46,36 @@ public final class SensorCatalog: NSObject, XMLParserDelegate {
             }
         }
     }
-    /// Mac18,5 exposes these families, but individual core assignments are not
-    /// established. Keep the inference visible and never overwrite model mappings.
+    /// Fill missing CPU/GPU families on Apple Silicon without claiming core identities.
+    /// Existing model-specific SMC groups take precedence; HID may be unavailable.
     public func addDiscoveredSensors(_ keys: [String]) {
-        guard model == "Mac18,5" else { return }
+        guard Self.isAppleSilicon(model: model) else { return }
+        let mappedCategories = Set(sensors.filter {
+            !$0.key.hasPrefix("hid:") && !$0.value.name.hasSuffix("(inferred)")
+        }.map { $0.value.category })
         for key in Set(keys).sorted() where key.utf8.count == 4 && sensors[key] == nil {
             let family: String
             if key.hasPrefix("Tp") || key.hasPrefix("Te") { family = "CPU" }
             else if key.hasPrefix("Tg") { family = "GPU" }
             else { continue }
+            guard !mappedCategories.contains(family.lowercased()) else { continue }
             sensors[key] = ("\(family) Sensor \(key) (inferred)", family.lowercased())
             groups["\(family) Sensors Average (inferred)", default: []].append(key)
             hiddenGroupMembers.insert(key)
+        }
+    }
+
+    static func isAppleSilicon(model: String) -> Bool {
+        let family = String(model.prefix { !$0.isNumber })
+        guard let major = Int(model.dropFirst(family.count).split(separator: ",").first ?? "") else { return false }
+        switch family {
+        case "Mac", "MacStudio", "MacBookNeo": return true
+        case "MacBookPro": return major >= 17
+        case "MacBookAir": return major >= 10
+        case "Macmini": return major >= 9
+        case "iMac": return major >= 21
+        case "MacPro": return major >= 8
+        default: return false
         }
     }
 

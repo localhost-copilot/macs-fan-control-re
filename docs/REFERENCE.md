@@ -23,6 +23,10 @@ API 参考：
 - 本机只读验证发现 PMU 同名设备拥有相同 IORegistry 路径、不同 LocationID，后者四字节对应 SMC 键。部分电气事件把 float 位模式当作定点数返回；因此使用明确对应的 SMC 键解码，JSON 保留 rawValue 和 backingSMCKey。无法确认的通道不猜测单位转换。
 - [同机型风扇控制记录](https://github.com/HDZucht/Mac-mini-M6-fan-control-LLM)描述小写 `F0md` 模式键；本机只读检查确认存在。写入优先小写，再检查旧式键；写入失败不会尝试其他模式键绕过错误。
 
-## Mac18,5 的 CPU/GPU 显示补充
+## 跨机型兼容补充
+
+后续适配将下述初始仅限 Mac18,5 的推断扩展到缺少 SMC CPU/GPU 映射的 Apple Silicon，保留现有映射。新增按机型选择数据库、模式 3 识别、`Ftst` 解锁及恢复、写入回读；开源参考与验证边界见 [COMPATIBILITY.md](COMPATIBILITY.md)。
+
+## Mac18,5 的 CPU/GPU 显示补充（初始实现）
 
 本机实测能读取 `Tp*`、`Te*`、`Tg*` 温度。[同机型的开源实测记录](https://github.com/HDZucht/Mac-mini-M6-fan-control-LLM#sensors-on-the-mac-mini-m6)也把这些键分别推断为 CPU 和 GPU。只在 Mac18,5 启用这一分组，名称明确附带 `inferred`；不声称具体性能核/能效核编号，不把该组平均值当作官方封装温度。`TCMb` 的含义在资料之间存在分歧，保留原始未知键，未将它指定为 CPU 温度。没有采用该外部项目的硬件写入或服务安装代码。

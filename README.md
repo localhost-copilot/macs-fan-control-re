@@ -35,7 +35,7 @@ Monitor every temperature, voltage, current, and power channel your Mac exposes,
 
 ## Highlights
 
-- 💻 **M6 support** — sensor reads and the GUI tested on Mac mini M6 (`Mac18,5`); real fan-speed writes and recovery still need hardware validation.
+- 💻 **Apple Silicon and Intel compatibility** — M1–M6 / Intel sensor catalogs and discovery, with capability-based fan control. Sensor reads and the GUI tested on Mac mini M6 (`Mac18,5`); other models and real fan writes need hardware validation. See [compatibility](docs/COMPATIBILITY.md).
 - 🌀 **Fan control** — constant RPM or sensor-based curves, applied live while you drag the slider.
 - 🌡️ **Full telemetry** — enumerates all SMC `T*` / `V*` / `I*` / `P*` keys, HID sensors, and IOReport Energy Model channels (428 channels on a `Mac18,5`).
 - 📊 **Menu bar** — fan RPM and any sensor reading in fixed-width slots that never jitter.
@@ -50,7 +50,7 @@ Monitor every temperature, voltage, current, and power channel your Mac exposes,
 | --- | --- |
 | OS | macOS 13 Ventura or later |
 | Toolchain | Xcode / Swift 5.9 or later |
-| Hardware | Apple Silicon, including M6 (sensor reads and GUI tested on Mac mini M6, `Mac18,5`); Intel hardware support is untested |
+| Hardware | Apple Silicon M1–M6 or Intel Mac; fanless models provide monitoring only. See [compatibility and validation](docs/COMPATIBILITY.md). |
 
 ## Quick Start
 
@@ -203,7 +203,7 @@ docs/
 └── REFERENCE.md    Implementation notes, API references, and resource provenance
 ```
 
-The helper supports Apple Silicon M6-style `F{i}md` / `F{i}Md` mode keys as well as the legacy `FS! ` key, and writes target RPM.
+The helper discovers `F{i}md` / `F{i}Md` mode keys or the legacy Intel `FS! ` bitmask and writes float or `fpe2` target RPM. Firmware mode 3 is system control. Manual-mode error `0x82` triggers capability-based `Ftst` unlock with bounded retries. An unlock acquired by this connection is released after its last controlled fan returns to automatic mode; failed recovery remains retryable. Mode and target writes are read back before reporting success.
 
 ## Safety
 
@@ -225,7 +225,7 @@ Closing the main window only hides the app to the menu bar; quitting releases co
 - **Unofficial.** This is an independent project and is not affiliated with CrystalIDEA.
 - **Controller** implements temperature bands, directional hysteresis, ramping, and 31 s refresh.
 - **Storage / external sensors.** SSD temperature comes from system HID / NAND channels. Separate SATA / NVMe SMART, Thunderbolt disks, and eGPU temperatures are not implemented.
-- **"All" means publicly enumerable.** Firmware-hidden sensors are inaccessible. HID and SMC may expose the same physical sensor, so the channel count is not the number of physical sensors. CPU / GPU grouping on `Mac18,5` (`Tp*` / `Te*` / `Tg*`) is inferred.
+- **"All" means publicly enumerable.** Firmware-hidden sensors are inaccessible. HID and SMC may expose the same physical sensor, so the channel count is not the number of physical sensors. Missing Apple Silicon CPU / GPU mappings use inferred `Tp*` / `Te*` / `Tg*` groups, preserving existing model-specific mappings. These are not verified core identities or package temperatures.
 - **Low temperatures.** Some Apple Silicon hardware refuses to spin fans up manually when cold.
 - **Localization.** English and Simplified Chinese only.
 - **Not notarized.** Build, unit tests, live sensor reads, and GUI are verified. Admin install, real RPM writes, Intel and other Apple Silicon models, and post-sleep recovery still need real-hardware testing. See [`docs/VALIDATION.md`](docs/VALIDATION.md).

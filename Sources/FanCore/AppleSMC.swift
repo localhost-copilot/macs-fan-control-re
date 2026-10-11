@@ -5,6 +5,16 @@ import IOKit
 public final class AppleSMC {
     private var connection: io_connect_t = 0
     private var metadata: [String: (Int, String)] = [:]
+    private var exchange: (([UInt8]) throws -> [UInt8])?
+    private var waitForMode: () -> Void = { usleep(100_000) }
+    private var controlledFans = Set<Int>()
+    private var ownsUnlock = false
+
+    // Exercise the real wire decoding and control sequence without opening hardware.
+    init(exchange: @escaping ([UInt8]) throws -> [UInt8], waitForMode: @escaping () -> Void = {}) {
+        self.exchange = exchange
+        self.waitForMode = waitForMode
+    }
 
     public init() throws {
         let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("AppleSMC"))
@@ -31,15 +41,29 @@ public final class AppleSMC {
         put(index, at: 44)
         for (i, byte) in bytes.enumerated() { input[48 + i] = byte }
         var outputSize = 80
-        let result = input.withUnsafeBytes { source in
-            output.withUnsafeMutableBytes { destination in
-                IOConnectCallStructMethod(connection, 2, source.baseAddress, 80, destination.baseAddress, &outputSize)
+        let result: kern_return_t
+        if let exchange {
+            output = try exchange(input)
+            outputSize = output.count
+            result = KERN_SUCCESS
+        } else {
+            result = input.withUnsafeBytes { source in
+                output.withUnsafeMutableBytes { destination in
+                    IOConnectCallStructMethod(connection, 2, source.baseAddress, 80, destination.baseAddress, &outputSize)
+                }
             }
         }
-        guard result == KERN_SUCCESS, outputSize == 80, output[40] == 0 else {
-            throw FanError.message("SMC \(key) failed (kernel \(result), device \(output[40])).")
+        guard result == KERN_SUCCESS, outputSize == 80 else {
+            throw FanError.message("SMC \(key) failed (kernel \(result), response size \(outputSize)).")
         }
+        guard output[40] == 0 else { throw DeviceError(key: key, status: output[40]) }
         return output
+    }
+
+    private struct DeviceError: LocalizedError {
+        let key: String
+        let status: UInt8
+        var errorDescription: String? { "SMC \(key) failed (device \(status))." }
     }
 
     public func info(_ key: String) throws -> (size: Int, type: String) {
@@ -75,7 +99,7 @@ public final class AppleSMC {
         case ("flt ", 4): return Double(Float(bitPattern: uint32(bytes, at: 0)))
         case ("fpe2", 2): return Double(UInt16(bytes[0]) << 8 | UInt16(bytes[1])) / 4
         case ("sp78", 2): return Double(Int16(bitPattern: UInt16(bytes[0]) << 8 | UInt16(bytes[1]))) / 256
-        case ("ui8 ", 1), ("ui16", 2), ("ui32", 4):
+        case ("flag", 1), ("ui8 ", 1), ("ui16", 2), ("ui32", 4):
             return Double(bytes.reduce(UInt32(0)) { ($0 << 8) | UInt32($1) })
         default: throw FanError.message("Unsupported SMC type ‘\(type)’.")
         }
@@ -105,8 +129,8 @@ public final class AppleSMC {
             }
             let manual: Bool
             let modeKey: String?
-            if let mode = try? number(Self.fanKey(id, "md")) { manual = mode != 0; modeKey = Self.fanKey(id, "md") }
-            else if let mode = try? number(Self.fanKey(id, "Md")) { manual = mode != 0; modeKey = Self.fanKey(id, "Md") }
+            if let mode = try? number(Self.fanKey(id, "md")) { manual = mode == 1; modeKey = Self.fanKey(id, "md") }
+            else if let mode = try? number(Self.fanKey(id, "Md")) { manual = mode == 1; modeKey = Self.fanKey(id, "Md") }
             else if let mode = try? number("FS! "), mode.isFinite, mode >= 0, mode <= 65535 {
                 manual = (Int(mode) & (1 << id)) != 0; modeKey = "FS! "
             } else { manual = false; modeKey = nil }
@@ -125,20 +149,66 @@ public final class AppleSMC {
         guard try info(key).size == bytes.count else { throw FanError.message("SMC write size mismatch.") }
         _ = try call(key: key, command: 6, size: bytes.count, bytes: bytes)
     }
-    public func setAutomatic(fan: Int) throws { try setManual(false, fan: fan) }
+    public func setAutomatic(fan: Int) throws {
+        try setManual(false, fan: fan)
+        // Ftst is global: retain it until the last fan owned by this connection
+        // is released. Keep ownership on failure so ControlSession can retry.
+        if ownsUnlock && controlledFans.subtracting([fan]).isEmpty {
+            try write("Ftst", bytes: [0])
+            guard try number("Ftst") == 0 else { throw FanError.message("Could not release the SMC fan-control unlock.") }
+            ownsUnlock = false
+        }
+        controlledFans.remove(fan)
+    }
     private func setManual(_ manual: Bool, fan: Int) throws {
         guard (0..<16).contains(fan) else { throw FanError.message("Invalid fan index.") }
-        // Apple Silicon (including Mac18,5) exposes lowercase md. Older Macs
-        // use Md or the shared FS! bitfield; do not fall back after a write fails.
+        // Probe capabilities, not chip names. Never switch mode keys after a failure.
         if let key = [Self.fanKey(fan, "md"), Self.fanKey(fan, "Md")].first(where: { (try? info($0)) != nil }) {
-            try write(key, bytes: [manual ? 1 : 0])
+            let desired: UInt8 = manual ? 1 : 0
+            let current = try number(key)
+            if current == Double(desired) || (!manual && current == 3) { return }
+            do {
+                try write(key, bytes: [desired])
+            } catch let error as DeviceError where manual && error.status == 0x82 {
+                try acquireUnlock()
+                // thermalmonitord yields asynchronously. Bound retries and only
+                // retry its specific refusal, never transport/permission errors.
+                for attempt in 0..<20 {
+                    waitForMode()
+                    do {
+                        try write(key, bytes: [desired])
+                        if try number(key) == Double(desired) { return }
+                    } catch let retry as DeviceError where retry.status == 0x82 {
+                        if attempt == 19 { throw retry }
+                    }
+                }
+            }
+            guard try number(key) == Double(desired) else {
+                throw FanError.message("SMC did not accept the requested mode for fan \(fan).")
+            }
         } else {
             let value = try number("FS! ")
             guard value.isFinite, value >= 0, value <= 65535 else { throw FanError.message("Invalid legacy fan mode bitfield.") }
             let old = UInt16(value)
             let mask = manual ? old | (1 << fan) : old & ~(1 << fan)
             try write("FS! ", bytes: [UInt8(mask >> 8), UInt8(mask & 255)])
+            guard try number("FS! ") == Double(mask) else {
+                throw FanError.message("SMC did not accept the legacy fan mode bitfield.")
+            }
         }
+    }
+
+    private func acquireUnlock() throws {
+        let flag = try read("Ftst")
+        guard ["ui8 ", "flag"].contains(flag.type), flag.bytes.count == 1, flag.bytes[0] <= 1 else {
+            throw FanError.message("Unsupported SMC fan-control unlock encoding.")
+        }
+        guard flag.bytes[0] == 0 else { return }
+        guard try fans().allSatisfy({ !$0.manual || controlledFans.contains($0.id) }) else {
+            throw FanError.message("Another fan is under manual control. Release it before acquiring the global SMC unlock.")
+        }
+        ownsUnlock = true
+        try write("Ftst", bytes: [1])
     }
     public func setRPM(_ rpm: Int, fan: Fan) throws {
         try ControlMode.constant(rpm).validate(for: fan)
@@ -154,8 +224,16 @@ public final class AppleSMC {
             bytes = [UInt8((rpm * 4) >> 8), UInt8((rpm * 4) & 255)]
         default: throw FanError.message("Unsupported fan target encoding: \(type).")
         }
-        try setManual(true, fan: fan.id)
-        do { try write(key, bytes: bytes) }
-        catch { try? setAutomatic(fan: fan.id); throw error }
+        controlledFans.insert(fan.id)
+        do {
+            try setManual(true, fan: fan.id)
+            try write(key, bytes: bytes)
+            guard try number(key) == Double(rpm) else { throw FanError.message("SMC did not accept the requested fan speed.") }
+        } catch {
+            let original = error
+            do { try setAutomatic(fan: fan.id) }
+            catch { throw FanError.message("\(original.localizedDescription) Automatic recovery also failed: \(error.localizedDescription)") }
+            throw original
+        }
     }
 }
