@@ -74,7 +74,7 @@ final class FanCoreTests: XCTestCase {
                      "A missing die must not produce a misleading partial CPU total")
     }
 
-    func testPowerFallbackPreservesIdentityAndRecoversWithoutReplacingIdleZero() throws {
+    func testPowerPrefersValidCLPCAndPreservesIdentity() throws {
         var primary = Sensor(id: "ioreport::GPU Energy:0", name: "GPU Power", value: nil,
                              quantity: .power, source: "IOReport", issue: "Sampling failed")
         var fallback = Sensor(id: "ioreport:Energy Counters:GPU Energy:0", name: "GPU Power", value: 3,
@@ -85,7 +85,7 @@ final class FanCoreTests: XCTestCase {
             XCTAssertEqual(result.count, 2)
             XCTAssertEqual(result.last, raw)
             let gpu = try XCTUnwrap(result.first)
-            XCTAssertEqual(gpu.id, primary.id, "Saved menu selections must survive failover")
+            XCTAssertEqual(gpu.id, primary.id, "Saved menu selections must survive switching sources")
             return gpu
         }
         let recovered = try merged()
@@ -97,11 +97,12 @@ final class FanCoreTests: XCTestCase {
             XCTAssertEqual(try merged().value, 3)
         }
         primary.value = 0; primary.issue = nil
-        XCTAssertEqual(try merged(), primary, "Valid idle zero must not trigger failover")
+        XCTAssertEqual(try merged().value, 3, "A frozen Energy Model counter reads as zero; CLPC wins")
         primary.value = 5
-        XCTAssertEqual(try merged(), primary, "Use the primary again when it recovers")
-        primary.value = nil; primary.issue = "Sampling failed"
+        XCTAssertEqual(try merged().value, 3, "Valid CLPC wins over a valid Energy Model reading")
         fallback.value = nil
+        XCTAssertEqual(try merged(), primary, "Use Energy Model when CLPC is unreadable")
+        primary.value = nil; primary.issue = "Sampling failed"
         XCTAssertEqual(try merged(), primary, "Retain the failure when neither source is readable")
         fallback.value = 0
         XCTAssertEqual(try merged().value, 0, "CLPC idle zero is also valid")

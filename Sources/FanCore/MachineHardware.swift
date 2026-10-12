@@ -77,7 +77,7 @@ public final class MachineHardware: FanHardware {
         readings += MaximumTemperature.allCases.compactMap { $0.sensor(from: readings) }
         let reportedPower = power?.readings() ?? []
         // Keep subscriptions independent so an unsupported CLPC report cannot
-        // break GPU/PCIe readings. Only valid Energy Model values win over CLPC.
+        // break GPU/PCIe readings. Valid CLPC values win over Energy Model.
         readings += PowerChannelRole.mergeSources(energyModel: reportedPower, clpc: clpc?.readings() ?? [])
         // Models without a sensor database still get a useful default list.
         curated = readings.contains { $0.isVisibleByDefault && $0.quantity == .temperature && $0.source != "Calculated" }

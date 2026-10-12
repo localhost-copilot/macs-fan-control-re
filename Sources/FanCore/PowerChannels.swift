@@ -61,15 +61,18 @@ enum PowerChannelRole: String, CaseIterable {
         return result
     }
 
-    /// Keep the primary identity stable so saved menu selections survive a
-    /// temporary source failure. A valid idle zero is still a measurement.
+    /// On macOS 27, Energy Model CPU/ANE counters can stay visible but stop
+    /// updating without Apple's `com.apple.private.pmgr.nrg.reporting`
+    /// entitlement, which reads as a valid idle zero. Prefer valid CLPC values
+    /// (including idle zero), as macmon does, but keep the Energy Model
+    /// identity so saved menu selections survive switching sources.
     static func mergeSources(energyModel: [Sensor], clpc: [Sensor]) -> [Sensor] {
         func valid(_ sensor: Sensor) -> Bool {
             sensor.value.map { $0.isFinite && $0 >= 0 } ?? false
         }
         let reported = Set(energyModel.filter(\.isVisibleByDefault).map(\.name))
         var result = energyModel.map { sensor in
-            guard sensor.isVisibleByDefault, !valid(sensor),
+            guard sensor.isVisibleByDefault,
                   let fallback = clpc.first(where: { $0.name == sensor.name && valid($0) }) else { return sensor }
             var item = sensor
             item.value = fallback.value; item.source = fallback.source; item.issue = fallback.issue
