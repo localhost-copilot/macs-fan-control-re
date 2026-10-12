@@ -76,14 +76,9 @@ public final class MachineHardware: FanHardware {
         }
         readings += MaximumTemperature.allCases.compactMap { $0.sensor(from: readings) }
         let reportedPower = power?.readings() ?? []
-        readings += reportedPower
         // Keep subscriptions independent so an unsupported CLPC report cannot
-        // break GPU/PCIe readings. Energy Model wins for components it reports.
-        let reported = Set(reportedPower.filter(\.isVisibleByDefault).map(\.name))
-        readings += (clpc?.readings() ?? []).filter { !reported.contains($0.name) }.map { sensor in
-            // CLPC CPU/GPU matched references on hardware; ANE has not been loaded and checked yet.
-            var item = sensor; if item.name == "ANE Power" { item.isVisibleByDefault = false }; return item
-        }
+        // break GPU/PCIe readings. Only valid Energy Model values win over CLPC.
+        readings += PowerChannelRole.mergeSources(energyModel: reportedPower, clpc: clpc?.readings() ?? [])
         // Models without a sensor database still get a useful default list.
         curated = readings.contains { $0.isVisibleByDefault && $0.quantity == .temperature && $0.source != "Calculated" }
         if !curated {
@@ -105,8 +100,10 @@ public final class MachineHardware: FanHardware {
             } else {
                 members = key.hasPrefix("avg:") ? Set(catalog.groups[String(key.dropFirst(4))] ?? []) : [key]
             }
+            // Control inputs must be fresh. Product names cannot select hashed
+            // identities for same-named HID services; never use the GUI cache policy here.
             let hidValues = members.contains { $0.hasPrefix("hid:") }
-                ? Dictionary((hid?.readings(refresh: { members.contains("hid:" + $0) }) ?? []).map { ($0.id, $0.celsius) }, uniquingKeysWith: { first, _ in first }) : [:]
+                ? Dictionary((hid?.readings() ?? []).map { ($0.id, $0.celsius) }, uniquingKeysWith: { first, _ in first }) : [:]
             let values = members.compactMap { $0.hasPrefix("hid:") ? hidValues[$0] ?? nil : try? smc.temperature($0) }
             if maximum != nil {
                 guard let value = MaximumTemperature.value(values) else {

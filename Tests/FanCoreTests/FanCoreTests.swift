@@ -56,6 +56,61 @@ final class FanCoreTests: XCTestCase {
         XCTAssertNil(partial.last?.value); XCTAssertNotNil(partial.last?.issue)
     }
 
+    func testUltraPowerSumsDiesWithoutCountingClustersOrPackageTwice() throws {
+        func channel(_ name: String, _ value: Double?) -> (name: String, sensor: Sensor) {
+            (name, Sensor(id: name, name: name, value: value, quantity: .power, source: "IOReport"))
+        }
+        let dies = [channel("DIE_0_CPU Energy", 4), channel("DIE_1_CPU Energy", 6)]
+        let clusters = [channel("DIE_0_ECPU", 1), channel("DIE_1_PCPU", 2)]
+        let cpu = PowerChannelRole.present(dies + clusters).filter(\.isVisibleByDefault)
+        XCTAssertEqual(cpu.count, 1)
+        XCTAssertEqual(cpu.first?.name, "CPU Power")
+        XCTAssertEqual(cpu.first?.value, 10)
+
+        let package = PowerChannelRole.present(dies + clusters + [channel("CPU Energy", 12)])
+        XCTAssertEqual(package.filter(\.isVisibleByDefault).map(\.value), [12])
+        let partial = PowerChannelRole.present([dies[0], channel("DIE_1_CPU Energy", nil)] + clusters)
+        XCTAssertNil(try XCTUnwrap(partial.first { $0.isVisibleByDefault }).value,
+                     "A missing die must not produce a misleading partial CPU total")
+    }
+
+    func testPowerFallbackPreservesIdentityAndRecoversWithoutReplacingIdleZero() throws {
+        var primary = Sensor(id: "ioreport::GPU Energy:0", name: "GPU Power", value: nil,
+                             quantity: .power, source: "IOReport", issue: "Sampling failed")
+        var fallback = Sensor(id: "ioreport:Energy Counters:GPU Energy:0", name: "GPU Power", value: 3,
+                              quantity: .power, source: "IOReport/CLPC")
+        let raw = Sensor(id: "raw", name: "Unclassified rail", value: 1, quantity: .power, source: "IOReport")
+        func merged() throws -> Sensor {
+            let result = PowerChannelRole.mergeSources(energyModel: [primary, raw], clpc: [fallback])
+            XCTAssertEqual(result.count, 2)
+            XCTAssertEqual(result.last, raw)
+            let gpu = try XCTUnwrap(result.first)
+            XCTAssertEqual(gpu.id, primary.id, "Saved menu selections must survive failover")
+            return gpu
+        }
+        let recovered = try merged()
+        XCTAssertEqual(recovered.value, 3)
+        XCTAssertEqual(recovered.source, fallback.source)
+        XCTAssertNil(recovered.issue)
+        for invalid in [Double.nan, .infinity, -1] {
+            primary.value = invalid
+            XCTAssertEqual(try merged().value, 3)
+        }
+        primary.value = 0; primary.issue = nil
+        XCTAssertEqual(try merged(), primary, "Valid idle zero must not trigger failover")
+        primary.value = 5
+        XCTAssertEqual(try merged(), primary, "Use the primary again when it recovers")
+        primary.value = nil; primary.issue = "Sampling failed"
+        fallback.value = nil
+        XCTAssertEqual(try merged(), primary, "Retain the failure when neither source is readable")
+        fallback.value = 0
+        XCTAssertEqual(try merged().value, 0, "CLPC idle zero is also valid")
+
+        primary.name = "ANE Power"; fallback.name = "ANE Power"
+        XCTAssertFalse(try merged().isVisibleByDefault, "Unverified CLPC ANE remains hidden during fallback")
+        XCTAssertFalse(try XCTUnwrap(PowerChannelRole.mergeSources(energyModel: [], clpc: [fallback]).first).isVisibleByDefault)
+    }
+
     func testMaximumTemperatureUsesCurrentRawReadingsAndSeparatesFamilies() throws {
         var readings = [
             Sensor(id: "Tp01", name: "CPU 1", celsius: 45, category: "cpu"),

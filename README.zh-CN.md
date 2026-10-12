@@ -40,9 +40,11 @@ swift run FanControl --probe-json
 - 菜单栏：单色/彩色/无图标、风扇 RPM、指定传感器读数；数值使用固定宽度槽位，读数变化时不左右跳动。手动控制时彩色图标变橙，高温读数着色。预设切换、逐风扇控制、隐藏/重新打开与退出。
 - 调速对话框实时生效：拖动滑块、切换到基于传感器或修改温度后立即作用于风扇，曲线实时显示当前工作点；取消恢复打开前的设置。
 - CPU / GPU 最高温度取各自已识别通道中当前可用读数的最大值，可用于菜单栏和温控。这是当前最高温度，不是历史峰值；全部读数不可用时显示为空，用于温控时回退到系统自动控制。
-- CPU / GPU / ANE / DRAM 功率沿用从 `/usr/bin/powermetrics`（macOS 27.0.1）逆向出的 Energy Model 通道规则：有 `CPU Energy` 汇总通道时直接使用，否则对各集群通道（`ECPU`、`PACC0_CPU`、`DIE_1_PCPU` 等）求和；`GPU Energy`/`GPU`、`ANE*`、`DRAM*` 直接对应。数值按能量差分计算，是采样期间的平均功率，不是功率计直接测量；其余通道保留原始名称并默认隐藏，不根据负载或未知 SMC 通道猜测。
+- CPU / GPU / ANE / DRAM 功率使用 Energy Model 通道：优先使用 `CPU Energy` 整包汇总，否则对 Ultra 的 die 总量（`DIE_0_CPU Energy`、`DIE_1_CPU Energy`）求和，再否则对集群通道（`ECPU`、`PACC0_CPU`、`DIE_1_PCPU` 等）求和，不叠加这些相互重叠的表示。集群映射参考 `/usr/bin/powermetrics`（macOS 27.0.1），Ultra die 映射参考 macmon；`GPU Energy`/`GPU`、`ANE*`、`DRAM*` 直接对应。数值按能量差分计算，是采样期间的平均功率，不是功率计直接测量；其余通道保留原始名称并默认隐藏，不根据负载或未知 SMC 通道猜测。
 - macOS 27 的 Energy Model 不再枚举 CPU 能量，powermetrics 也没有其他 CPU 来源。在 macOS 27.0 / 27.0.1 上，应用改读 AppleCLPC 的 CPU / GPU / ANE 能量报告，无需 sudo，覆盖 [macmon 固件分析表](https://github.com/vladkens/macmon/blob/main/docs/clpc-discovery.md)中 M1–M6 的 17 个 CLPC 驱动；Energy Model 已有的部件优先。在 Mac18,5 / macOS 27.0.1 上，CLPC GPU 与 Energy Model GPU 在 10.8 W 负载下相差不到 0.5%。CLPC ANE 尚未在 ANE 负载下核对，默认隐藏。其他系统版本不套用这些 ID。分级负载下与独立 SMC 电源轨的对照见 [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)。
 - Mac18,5 的 CPU（`Tp*` 性能集群、`Te*` 能效集群）与 GPU（`Tg*`）温度族已通过隔离的 CPU、E 核、GPU 负载确认，不再标记 inferred。
+- Energy Model 仅在读数有效时优先，包括空闲时的零值。读数不可用时改用有效 CLPC 数据，保留传感器 ID，使已保存的选择继续有效；恢复后重新使用 Energy Model。CLPC ANE 在回退期间也默认隐藏。
+- 风扇温控每轮都重新读取 HID 温度，包括名称相同但 ID 不同的传感器；监控界面的原始通道缓存不会提供温控输入。
 - 工具栏式偏好设置窗口（General、T° Sensors、Menu bar display），另有 Advanced 页管理 helper 与诊断；登录最小化启动、Dock 图标、摄氏/华氏、精确显示、传感器显示管理、中英文主要界面。
 - SMC 自动枚举 `T*` / `V*` / `I*` / `P*` 通道，支持 float 和有效的 16 位有符号/无符号定点编码；保留未知键和不可用状态，每分钟重新发现。
 - HID 温度、电压、电流；通过 LocationID 区分同名 PMU 通道，并用对应 SMC 键读取存在 HID 编码异常的电气通道。保留原始 HID 数值供诊断。
