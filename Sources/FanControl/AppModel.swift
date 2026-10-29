@@ -47,7 +47,7 @@ extension Preferences {
 final class AppModel: ObservableObject {
     @Published var fans: [Fan] = []
     @Published var sensors: [Sensor] = []
-    @Published var modes: [Int: ControlMode] = [:]
+    @Published var modes: [Int: ControlMode] = [:] { didSet { updateControlActivity() } }
     @Published var presets: [Preset] = []
     @Published var activePreset = PresetName.automatic
     @Published var preferences = Preferences() { didSet { persistPreferences() } }
@@ -60,10 +60,12 @@ final class AppModel: ObservableObject {
     @Published var showAbout = false
     @Published var presetEditor: PresetEdit?
     @Published var log: [String] = []
-    let helper = HelperClient()
-    private let monitor = HardwareMonitor()
+    let helper: any FanControlService
+    private let monitor: any HardwareSampling
     private let defaults: UserDefaults
     private var polling: Task<Void, Never>?
+    private var heartbeats: Task<Void, Never>?
+    private var controlActivity: NSObjectProtocol?
     private var tick = 0
     private var refreshGeneration = 0
     private var installing: Task<Void, Error>?
@@ -79,12 +81,36 @@ final class AppModel: ObservableObject {
     var openPreferences: (() -> Void)?
     var statusChanged: (() -> Void)?
 
-    init(defaults suppliedDefaults: UserDefaults? = nil, demoRequested: Bool = CommandLine.arguments.contains("--demo")) {
+    init(defaults suppliedDefaults: UserDefaults? = nil, demoRequested: Bool = CommandLine.arguments.contains("--demo"),
+         helper: (any FanControlService)? = nil, monitor: any HardwareSampling = HardwareMonitor()) {
+        self.helper = helper ?? HelperClient()
+        self.monitor = monitor
         demo = demoRequested
         defaults = suppliedDefaults ?? (demoRequested ? UserDefaults(suiteName: "local.macsfancontrol.swift.demo")! : .standard)
         if let data = defaults.data(forKey: "preferences"), let prefs = try? JSONDecoder().decode(Preferences.self, from: data) { preferences = prefs }
         if let data = defaults.data(forKey: "presets"), let values = try? JSONDecoder().decode([Preset].self, from: data) { presets = values }
         if let data = defaults.data(forKey: controlKey) { pendingControl = try? JSONDecoder().decode(SavedControl.self, from: data) }
+    }
+    deinit {
+        polling?.cancel()
+        heartbeats?.cancel()
+        if let controlActivity { ProcessInfo.processInfo.endActivity(controlActivity) }
+    }
+    private func updateControlActivity() {
+        if !demo && !modes.isEmpty {
+            if controlActivity == nil {
+                // Keep the GUI's safety heartbeat running while hidden, without
+                // preventing idle system sleep or the normal sleep recovery path.
+                controlActivity = ProcessInfo.processInfo.beginActivity(options: .userInitiatedAllowingIdleSystemSleep,
+                                                                        reason: "Maintaining manual fan control")
+            }
+        } else {
+            endControlActivity()
+        }
+    }
+    private func endControlActivity() {
+        if let controlActivity { ProcessInfo.processInfo.endActivity(controlActivity) }
+        controlActivity = nil
     }
     var unit: TemperatureUnit { preferences.unit }
     var visibleSensors: [Sensor] {
@@ -170,17 +196,32 @@ final class AppModel: ObservableObject {
         record("Fan control helper installed.")
     }
     func start() {
+        polling?.cancel()
+        heartbeats?.cancel()
         polling = Task { [weak self] in
             if let self, !self.demo {
                 // A cancelled prompt only defers installation until the first manual change.
                 do { try await self.ensureHelper() } catch { self.record(error.localizedDescription) }
             }
             while !Task.isCancelled {
-                guard let self else { return }
-                await refresh()
-                if !demo && !modes.isEmpty {
-                    do { try await helper.heartbeat() }
-                    catch { self.error = error.localizedDescription; record(error.localizedDescription); releaseControl() }
+                guard self != nil else { return }
+                await self?.refresh()
+                try? await Task.sleep(nanoseconds: 1_500_000_000)
+            }
+        }
+        // Sensor enumeration and IOReport/HID reads can take longer than the
+        // helper's lease. Renewal must not wait for a monitoring snapshot.
+        heartbeats = Task { [weak self] in
+            while !Task.isCancelled {
+                guard self != nil else { return }
+                if let self, !self.demo && !self.modes.isEmpty {
+                    do { try await self.helper.heartbeat() }
+                    catch {
+                        guard !Task.isCancelled else { return }
+                        self.error = error.localizedDescription
+                        self.record(error.localizedDescription)
+                        self.releaseControl()
+                    }
                 }
                 try? await Task.sleep(nanoseconds: 1_500_000_000)
             }
@@ -329,7 +370,12 @@ final class AppModel: ObservableObject {
     func prepareToQuit() async -> Bool {
         pendingControl = nil
         polling?.cancel()
-        do { if !demo { try await helper.reset() }; return true }
+        heartbeats?.cancel()
+        do {
+            if !demo { try await helper.reset() }
+            endControlActivity()
+            return true
+        }
         catch { self.error = error.localizedDescription; start(); return false }
     }
     func record(_ message: String) {

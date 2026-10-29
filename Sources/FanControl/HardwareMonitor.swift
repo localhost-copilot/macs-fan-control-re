@@ -7,8 +7,12 @@ struct HardwareSnapshot {
     var error: String?
 }
 
+protocol HardwareSampling {
+    func sample(full: Bool) async -> HardwareSnapshot
+}
+
 // Mutable hardware state is confined to queue; callers receive value snapshots.
-final class HardwareMonitor: @unchecked Sendable {
+final class HardwareMonitor: HardwareSampling, @unchecked Sendable {
     private let queue = DispatchQueue(label: "local.macsfancontrol.monitor", qos: .utility)
     private var hardware: MachineHardware?
 

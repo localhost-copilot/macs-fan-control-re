@@ -3,7 +3,17 @@ import ServiceManagement
 import FanCore
 
 @MainActor
-final class HelperClient {
+protocol FanControlService: AnyObject {
+    var available: Bool { get }
+    func register() async throws
+    func unregister() async throws
+    func apply(_ modes: [Int: ControlMode]) async throws
+    func heartbeat() async throws
+    func reset() async throws
+}
+
+@MainActor
+final class HelperClient: FanControlService {
     private var connection: NSXPCConnection?
     private var localInstallation = try? LocalHelperInstaller()
     private var localEnabled = false

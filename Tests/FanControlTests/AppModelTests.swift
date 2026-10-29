@@ -4,6 +4,56 @@ import FanCore
 
 final class AppModelTests: XCTestCase {
     @MainActor
+    func testHeartbeatRenewsWhileSensorSamplingIsSuspended() async {
+        let suite = "local.macsfancontrol.test.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suite)!
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let sampling = expectation(description: "Sensor read started and remains suspended")
+        let heartbeat = expectation(description: "Heartbeat arrived before sensor read completed")
+        let monitor = SuspendedMonitor(started: sampling)
+        let helper = TestFanControlService()
+        helper.onHeartbeat = { heartbeat.fulfill() }
+        let model = AppModel(defaults: defaults, demoRequested: false, helper: helper, monitor: monitor)
+        model.modes = [0: .constant(2400)]
+        model.start()
+
+        await fulfillment(of: [sampling, heartbeat], timeout: 3)
+        XCTAssertEqual(model.modes[0], .constant(2400))
+        XCTAssertNil(model.error)
+        let quit = await model.prepareToQuit()
+        XCTAssertTrue(quit)
+        XCTAssertEqual(helper.resets, 1)
+        await monitor.finish()
+    }
+
+    @MainActor
+    func testHeartbeatFailureReleasesControlWhileSensorSamplingIsSuspended() async {
+        let suite = "local.macsfancontrol.test.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suite)!
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let sampling = expectation(description: "Sensor read started and remains suspended")
+        let released = expectation(description: "Failed heartbeat releases local control")
+        let monitor = SuspendedMonitor(started: sampling)
+        let helper = TestFanControlService()
+        helper.onHeartbeat = { throw FanError.message("Control session expired") }
+        let model = AppModel(defaults: defaults, demoRequested: false, helper: helper, monitor: monitor)
+        model.modes = [0: .constant(2400)]
+        model.activePreset = PresetName.custom
+        let observation = model.$activePreset.dropFirst().sink { preset in
+            if preset == PresetName.automatic { released.fulfill() }
+        }
+        defer { observation.cancel() }
+        model.start()
+
+        await fulfillment(of: [sampling, released], timeout: 3)
+        XCTAssertTrue(model.modes.isEmpty)
+        XCTAssertEqual(model.error, "Control session expired")
+        let quit = await model.prepareToQuit()
+        XCTAssertTrue(quit)
+        await monitor.finish()
+    }
+
+    @MainActor
     func testMaximumTemperatureControlRestoresAndTracksHottestChannel() async {
         let suite = "local.macsfancontrol.test.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
@@ -239,4 +289,36 @@ final class AppModelTests: XCTestCase {
             XCTAssertTrue(AppModel(defaults: defaults, demoRequested: true).presets.isEmpty)
         }
     }
+}
+
+private actor SuspendedMonitor: HardwareSampling {
+    private let started: XCTestExpectation
+    private var continuation: CheckedContinuation<HardwareSnapshot, Never>?
+
+    init(started: XCTestExpectation) { self.started = started }
+
+    func sample(full: Bool) async -> HardwareSnapshot {
+        await withCheckedContinuation { continuation in
+            self.continuation = continuation
+            started.fulfill()
+        }
+    }
+
+    func finish() {
+        continuation?.resume(returning: HardwareSnapshot(fans: [], sensors: [], error: nil))
+        continuation = nil
+    }
+}
+
+@MainActor
+private final class TestFanControlService: FanControlService {
+    var available = true
+    var onHeartbeat: (() throws -> Void)?
+    private(set) var resets = 0
+
+    func register() async throws {}
+    func unregister() async throws {}
+    func apply(_ modes: [Int: ControlMode]) async throws {}
+    func heartbeat() async throws { try onHeartbeat?() }
+    func reset() async throws { resets += 1 }
 }

@@ -225,6 +225,7 @@ The app is designed to fail toward the system's automatic fan control:
 | App launch | Restore the last applied settings after hardware discovery and validation; report failures without repeated restore attempts |
 
 Closing the main window only hides the app to the menu bar; quitting releases control.
+While manual control is active, a separate heartbeat loop renews the helper's eight-second lease independently of sensor sampling. The app prevents App Nap during control, while still allowing system sleep.
 
 ## Known Limitations
 
